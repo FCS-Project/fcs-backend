@@ -23,7 +23,7 @@ let UserService = class UserService {
         return this.prisma.user.findFirst({ where: { id } });
     }
     update(id, updateUserDto) {
-        return `This action updates a #${id} user`;
+        return this.prisma.user.update({ where: { id }, data: updateUserDto });
     }
     remove(id) {
         return `This action removes a #${id} user`;
