@@ -4,8 +4,11 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export declare class UserService {
     private prisma;
     constructor(prisma: PrismaService);
-    create(createUserDto: CreateUserDto): Promise<import(".prisma/client").User>;
+    create(createUserDto: CreateUserDto): Promise<void>;
     findOne(id: string): Promise<import(".prisma/client").User>;
     update(id: string, updateUserDto: UpdateUserDto): Promise<import(".prisma/client").User>;
     remove(id: string): Promise<import(".prisma/client").User>;
+    getDocuments(id: string): Promise<(import(".prisma/client").User & {
+        Documents: import(".prisma/client").Document[];
+    })[]>;
 }

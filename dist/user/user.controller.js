@@ -33,6 +33,9 @@ let UserController = class UserController {
     remove(id) {
         return this.userService.remove(id);
     }
+    getDocuments(id) {
+        return this.userService.getDocuments(id);
+    }
 };
 __decorate([
     (0, common_1.Post)(),
@@ -63,6 +66,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "remove", null);
+__decorate([
+    (0, common_1.Get)('documents'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], UserController.prototype, "getDocuments", null);
 UserController = __decorate([
     (0, common_1.Controller)('user'),
     __metadata("design:paramtypes", [user_service_1.UserService])

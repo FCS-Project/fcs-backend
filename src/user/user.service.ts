@@ -7,8 +7,15 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UserService {
   constructor(private prisma: PrismaService) {}
   async create(createUserDto: CreateUserDto) {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const bcrypt = require('bcrypt');
+    const saltRounds = 12;
     try {
-      return await this.prisma.user.create({ data: createUserDto });
+      const preHash = createUserDto.password;
+      bcrypt.hash(preHash, saltRounds, function (err, hash) {
+        createUserDto.password = hash;
+        return this.prisma.user.create({ data: createUserDto });
+      });
     } catch (error) {
       if ((error.code = 'P2002')) {
         throw new BadRequestException(
@@ -32,7 +39,7 @@ export class UserService {
       });
     } catch (error) {
       throw new HttpException(
-        'There was some error while updating the changes',
+        'There was some error while updating the changes.',
         500,
       );
     }
@@ -43,9 +50,16 @@ export class UserService {
       return await this.prisma.user.delete({ where: { id } });
     } catch (error) {
       throw new HttpException(
-        'There was some error while deleting the user',
+        'There was some error while deleting the user.',
         500,
       );
     }
+  }
+
+  async getDocuments(id: string) {
+    return await this.prisma.user.findMany({
+      where: { id },
+      include: { Documents: true },
+    });
   }
 }

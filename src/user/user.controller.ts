@@ -34,4 +34,9 @@ export class UserController {
   remove(@Param('id') id: string) {
     return this.userService.remove(id);
   }
+
+  @Get('documents')
+  getDocuments(@Param('id') id: string) {
+    return this.userService.getDocuments(id);
+  }
 }

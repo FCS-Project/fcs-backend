@@ -17,8 +17,14 @@ let UserService = class UserService {
         this.prisma = prisma;
     }
     async create(createUserDto) {
+        const bcrypt = require('bcrypt');
+        const saltRounds = 12;
         try {
-            return await this.prisma.user.create({ data: createUserDto });
+            const preHash = createUserDto.password;
+            bcrypt.hash(preHash, saltRounds, function (err, hash) {
+                createUserDto.password = hash;
+                return this.prisma.user.create({ data: createUserDto });
+            });
         }
         catch (error) {
             if ((error.code = 'P2002')) {
@@ -40,7 +46,7 @@ let UserService = class UserService {
             });
         }
         catch (error) {
-            throw new common_1.HttpException('There was some error while updating the changes', 500);
+            throw new common_1.HttpException('There was some error while updating the changes.', 500);
         }
     }
     async remove(id) {
@@ -48,8 +54,14 @@ let UserService = class UserService {
             return await this.prisma.user.delete({ where: { id } });
         }
         catch (error) {
-            throw new common_1.HttpException('There was some error while deleting the user', 500);
+            throw new common_1.HttpException('There was some error while deleting the user.', 500);
         }
+    }
+    async getDocuments(id) {
+        return await this.prisma.user.findMany({
+            where: { id },
+            include: { Documents: true },
+        });
     }
 };
 UserService = __decorate([
