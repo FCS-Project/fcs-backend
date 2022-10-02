@@ -16,17 +16,40 @@ let UserService = class UserService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    create(createUserDto) {
-        return this.prisma.user.create({ data: createUserDto });
+    async create(createUserDto) {
+        try {
+            return await this.prisma.user.create({ data: createUserDto });
+        }
+        catch (error) {
+            if ((error.code = 'P2002')) {
+                throw new common_1.BadRequestException('A user with these credentials already exists!');
+            }
+            else {
+                throw new common_1.HttpException(error, 500);
+            }
+        }
     }
-    findOne(id) {
-        return this.prisma.user.findFirst({ where: { id } });
+    async findOne(id) {
+        return await this.prisma.user.findUnique({ where: { id } });
     }
-    update(id, updateUserDto) {
-        return this.prisma.user.update({ where: { id }, data: updateUserDto });
+    async update(id, updateUserDto) {
+        try {
+            return await this.prisma.user.update({
+                where: { id },
+                data: updateUserDto,
+            });
+        }
+        catch (error) {
+            throw new common_1.HttpException('Could not update the changes', 500);
+        }
     }
-    remove(id) {
-        return `This action removes a #${id} user`;
+    async remove(id) {
+        try {
+            return await this.prisma.user.delete({ where: { id } });
+        }
+        catch (error) {
+            throw new common_1.HttpException('There was some error while deleting the user', 500);
+        }
     }
 };
 UserService = __decorate([
