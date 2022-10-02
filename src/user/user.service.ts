@@ -31,7 +31,10 @@ export class UserService {
         data: updateUserDto,
       });
     } catch (error) {
-      throw new HttpException('Could not update the changes', 500);
+      throw new HttpException(
+        'There was some error while updating the changes',
+        500,
+      );
     }
   }
 

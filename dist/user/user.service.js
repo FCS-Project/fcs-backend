@@ -40,7 +40,7 @@ let UserService = class UserService {
             });
         }
         catch (error) {
-            throw new common_1.HttpException('Could not update the changes', 500);
+            throw new common_1.HttpException('There was some error while updating the changes', 500);
         }
     }
     async remove(id) {
