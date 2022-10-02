@@ -6,20 +6,27 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppModule = void 0;
+exports.DocumentService = void 0;
 const common_1 = require("@nestjs/common");
-const app_controller_1 = require("./app.controller");
-const app_service_1 = require("./app.service");
-const user_module_1 = require("./user/user.module");
-const document_module_1 = require("./document/document.module");
-let AppModule = class AppModule {
+let DocumentService = class DocumentService {
+    create(createDocumentDto) {
+        return 'This action adds a new document';
+    }
+    findAll() {
+        return `This action returns all document`;
+    }
+    findOne(id) {
+        return `This action returns a #${id} document`;
+    }
+    update(id, updateDocumentDto) {
+        return `This action updates a #${id} document`;
+    }
+    remove(id) {
+        return `This action removes a #${id} document`;
+    }
 };
-AppModule = __decorate([
-    (0, common_1.Module)({
-        controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService],
-        imports: [user_module_1.UserModule, document_module_1.DocumentModule],
-    })
-], AppModule);
-exports.AppModule = AppModule;
-//# sourceMappingURL=app.module.js.map
+DocumentService = __decorate([
+    (0, common_1.Injectable)()
+], DocumentService);
+exports.DocumentService = DocumentService;
+//# sourceMappingURL=document.service.js.map
