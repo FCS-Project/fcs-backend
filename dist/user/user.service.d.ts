@@ -5,8 +5,7 @@ export declare class UserService {
     private prisma;
     constructor(prisma: PrismaService);
     create(createUserDto: CreateUserDto): import(".prisma/client").Prisma.Prisma__UserClient<import(".prisma/client").User, never>;
-    findAll(): string;
-    findOne(id: number): string;
+    findOne(id: string): import(".prisma/client").Prisma.Prisma__UserClient<import(".prisma/client").User, never>;
     update(id: number, updateUserDto: UpdateUserDto): string;
     remove(id: number): string;
 }

@@ -19,11 +19,8 @@ let UserService = class UserService {
     create(createUserDto) {
         return this.prisma.user.create({ data: createUserDto });
     }
-    findAll() {
-        return `This action returns all user`;
-    }
     findOne(id) {
-        return `This action returns a #${id} user`;
+        return this.prisma.user.findFirst({ where: { id } });
     }
     update(id, updateUserDto) {
         return `This action updates a #${id} user`;
