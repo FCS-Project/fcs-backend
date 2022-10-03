@@ -13,11 +13,18 @@ export class LoginService {
     const user = await this.prisma.user.findUnique({
       where: { email: loginDto.email },
     });
-    const result = await bcrypt.compare(loginDto.password, user.password);
-    if (result) {
-      return { success: true, data: user };
+    if (user) {
+      const result = await bcrypt.compare(loginDto.password, user.password);
+      if (result) {
+        return { success: true, data: user };
+      } else {
+        return { success: false, message: 'Invalid User Credentials!' };
+      }
     } else {
-      return { success: false, message: 'Invalid User Credentials' };
+      return {
+        success: false,
+        message: `User with Email ID: ${loginDto.email} does not exist!`,
+      };
     }
   }
 }
