@@ -1,21 +1,21 @@
 import { BadRequestException, HttpException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
+import { LoginUserDto } from './dto/login-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const bcrypt = require('bcrypt');
+const saltRounds = 12;
 
 @Injectable()
 export class UserService {
   constructor(private prisma: PrismaService) {}
   async create(createUserDto: CreateUserDto) {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const bcrypt = require('bcrypt');
-    const saltRounds = 12;
     try {
-      const preHash = createUserDto.password;
-      bcrypt.hash(preHash, saltRounds, function (err, hash) {
-        createUserDto.password = hash;
-        return this.prisma.user.create({ data: createUserDto });
-      });
+      const hash = await bcrypt.hash(createUserDto.password, saltRounds);
+      createUserDto.password = hash;
+      return await this.prisma.user.create({ data: createUserDto });
     } catch (error) {
       if ((error.code = 'P2002')) {
         throw new BadRequestException(
@@ -61,5 +61,17 @@ export class UserService {
       where: { id },
       include: { Documents: true },
     });
+  }
+
+  async login(loginUserDto: LoginUserDto) {
+    const user = await this.prisma.user.findUnique({
+      where: { email: loginUserDto.email },
+    });
+    const result = await bcrypt.compare(loginUserDto.password, user.password);
+    if (result) {
+      return result;
+    } else {
+      throw new HttpException('Invalid User Credentials', 500);
+    }
   }
 }
