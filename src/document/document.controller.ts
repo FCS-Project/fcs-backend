@@ -27,7 +27,7 @@ export class DocumentController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.documentService.findOne(+id);
+    return this.documentService.findOne(id);
   }
 
   @Patch(':id')
@@ -40,6 +40,6 @@ export class DocumentController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.documentService.remove(+id);
+    return this.documentService.remove(id);
   }
 }
