@@ -68,8 +68,9 @@ export class UserService {
       where: { email: loginUserDto.email },
     });
     const result = await bcrypt.compare(loginUserDto.password, user.password);
+    const response = { success: true, data: user };
     if (result) {
-      return result;
+      return response;
     } else {
       throw new HttpException('Invalid User Credentials', 500);
     }
