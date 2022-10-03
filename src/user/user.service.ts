@@ -37,10 +37,7 @@ export class UserService {
         data: updateUserDto,
       });
     } catch (error) {
-      throw new HttpException(
-        'There was some error while updating the changes.',
-        500,
-      );
+      throw new HttpException(error, 500);
     }
   }
 
@@ -48,10 +45,7 @@ export class UserService {
     try {
       return await this.prisma.user.delete({ where: { id } });
     } catch (error) {
-      throw new HttpException(
-        'There was some error while deleting the user.',
-        500,
-      );
+      throw new HttpException(error, 500);
     }
   }
 

@@ -20,19 +20,27 @@ export class DocumentService {
     }
   }
 
-  findAll() {
-    return `This action returns all document`;
+  async findAll() {
+    return await this.prisma.document.findMany();
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} document`;
+  async findOne(id: string) {
+    try {
+      return await this.prisma.document.findUnique({ where: { id } });
+    } catch (error) {
+      return new HttpException(error, 500);
+    }
   }
 
   update(id: number, updateDocumentDto: UpdateDocumentDto) {
     return `This action updates a #${id} document`;
   }
 
-  remove(id: string) {
-    return this.prisma.document.delete({ where: { id } });
+  async remove(id: string) {
+    try {
+      return await this.prisma.document.delete({ where: { id } });
+    } catch (error) {
+      return new HttpException(error, 500);
+    }
   }
 }
