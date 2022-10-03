@@ -1,7 +1,6 @@
 import { BadRequestException, HttpException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { LoginUserDto } from './dto/login-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -61,18 +60,5 @@ export class UserService {
       where: { id },
       include: { Documents: true },
     });
-  }
-
-  async login(loginUserDto: LoginUserDto) {
-    const user = await this.prisma.user.findUnique({
-      where: { email: loginUserDto.email },
-    });
-    const result = await bcrypt.compare(loginUserDto.password, user.password);
-    const response = { success: true, data: user };
-    if (result) {
-      return response;
-    } else {
-      throw new HttpException('Invalid User Credentials', 500);
-    }
   }
 }

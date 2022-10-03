@@ -1,7 +1,6 @@
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { LoginUserDto } from './dto/login-user.dto';
 export declare class UserController {
     private readonly userService;
     constructor(userService: UserService);
@@ -12,5 +11,4 @@ export declare class UserController {
     getDocuments(id: string): Promise<(import(".prisma/client").User & {
         Documents: import(".prisma/client").Document[];
     })[]>;
-    login(loginUserDto: LoginUserDto): Promise<any>;
 }
