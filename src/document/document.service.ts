@@ -1,7 +1,6 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateDocumentDto } from './dto/create-document.dto';
-import { UpdateDocumentDto } from './dto/update-document.dto';
 
 @Injectable()
 export class DocumentService {
@@ -10,7 +9,7 @@ export class DocumentService {
     try {
       return await this.prisma.document.create({ data: createDocumentDto });
     } catch (error) {
-      return { success: false, message: error.message };
+      throw new HttpException(error, 500);
     }
   }
 
@@ -26,17 +25,13 @@ export class DocumentService {
     }
   }
 
-  update(id: number, updateDocumentDto: UpdateDocumentDto) {
-    return `This action updates a #${id} document`;
-  }
-
   async remove(id: string) {
     try {
       const document = await this.prisma.document.delete({ where: { id } });
       if (document) {
         return { success: true };
       } else {
-        return { success: false, message: 'This document does not exist' };
+        throw new BadRequestException('Document does not exist!');
       }
     } catch (error) {
       return new HttpException(error, 500);
