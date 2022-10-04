@@ -1,21 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { LoginDto } from './dto/login.dto';
+import { SignInDto } from './dto/signIn.dto';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const bcrypt = require('bcrypt');
 
 @Injectable()
-export class LoginService {
+export class AuthService {
   constructor(private prisma: PrismaService) {}
 
-  async login(loginDto: LoginDto) {
-    if (loginDto.email) {
+  async login(signInDto: SignInDto) {
+    if (signInDto.email) {
       const user = await this.prisma.user.findUnique({
-        where: { email: loginDto.email },
+        where: { email: signInDto.email },
       });
       if (user) {
-        const result = await bcrypt.compare(loginDto.password, user.password);
+        const result = await bcrypt.compare(signInDto.password, user.password);
         if (result) {
           return { success: true, data: user };
         } else {
@@ -24,16 +24,16 @@ export class LoginService {
       } else {
         return {
           success: false,
-          message: `User with email address '${loginDto.email}' does not exist!`,
+          message: `User with email address '${signInDto.email}' does not exist!`,
         };
       }
     }
-    if (loginDto.mobileNumber) {
+    if (signInDto.mobileNumber) {
       const user = await this.prisma.user.findUnique({
-        where: { mobileNumber: loginDto.mobileNumber },
+        where: { mobileNumber: signInDto.mobileNumber },
       });
       if (user) {
-        const result = await bcrypt.compare(loginDto.password, user.password);
+        const result = await bcrypt.compare(signInDto.password, user.password);
         if (result) {
           return { success: true, data: user };
         } else {
@@ -42,7 +42,7 @@ export class LoginService {
       } else {
         return {
           success: false,
-          message: `User with mobile number '${loginDto.mobileNumber}' does not exist!`,
+          message: `User with mobile number '${signInDto.mobileNumber}' does not exist!`,
         };
       }
     }
