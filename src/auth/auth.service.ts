@@ -1,15 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { SignInDto } from './dto/signIn.dto';
+import { SignUpDto } from './dto/signUp.dto';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const bcrypt = require('bcrypt');
+const saltRounds = 12;
 
 @Injectable()
 export class AuthService {
   constructor(private prisma: PrismaService) {}
 
-  async login(signInDto: SignInDto) {
+  async signIn(signInDto: SignInDto) {
     if (signInDto.email) {
       const user = await this.prisma.user.findUnique({
         where: { email: signInDto.email },
@@ -44,6 +46,22 @@ export class AuthService {
           success: false,
           message: `User with mobile number '${signInDto.mobileNumber}' does not exist!`,
         };
+      }
+    }
+  }
+
+  async signUp(signUpDto: SignUpDto) {
+    try {
+      const hash = await bcrypt.hash(signUpDto.password, saltRounds);
+      signUpDto.password = hash;
+      return await this.prisma.user.create({ data: signUpDto });
+    } catch (error) {
+      if ((error.code = 'P2002')) {
+        throw new BadRequestException(
+          'A user with these credentials already exists!',
+        );
+      } else {
+        throw new HttpException(error, 500);
       }
     }
   }
