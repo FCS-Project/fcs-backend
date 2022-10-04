@@ -4,9 +4,18 @@ import { UpdateDocumentDto } from './dto/update-document.dto';
 export declare class DocumentController {
     private readonly documentService;
     constructor(documentService: DocumentService);
-    create(createDocumentDto: CreateDocumentDto): Promise<import(".prisma/client").Document>;
+    create(createDocumentDto: CreateDocumentDto): Promise<import(".prisma/client").Document | {
+        success: boolean;
+        message: any;
+    }>;
     findAll(): Promise<import(".prisma/client").Document[]>;
-    findOne(id: string): Promise<import(".prisma/client").Document | import("@nestjs/common").HttpException>;
+    findOne(id: string): Promise<import("@nestjs/common").HttpException | import(".prisma/client").Document>;
     update(id: string, updateDocumentDto: UpdateDocumentDto): string;
-    remove(id: string): Promise<import(".prisma/client").Document | import("@nestjs/common").HttpException>;
+    remove(id: string): Promise<import("@nestjs/common").HttpException | {
+        success: boolean;
+        message?: undefined;
+    } | {
+        success: boolean;
+        message: string;
+    }>;
 }

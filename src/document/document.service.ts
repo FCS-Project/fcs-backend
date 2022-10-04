@@ -1,4 +1,4 @@
-import { BadRequestException, HttpException, Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateDocumentDto } from './dto/create-document.dto';
 import { UpdateDocumentDto } from './dto/update-document.dto';
@@ -10,13 +10,7 @@ export class DocumentService {
     try {
       return await this.prisma.document.create({ data: createDocumentDto });
     } catch (error) {
-      if (error.code == 'P2002') {
-        throw new BadRequestException(
-          'A user with these credentials already exists!',
-        );
-      } else {
-        throw new HttpException(error, 500);
-      }
+      return { success: false, message: error.message };
     }
   }
 
@@ -38,7 +32,12 @@ export class DocumentService {
 
   async remove(id: string) {
     try {
-      return await this.prisma.document.delete({ where: { id } });
+      const document = await this.prisma.document.delete({ where: { id } });
+      if (document) {
+        return { success: true };
+      } else {
+        return { success: false, message: 'This document does not exist' };
+      }
     } catch (error) {
       return new HttpException(error, 500);
     }

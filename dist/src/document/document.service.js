@@ -21,12 +21,8 @@ let DocumentService = class DocumentService {
             return await this.prisma.document.create({ data: createDocumentDto });
         }
         catch (error) {
-            if (error.code == 'P2002') {
-                throw new common_1.BadRequestException('A user with these credentials already exists!');
-            }
-            else {
-                throw new common_1.HttpException(error, 500);
-            }
+            return { success: false, message: error.message };
+            throw new common_1.HttpException(error, 500);
         }
     }
     async findAll() {
@@ -45,7 +41,13 @@ let DocumentService = class DocumentService {
     }
     async remove(id) {
         try {
-            return await this.prisma.document.delete({ where: { id } });
+            const document = await this.prisma.document.delete({ where: { id } });
+            if (document) {
+                return { success: true };
+            }
+            else {
+                return { success: false, message: 'This document does not exist' };
+            }
         }
         catch (error) {
             return new common_1.HttpException(error, 500);

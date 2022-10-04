@@ -17,10 +17,16 @@ let UserService = class UserService {
         this.prisma = prisma;
     }
     async findOne(id) {
-        const user = await this.prisma.user.findUnique({ where: { id } });
-        if (user != null)
-            return { success: true, data: user };
-        return { success: false, data: null };
+        try {
+            const user = await this.prisma.user.findUnique({ where: { id } });
+            if (user) {
+                return { success: true, data: user };
+            }
+            return { success: false, message: 'User does not exist!' };
+        }
+        catch (error) {
+            throw new common_1.HttpException(error, 500);
+        }
     }
     async update(id, updateUserDto) {
         try {
@@ -36,9 +42,15 @@ let UserService = class UserService {
     }
     async remove(id) {
         try {
-            return await this.prisma.user.delete({ where: { id } });
+            const user = await this.prisma.user.delete({ where: { id } });
+            if (user) {
+                return { success: true };
+            }
         }
         catch (error) {
+            if ((error.code = 'P2025')) {
+                return { success: false, message: 'User does not exist!' };
+            }
             throw new common_1.HttpException(error, 500);
         }
     }
