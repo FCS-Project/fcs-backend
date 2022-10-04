@@ -39,7 +39,7 @@ export class AuthService {
         if (result) {
           return { success: true, data: user };
         } else {
-          return { success: false, message: 'Invalid User Credentials!' };
+          throw new BadRequestException('Invalid User Credentials!');
         }
       } else {
         return {
