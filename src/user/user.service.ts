@@ -1,4 +1,4 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 
@@ -11,8 +11,9 @@ export class UserService {
       const user = await this.prisma.user.findUnique({ where: { id } });
       if (user) {
         return { success: true, data: user };
+      } else {
+        throw new BadRequestException('User does not exist!');
       }
-      return { success: false, message: 'User does not exist!' };
     } catch (error) {
       throw new HttpException(error, 500);
     }
@@ -26,7 +27,7 @@ export class UserService {
       });
       return { success: true, data: updatedData };
     } catch (error) {
-      return { success: false, message: 'User data could not be updated!' };
+      throw new HttpException(error, 500);
     }
   }
 
@@ -38,7 +39,7 @@ export class UserService {
       }
     } catch (error) {
       if ((error.code = 'P2025')) {
-        return { success: false, message: 'User does not exist!' };
+        throw new BadRequestException('User does not exist!');
       }
       throw new HttpException(error, 500);
     }

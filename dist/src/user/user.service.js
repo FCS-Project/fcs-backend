@@ -22,7 +22,9 @@ let UserService = class UserService {
             if (user) {
                 return { success: true, data: user };
             }
-            return { success: false, message: 'User does not exist!' };
+            else {
+                throw new common_1.BadRequestException('User does not exist!');
+            }
         }
         catch (error) {
             throw new common_1.HttpException(error, 500);
@@ -37,7 +39,7 @@ let UserService = class UserService {
             return { success: true, data: updatedData };
         }
         catch (error) {
-            return { success: false, message: 'User data could not be updated!' };
+            throw new common_1.HttpException(error, 500);
         }
     }
     async remove(id) {
@@ -49,7 +51,7 @@ let UserService = class UserService {
         }
         catch (error) {
             if ((error.code = 'P2025')) {
-                return { success: false, message: 'User does not exist!' };
+                throw new common_1.BadRequestException('User does not exist!');
             }
             throw new common_1.HttpException(error, 500);
         }

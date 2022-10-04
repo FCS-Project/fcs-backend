@@ -64,7 +64,8 @@ let AuthService = class AuthService {
         try {
             const hash = await bcrypt.hash(signUpDto.password, saltRounds);
             signUpDto.password = hash;
-            return await this.prisma.user.create({ data: signUpDto });
+            const user = await this.prisma.user.create({ data: signUpDto });
+            return { success: true, data: user };
         }
         catch (error) {
             if ((error.code = 'P2002')) {
@@ -72,7 +73,6 @@ let AuthService = class AuthService {
                     success: false,
                     message: 'A user with this email address already exists!',
                 };
-                throw new common_1.BadRequestException('A user with these credentials already exists!');
             }
             else {
                 throw new common_1.HttpException(error, 500);

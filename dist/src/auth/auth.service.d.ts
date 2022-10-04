@@ -13,8 +13,13 @@ export declare class AuthService {
         message: string;
         data?: undefined;
     }>;
-    signUp(signUpDto: SignUpDto): Promise<import(".prisma/client").User | {
+    signUp(signUpDto: SignUpDto): Promise<{
+        success: boolean;
+        data: import(".prisma/client").User;
+        message?: undefined;
+    } | {
         success: boolean;
         message: string;
+        data?: undefined;
     }>;
 }
