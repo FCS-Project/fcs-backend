@@ -54,7 +54,8 @@ export class AuthService {
     try {
       const hash = await bcrypt.hash(signUpDto.password, saltRounds);
       signUpDto.password = hash;
-      return await this.prisma.user.create({ data: signUpDto });
+      const user = await this.prisma.user.create({ data: signUpDto });
+      return { success: true, data: user };
     } catch (error) {
       if ((error.code = 'P2002')) {
         return {
