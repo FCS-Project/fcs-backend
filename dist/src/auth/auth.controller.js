@@ -36,7 +36,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "signIn", null);
 __decorate([
-    (0, common_1.Get)('signup'),
+    (0, common_1.Post)('signup'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [signUp_dto_1.SignUpDto]),

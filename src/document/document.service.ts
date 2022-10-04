@@ -1,6 +1,7 @@
 import { BadRequestException, HttpException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateDocumentDto } from './dto/create-document.dto';
+import { GetUserDocumentDto } from './dto/user-document.dto';
 
 @Injectable()
 export class DocumentService {
@@ -15,6 +16,12 @@ export class DocumentService {
 
   async findAll() {
     return this.prisma.document.findMany();
+  }
+
+  async findUserDocuments(getUserDocumentDto: GetUserDocumentDto) {
+    return this.prisma.document.findMany({
+      where: { userId: getUserDocumentDto.userId },
+    });
   }
 
   async findOne(id: string) {

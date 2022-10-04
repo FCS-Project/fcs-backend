@@ -21,22 +21,24 @@ let DocumentService = class DocumentService {
             return await this.prisma.document.create({ data: createDocumentDto });
         }
         catch (error) {
-            return { success: false, message: error.message };
+            throw new common_1.HttpException(error, 500);
         }
     }
     async findAll() {
         return this.prisma.document.findMany();
+    }
+    async findUserDocuments(getUserDocumentDto) {
+        return this.prisma.document.findMany({
+            where: { userId: getUserDocumentDto.userId },
+        });
     }
     async findOne(id) {
         try {
             return await this.prisma.document.findUnique({ where: { id } });
         }
         catch (error) {
-            return new common_1.HttpException(error, 500);
+            throw new common_1.HttpException(error, 500);
         }
-    }
-    update(id, updateDocumentDto) {
-        return `This action updates a #${id} document`;
     }
     async remove(id) {
         try {
@@ -45,11 +47,11 @@ let DocumentService = class DocumentService {
                 return { success: true };
             }
             else {
-                return { success: false, message: 'This document does not exist' };
+                throw new common_1.BadRequestException('Document does not exist!');
             }
         }
         catch (error) {
-            return new common_1.HttpException(error, 500);
+            throw new common_1.HttpException(error, 500);
         }
     }
 };

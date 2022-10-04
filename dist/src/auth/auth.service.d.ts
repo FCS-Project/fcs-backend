@@ -7,19 +7,9 @@ export declare class AuthService {
     signIn(signInDto: SignInDto): Promise<{
         success: boolean;
         data: import(".prisma/client").User;
-        message?: undefined;
-    } | {
-        success: boolean;
-        message: string;
-        data?: undefined;
     }>;
     signUp(signUpDto: SignUpDto): Promise<{
         success: boolean;
         data: import(".prisma/client").User;
-        message?: undefined;
-    } | {
-        success: boolean;
-        message: string;
-        data?: undefined;
     }>;
 }

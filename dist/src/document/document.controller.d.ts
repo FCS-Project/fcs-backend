@@ -1,21 +1,14 @@
 import { DocumentService } from './document.service';
 import { CreateDocumentDto } from './dto/create-document.dto';
-import { UpdateDocumentDto } from './dto/update-document.dto';
+import { GetUserDocumentDto } from './dto/user-document.dto';
 export declare class DocumentController {
     private readonly documentService;
     constructor(documentService: DocumentService);
-    create(createDocumentDto: CreateDocumentDto): Promise<import(".prisma/client").Document | {
-        success: boolean;
-        message: any;
-    }>;
+    create(createDocumentDto: CreateDocumentDto): Promise<import(".prisma/client").Document>;
     findAll(): Promise<import(".prisma/client").Document[]>;
-    findOne(id: string): Promise<import("@nestjs/common").HttpException | import(".prisma/client").Document>;
-    update(id: string, updateDocumentDto: UpdateDocumentDto): string;
-    remove(id: string): Promise<import("@nestjs/common").HttpException | {
+    findUserDocuments(getUserDocumentDto: GetUserDocumentDto): Promise<import(".prisma/client").Document[]>;
+    findOne(id: string): Promise<import(".prisma/client").Document>;
+    remove(id: string): Promise<{
         success: boolean;
-        message?: undefined;
-    } | {
-        success: boolean;
-        message: string;
     }>;
 }
