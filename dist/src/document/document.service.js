@@ -22,7 +22,6 @@ let DocumentService = class DocumentService {
         }
         catch (error) {
             return { success: false, message: error.message };
-            throw new common_1.HttpException(error, 500);
         }
     }
     async findAll() {

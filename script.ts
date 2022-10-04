@@ -4,10 +4,9 @@ const prisma = new PrismaClient();
 async function main() {
   // use this for testing related to database
   // run nodemon script.ts in terminal to run this file
-
-  const user = await prisma.user.create({
-    data: { name: 'xyz', email: 'xyz@gmail.com', password: 'xyz' },
-  });
+  // const user = await prisma.user.create({
+  //   data: { name: 'xyz', email: 'xyz@gmail.com', password: 'xyz' },
+  // });
 }
 
 main()

@@ -37,7 +37,7 @@ let UserService = class UserService {
             return { success: true, data: updatedData };
         }
         catch (error) {
-            throw new common_1.HttpException(error, 500);
+            return { success: false, message: 'User data could not be updated!' };
         }
     }
     async remove(id) {

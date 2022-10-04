@@ -15,6 +15,11 @@ export declare class UserService {
     update(id: string, updateUserDto: UpdateUserDto): Promise<{
         success: boolean;
         data: import(".prisma/client").User;
+        message?: undefined;
+    } | {
+        success: boolean;
+        message: string;
+        data?: undefined;
     }>;
     remove(id: string): Promise<{
         success: boolean;

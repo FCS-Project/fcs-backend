@@ -13,5 +13,8 @@ export declare class AuthController {
         message: string;
         data?: undefined;
     }>;
-    signUp(signUpDto: SignUpDto): Promise<import(".prisma/client").User>;
+    signUp(signUpDto: SignUpDto): Promise<import(".prisma/client").User | {
+        success: boolean;
+        message: string;
+    }>;
 }

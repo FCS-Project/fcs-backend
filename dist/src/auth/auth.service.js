@@ -68,6 +68,10 @@ let AuthService = class AuthService {
         }
         catch (error) {
             if ((error.code = 'P2002')) {
+                return {
+                    success: false,
+                    message: 'A user with this email address already exists!',
+                };
                 throw new common_1.BadRequestException('A user with these credentials already exists!');
             }
             else {
