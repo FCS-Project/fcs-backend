@@ -12,41 +12,45 @@ export class AuthService {
   constructor(private prisma: PrismaService) {}
 
   async signIn(signInDto: SignInDto) {
-    if (signInDto.email) {
-      const user = await this.prisma.user.findUnique({
-        where: { email: signInDto.email },
-      });
-      if (user) {
-        const result = await bcrypt.compare(signInDto.password, user.password);
-        if (result) {
-          return { success: true, data: user };
+    try {
+      if (signInDto.email) {
+        const user = await this.prisma.user.findUnique({
+          where: { email: signInDto.email },
+        });
+        if (user) {
+          const result = await bcrypt.compare(
+            signInDto.password,
+            user.password,
+          );
+          if (result) {
+            return { success: true, data: user };
+          } else {
+            throw new BadRequestException('Invalid User Credentials!');
+          }
         } else {
-          return { success: false, message: 'Invalid User Credentials!' };
+          throw new BadRequestException('User does not exist!');
         }
-      } else {
-        return {
-          success: false,
-          message: `User with email address '${signInDto.email}' does not exist!`,
-        };
       }
-    }
-    if (signInDto.mobileNumber) {
-      const user = await this.prisma.user.findUnique({
-        where: { mobileNumber: signInDto.mobileNumber },
-      });
-      if (user) {
-        const result = await bcrypt.compare(signInDto.password, user.password);
-        if (result) {
-          return { success: true, data: user };
+      if (signInDto.mobileNumber) {
+        const user = await this.prisma.user.findUnique({
+          where: { mobileNumber: signInDto.mobileNumber },
+        });
+        if (user) {
+          const result = await bcrypt.compare(
+            signInDto.password,
+            user.password,
+          );
+          if (result) {
+            return { success: true, data: user };
+          } else {
+            throw new BadRequestException('Invalid User Credentials!');
+          }
         } else {
-          throw new BadRequestException('Invalid User Credentials!');
+          throw new BadRequestException('User does not exist!');
         }
-      } else {
-        return {
-          success: false,
-          message: `User with mobile number '${signInDto.mobileNumber}' does not exist!`,
-        };
       }
+    } catch (error) {
+      throw new HttpException(error, 500);
     }
   }
 
