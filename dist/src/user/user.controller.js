@@ -23,6 +23,9 @@ let UserController = class UserController {
     findOne(id) {
         return this.userService.findOne(id);
     }
+    findDocuments(id) {
+        return this.userService.findDocuments(id);
+    }
     update(id, updateUserDto) {
         return this.userService.update(id, updateUserDto);
     }
@@ -40,6 +43,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "findOne", null);
+__decorate([
+    (0, common_1.Get)(':id/documents'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], UserController.prototype, "findDocuments", null);
 __decorate([
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id')),

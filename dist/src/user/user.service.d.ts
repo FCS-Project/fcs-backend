@@ -7,6 +7,7 @@ export declare class UserService {
         success: boolean;
         data: import(".prisma/client").User;
     }>;
+    findDocuments(id: string): Promise<import(".prisma/client").Document[]>;
     update(id: string, updateUserDto: UpdateUserDto): Promise<{
         success: boolean;
         data: import(".prisma/client").User;
