@@ -10,7 +10,7 @@ export class DocumentService {
     try {
       return await this.prisma.document.create({ data: createDocumentDto });
     } catch (error) {
-      if ((error.code = 'P2002')) {
+      if (error.code == 'P2002') {
         throw new BadRequestException(
           'A user with these credentials already exists!',
         );
@@ -21,7 +21,7 @@ export class DocumentService {
   }
 
   async findAll() {
-    return await this.prisma.document.findMany();
+    return this.prisma.document.findMany();
   }
 
   async findOne(id: string) {
