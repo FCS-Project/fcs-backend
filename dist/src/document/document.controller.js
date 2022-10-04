@@ -28,13 +28,13 @@ let DocumentController = class DocumentController {
         return this.documentService.findAll();
     }
     findOne(id) {
-        return this.documentService.findOne(+id);
+        return this.documentService.findOne(id);
     }
     update(id, updateDocumentDto) {
         return this.documentService.update(+id, updateDocumentDto);
     }
     remove(id) {
-        return this.documentService.remove(+id);
+        return this.documentService.remove(id);
     }
 };
 __decorate([

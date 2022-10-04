@@ -12,39 +12,26 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
-const bcrypt = require('bcrypt');
-const saltRounds = 12;
 let UserService = class UserService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    async create(createUserDto) {
-        try {
-            const hash = await bcrypt.hash(createUserDto.password, saltRounds);
-            createUserDto.password = hash;
-            return await this.prisma.user.create({ data: createUserDto });
-        }
-        catch (error) {
-            if ((error.code = 'P2002')) {
-                throw new common_1.BadRequestException('A user with these credentials already exists!');
-            }
-            else {
-                throw new common_1.HttpException(error, 500);
-            }
-        }
-    }
     async findOne(id) {
-        return await this.prisma.user.findUnique({ where: { id } });
+        const user = await this.prisma.user.findUnique({ where: { id } });
+        if (user != null)
+            return { success: true, data: user };
+        return { success: false, data: null };
     }
     async update(id, updateUserDto) {
         try {
-            return await this.prisma.user.update({
+            const updatedData = await this.prisma.user.update({
                 where: { id },
                 data: updateUserDto,
             });
+            return { success: true, data: updatedData };
         }
         catch (error) {
-            throw new common_1.HttpException('There was some error while updating the changes.', 500);
+            throw new common_1.HttpException(error, 500);
         }
     }
     async remove(id) {
@@ -52,7 +39,7 @@ let UserService = class UserService {
             return await this.prisma.user.delete({ where: { id } });
         }
         catch (error) {
-            throw new common_1.HttpException('There was some error while deleting the user.', 500);
+            throw new common_1.HttpException(error, 500);
         }
     }
     async getDocuments(id) {

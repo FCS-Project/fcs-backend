@@ -21,7 +21,7 @@ let DocumentService = class DocumentService {
             return await this.prisma.document.create({ data: createDocumentDto });
         }
         catch (error) {
-            if ((error.code = 'P2002')) {
+            if (error.code == 'P2002') {
                 throw new common_1.BadRequestException('A user with these credentials already exists!');
             }
             else {
@@ -29,17 +29,27 @@ let DocumentService = class DocumentService {
             }
         }
     }
-    findAll() {
-        return `This action returns all document`;
+    async findAll() {
+        return this.prisma.document.findMany();
     }
-    findOne(id) {
-        return `This action returns a #${id} document`;
+    async findOne(id) {
+        try {
+            return await this.prisma.document.findUnique({ where: { id } });
+        }
+        catch (error) {
+            return new common_1.HttpException(error, 500);
+        }
     }
     update(id, updateDocumentDto) {
         return `This action updates a #${id} document`;
     }
-    remove(id) {
-        return `This action removes a #${id} document`;
+    async remove(id) {
+        try {
+            return await this.prisma.document.delete({ where: { id } });
+        }
+        catch (error) {
+            return new common_1.HttpException(error, 500);
+        }
     }
 };
 DocumentService = __decorate([
