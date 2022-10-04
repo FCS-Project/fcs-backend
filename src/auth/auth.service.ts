@@ -1,4 +1,4 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { SignInDto } from './dto/signIn.dto';
 import { SignUpDto } from './dto/signUp.dto';
@@ -58,10 +58,9 @@ export class AuthService {
       return { success: true, data: user };
     } catch (error) {
       if ((error.code = 'P2002')) {
-        return {
-          success: false,
-          message: 'A user with this email address already exists!',
-        };
+        throw new BadRequestException(
+          'A user with this email address already exists!',
+        );
       } else {
         throw new HttpException(error, 500);
       }
