@@ -21,7 +21,7 @@ export class DocumentService {
     try {
       return await this.prisma.document.findUnique({ where: { id } });
     } catch (error) {
-      return new HttpException(error, 500);
+      throw new HttpException(error, 500);
     }
   }
 
@@ -34,7 +34,7 @@ export class DocumentService {
         throw new BadRequestException('Document does not exist!');
       }
     } catch (error) {
-      return new HttpException(error, 500);
+      throw new HttpException(error, 500);
     }
   }
 }
