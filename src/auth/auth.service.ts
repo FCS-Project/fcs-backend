@@ -61,7 +61,7 @@ export class AuthService {
       const user = await this.prisma.user.create({ data: signUpDto });
       return { success: true, data: user };
     } catch (error) {
-      if ((error.code = 'P2002')) {
+      if (error.code === 'P2002') {
         throw new BadRequestException(
           'A user with this email address already exists!',
         );
