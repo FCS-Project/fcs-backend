@@ -1,7 +1,9 @@
 import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { DocumentService } from './document.service';
 import { CreateDocumentDto } from './dto/create-document.dto';
 
+@ApiTags('Document')
 @Controller('document')
 export class DocumentController {
   constructor(private readonly documentService: DocumentService) {}
