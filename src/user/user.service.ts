@@ -19,7 +19,7 @@ export class UserService {
     }
   }
 
-  async findDocuments(id: string) {
+  async getUserDocuments(id: string) {
     try {
       const docs = await this.prisma.document.findMany({
         where: { userId: id },
@@ -54,17 +54,6 @@ export class UserService {
       if (error.code === 'P2025') {
         throw new BadRequestException('User does not exist!');
       }
-      throw new HttpException(error, 500);
-    }
-  }
-
-  async getDocuments(id: string) {
-    try {
-      return await this.prisma.user.findMany({
-        where: { id },
-        include: { Documents: true },
-      });
-    } catch (error) {
       throw new HttpException(error, 500);
     }
   }

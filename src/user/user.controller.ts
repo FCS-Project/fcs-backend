@@ -15,7 +15,7 @@ export class UserController {
 
   @Get(':id/documents')
   findDocuments(@Param('id') id: string) {
-    return this.userService.findDocuments(id);
+    return this.userService.getUserDocuments(id);
   }
 
   @Patch(':id')
@@ -26,10 +26,5 @@ export class UserController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.userService.remove(id);
-  }
-
-  @Get('documents')
-  getDocuments(@Param('id') id: string) {
-    return this.userService.getDocuments(id);
   }
 }
