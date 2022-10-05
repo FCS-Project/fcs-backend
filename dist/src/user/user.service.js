@@ -31,7 +31,12 @@ let UserService = class UserService {
         }
     }
     async findDocuments(id) {
-        return await this.prisma.document.findMany({ where: { userId: id } });
+        try {
+            return await this.prisma.document.findMany({ where: { userId: id } });
+        }
+        catch (error) {
+            throw new common_1.HttpException(error, 500);
+        }
     }
     async update(id, updateUserDto) {
         try {
