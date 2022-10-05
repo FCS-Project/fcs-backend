@@ -27,11 +27,6 @@ let DocumentService = class DocumentService {
     async findAll() {
         return this.prisma.document.findMany();
     }
-    async findUserDocuments(getUserDocumentDto) {
-        return this.prisma.document.findMany({
-            where: { userId: getUserDocumentDto.userId },
-        });
-    }
     async findOne(id) {
         try {
             return await this.prisma.document.findUnique({ where: { id } });

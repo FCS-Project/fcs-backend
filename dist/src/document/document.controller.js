@@ -16,7 +16,6 @@ exports.DocumentController = void 0;
 const common_1 = require("@nestjs/common");
 const document_service_1 = require("./document.service");
 const create_document_dto_1 = require("./dto/create-document.dto");
-const user_document_dto_1 = require("./dto/user-document.dto");
 let DocumentController = class DocumentController {
     constructor(documentService) {
         this.documentService = documentService;
@@ -26,9 +25,6 @@ let DocumentController = class DocumentController {
     }
     findAll() {
         return this.documentService.findAll();
-    }
-    findUserDocuments(getUserDocumentDto) {
-        return this.documentService.findUserDocuments(getUserDocumentDto);
     }
     findOne(id) {
         return this.documentService.findOne(id);
@@ -50,13 +46,6 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], DocumentController.prototype, "findAll", null);
-__decorate([
-    (0, common_1.Get)(),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [user_document_dto_1.GetUserDocumentDto]),
-    __metadata("design:returntype", void 0)
-], DocumentController.prototype, "findUserDocuments", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
