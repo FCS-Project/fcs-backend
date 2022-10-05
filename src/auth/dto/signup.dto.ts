@@ -26,6 +26,6 @@ export class SignUpDto {
 
   @IsString()
   @IsOptional()
-  @ApiProperty({ required: false })
+  @ApiProperty({ required: false, default: 'Basic' })
   role: Role;
 }
