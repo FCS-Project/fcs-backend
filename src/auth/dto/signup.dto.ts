@@ -1,6 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Role } from '@prisma/client';
-import { IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  Length,
+} from 'class-validator';
 
 export class SignUpDto {
   @IsString()
@@ -21,6 +27,7 @@ export class SignUpDto {
 
   @IsString()
   @IsOptional()
+  @Length(10)
   @ApiProperty({ required: false })
   mobileNumber: string;
 

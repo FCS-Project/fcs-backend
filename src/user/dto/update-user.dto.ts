@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString, Length } from 'class-validator';
 import { Role } from '@prisma/client';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -19,6 +19,7 @@ export class UpdateUserDto {
   password: string;
 
   @IsString()
+  @Length(10)
   @IsOptional()
   @ApiProperty({ required: false })
   mobileNumber: string;

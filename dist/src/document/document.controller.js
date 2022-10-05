@@ -14,6 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DocumentController = void 0;
 const common_1 = require("@nestjs/common");
+const swagger_1 = require("@nestjs/swagger");
 const document_service_1 = require("./document.service");
 const create_document_dto_1 = require("./dto/create-document.dto");
 let DocumentController = class DocumentController {
@@ -61,6 +62,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], DocumentController.prototype, "remove", null);
 DocumentController = __decorate([
+    (0, swagger_1.ApiTags)('Document'),
     (0, common_1.Controller)('document'),
     __metadata("design:paramtypes", [document_service_1.DocumentService])
 ], DocumentController);
