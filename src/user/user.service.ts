@@ -46,7 +46,7 @@ export class UserService {
         return { success: true };
       }
     } catch (error) {
-      if ((error.code = 'P2025')) {
+      if (error.code === 'P2025') {
         throw new BadRequestException('User does not exist!');
       }
       throw new HttpException(error, 500);
@@ -54,9 +54,13 @@ export class UserService {
   }
 
   async getDocuments(id: string) {
-    return await this.prisma.user.findMany({
-      where: { id },
-      include: { Documents: true },
-    });
+    try {
+      return await this.prisma.user.findMany({
+        where: { id },
+        include: { Documents: true },
+      });
+    } catch (error) {
+      throw new HttpException(error, 500);
+    }
   }
 }
