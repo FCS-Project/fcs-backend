@@ -32,7 +32,12 @@ let UserService = class UserService {
     }
     async findDocuments(id) {
         try {
-            return await this.prisma.document.findMany({ where: { userId: id } });
+            const docs = await this.prisma.document.findMany({
+                where: { userId: id },
+            });
+            if (docs) {
+                return { success: true, data: docs };
+            }
         }
         catch (error) {
             throw new common_1.HttpException(error, 500);
@@ -58,17 +63,22 @@ let UserService = class UserService {
             }
         }
         catch (error) {
-            if ((error.code = 'P2025')) {
+            if (error.code === 'P2025') {
                 throw new common_1.BadRequestException('User does not exist!');
             }
             throw new common_1.HttpException(error, 500);
         }
     }
     async getDocuments(id) {
-        return await this.prisma.user.findMany({
-            where: { id },
-            include: { Documents: true },
-        });
+        try {
+            return await this.prisma.user.findMany({
+                where: { id },
+                include: { Documents: true },
+            });
+        }
+        catch (error) {
+            throw new common_1.HttpException(error, 500);
+        }
     }
 };
 UserService = __decorate([

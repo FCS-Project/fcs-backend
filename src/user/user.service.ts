@@ -21,7 +21,12 @@ export class UserService {
 
   async findDocuments(id: string) {
     try {
-      return await this.prisma.document.findMany({ where: { userId: id } });
+      const docs = await this.prisma.document.findMany({
+        where: { userId: id },
+      });
+      if (docs) {
+        return { success: true, data: docs };
+      }
     } catch (error) {
       throw new HttpException(error, 500);
     }
