@@ -27,7 +27,18 @@ let AuthService = class AuthService {
                 if (user) {
                     const result = await bcrypt.compare(signInDto.password, user.password);
                     if (result) {
-                        return { success: true, data: user };
+                        const data = await this.prisma.user.findUnique({
+                            where: { email: signInDto.email },
+                            select: {
+                                name: true,
+                                email: true,
+                                mobileNumber: true,
+                                role: true,
+                                Documents: true,
+                                createdAt: true,
+                            },
+                        });
+                        return { success: true, data: data };
                     }
                     else {
                         throw new common_1.BadRequestException('Invalid User Credentials!');
@@ -63,7 +74,17 @@ let AuthService = class AuthService {
         try {
             const hash = await bcrypt.hash(signUpDto.password, saltRounds);
             signUpDto.password = hash;
-            const user = await this.prisma.user.create({ data: signUpDto });
+            const user = await this.prisma.user.create({
+                data: signUpDto,
+                select: {
+                    name: true,
+                    email: true,
+                    mobileNumber: true,
+                    role: true,
+                    Documents: true,
+                    createdAt: true,
+                },
+            });
             return { success: true, data: user };
         }
         catch (error) {

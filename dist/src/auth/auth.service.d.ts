@@ -6,10 +6,27 @@ export declare class AuthService {
     constructor(prisma: PrismaService);
     signIn(signInDto: SignInDto): Promise<{
         success: boolean;
+        data: {
+            email: string;
+            name: string;
+            mobileNumber: string;
+            role: import(".prisma/client").Role;
+            Documents: import(".prisma/client").Document[];
+            createdAt: Date;
+        };
+    } | {
+        success: boolean;
         data: import(".prisma/client").User;
     }>;
     signUp(signUpDto: SignUpDto): Promise<{
         success: boolean;
-        data: import(".prisma/client").User;
+        data: {
+            email: string;
+            name: string;
+            mobileNumber: string;
+            role: import(".prisma/client").Role;
+            Documents: import(".prisma/client").Document[];
+            createdAt: Date;
+        };
     }>;
 }
