@@ -2,6 +2,8 @@ import { Controller, Get, Body, Patch, Param, Delete } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { Role } from '@prisma/client';
+import { Roles } from 'src/roles.decorator';
 
 @ApiTags('User')
 @Controller('user')
@@ -9,6 +11,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get(':id')
+  @Roles(Role.ADMIN)
   findOne(@Param('id') id: string) {
     return this.userService.findOne(id);
   }
