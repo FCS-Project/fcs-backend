@@ -26,6 +26,7 @@ export class AuthService {
             const data = await this.prisma.user.findUnique({
               where: { email: signInDto.email },
               select: {
+                id: true,
                 name: true,
                 email: true,
                 mobileNumber: true,
@@ -71,6 +72,7 @@ export class AuthService {
       const user = await this.prisma.user.create({
         data: signUpDto,
         select: {
+          id: true,
           name: true,
           email: true,
           mobileNumber: true,
