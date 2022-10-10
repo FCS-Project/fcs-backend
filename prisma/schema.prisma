@@ -16,7 +16,7 @@ model User {
   email        String     @unique
   password     String
   mobileNumber String?    @unique
-  roles         Role[]     
+  roles        Role[]
   Documents    Document[]
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
