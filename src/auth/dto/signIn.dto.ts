@@ -4,12 +4,13 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
-  Length,
+  MaxLength,
+  MinLength,
 } from 'class-validator';
 
 export class SignInDto {
-  @IsString()
   @IsOptional()
+  @IsString()
   @IsEmail()
   @ApiProperty({ required: false })
   email: string;
@@ -19,9 +20,10 @@ export class SignInDto {
   @ApiProperty()
   password: string;
 
-  @IsString()
-  @Length(10)
   @IsOptional()
+  @IsString()
+  @MinLength(10)
+  @MaxLength(10)
   @ApiProperty({ required: false })
   mobileNumber: string;
 }

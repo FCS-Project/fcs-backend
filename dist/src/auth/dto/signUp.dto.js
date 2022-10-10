@@ -35,15 +35,16 @@ __decorate([
     __metadata("design:type", String)
 ], SignUpDto.prototype, "password", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.Length)(10),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.MinLength)(10),
+    (0, class_validator_1.MaxLength)(10),
     (0, swagger_1.ApiProperty)({ required: false }),
     __metadata("design:type", String)
 ], SignUpDto.prototype, "mobileNumber", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
     (0, swagger_1.ApiProperty)({ required: false }),
     __metadata("design:type", String)
 ], SignUpDto.prototype, "role", void 0);

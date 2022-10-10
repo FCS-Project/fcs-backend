@@ -15,8 +15,8 @@ const class_validator_1 = require("class-validator");
 class SignInDto {
 }
 __decorate([
-    (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsEmail)(),
     (0, swagger_1.ApiProperty)({ required: false }),
     __metadata("design:type", String)
@@ -28,9 +28,10 @@ __decorate([
     __metadata("design:type", String)
 ], SignInDto.prototype, "password", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.Length)(10),
     (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.MinLength)(10),
+    (0, class_validator_1.MaxLength)(10),
     (0, swagger_1.ApiProperty)({ required: false }),
     __metadata("design:type", String)
 ], SignInDto.prototype, "mobileNumber", void 0);
