@@ -7,6 +7,7 @@ async function main() {
   // const user = await prisma.user.create({
   //   data: { name: 'xyz', email: 'xyz@gmail.com', password: 'xyz' },
   // });
+  // console.log(user);
 }
 
 main()

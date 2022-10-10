@@ -25,16 +25,13 @@ let UserController = class UserController {
         return this.userService.findOne(id);
     }
     findDocuments(id) {
-        return this.userService.findDocuments(id);
+        return this.userService.getUserDocuments(id);
     }
     update(id, updateUserDto) {
         return this.userService.update(id, updateUserDto);
     }
     remove(id) {
         return this.userService.remove(id);
-    }
-    getDocuments(id) {
-        return this.userService.getDocuments(id);
     }
 };
 __decorate([
@@ -66,13 +63,6 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "remove", null);
-__decorate([
-    (0, common_1.Get)('documents'),
-    __param(0, (0, common_1.Param)('id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], UserController.prototype, "getDocuments", null);
 UserController = __decorate([
     (0, swagger_1.ApiTags)('User'),
     (0, common_1.Controller)('user'),

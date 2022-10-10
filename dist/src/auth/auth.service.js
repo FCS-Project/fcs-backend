@@ -20,7 +20,7 @@ let AuthService = class AuthService {
     }
     async signIn(signInDto) {
         try {
-            if (signInDto.email) {
+            if (signInDto.email != '') {
                 const user = await this.prisma.user.findUnique({
                     where: { email: signInDto.email },
                 });
@@ -37,7 +37,7 @@ let AuthService = class AuthService {
                     throw new common_1.BadRequestException('User does not exist!');
                 }
             }
-            if (signInDto.mobileNumber) {
+            else {
                 const user = await this.prisma.user.findUnique({
                     where: { mobileNumber: signInDto.mobileNumber },
                 });

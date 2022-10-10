@@ -18,7 +18,4 @@ export declare class UserController {
     remove(id: string): Promise<{
         success: boolean;
     }>;
-    getDocuments(id: string): Promise<(import(".prisma/client").User & {
-        Documents: import(".prisma/client").Document[];
-    })[]>;
 }

@@ -7,7 +7,7 @@ export declare class UserService {
         success: boolean;
         data: import(".prisma/client").User;
     }>;
-    findDocuments(id: string): Promise<{
+    getUserDocuments(id: string): Promise<{
         success: boolean;
         data: import(".prisma/client").Document[];
     }>;
@@ -18,7 +18,4 @@ export declare class UserService {
     remove(id: string): Promise<{
         success: boolean;
     }>;
-    getDocuments(id: string): Promise<(import(".prisma/client").User & {
-        Documents: import(".prisma/client").Document[];
-    })[]>;
 }
