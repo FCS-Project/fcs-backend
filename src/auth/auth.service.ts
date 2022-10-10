@@ -23,7 +23,18 @@ export class AuthService {
             user.password,
           );
           if (result) {
-            return { success: true, data: user };
+            const data = await this.prisma.user.findUnique({
+              where: { email: signInDto.email },
+              select: {
+                name: true,
+                email: true,
+                mobileNumber: true,
+                role: true,
+                Documents: true,
+                createdAt: true,
+              },
+            });
+            return { success: true, data: data };
           } else {
             throw new BadRequestException('Invalid User Credentials!');
           }
