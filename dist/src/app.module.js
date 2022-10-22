@@ -16,6 +16,7 @@ const prisma_module_1 = require("./prisma/prisma.module");
 const auth_module_1 = require("./auth/auth.module");
 const core_1 = require("@nestjs/core");
 const roles_guard_1 = require("./roles.guard");
+const guards_1 = require("./common/guards");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -26,6 +27,10 @@ AppModule = __decorate([
             {
                 provide: core_1.APP_GUARD,
                 useClass: roles_guard_1.RolesGuard,
+            },
+            {
+                provide: core_1.APP_GUARD,
+                useClass: guards_1.AtGuard,
             },
         ],
         imports: [user_module_1.UserModule, document_module_1.DocumentModule, prisma_module_1.PrismaModule, auth_module_1.AuthModule],
