@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SignUpDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
-const client_1 = require("@prisma/client");
 const class_validator_1 = require("class-validator");
 class SignUpDto {
 }
@@ -44,9 +43,8 @@ __decorate([
 ], SignUpDto.prototype, "mobileNumber", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsString)(),
     (0, swagger_1.ApiProperty)({ required: false }),
-    __metadata("design:type", String)
-], SignUpDto.prototype, "role", void 0);
+    __metadata("design:type", Array)
+], SignUpDto.prototype, "roles", void 0);
 exports.SignUpDto = SignUpDto;
 //# sourceMappingURL=signUp.dto.js.map

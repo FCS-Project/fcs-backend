@@ -7,11 +7,11 @@ export declare class AuthService {
     signIn(signInDto: SignInDto): Promise<{
         success: boolean;
         data: {
-            id: string;
             name: string;
             email: string;
             mobileNumber: string;
             roles: import(".prisma/client").Role[];
+            id: string;
             Documents: import(".prisma/client").Document[];
             createdAt: Date;
         };
@@ -22,11 +22,11 @@ export declare class AuthService {
     signUp(signUpDto: SignUpDto): Promise<{
         success: boolean;
         data: {
-            id: string;
             name: string;
             email: string;
             mobileNumber: string;
             roles: import(".prisma/client").Role[];
+            id: string;
             Documents: import(".prisma/client").Document[];
             createdAt: Date;
         };

@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Role } from '@prisma/client';
 import {
+  IsArray,
   IsEmail,
   IsNotEmpty,
   IsOptional,
@@ -34,7 +35,7 @@ export class SignUpDto {
   mobileNumber: string;
 
   @IsOptional()
-  @IsString()
+  @IsArray()
   @ApiProperty({ required: false })
-  role: Role;
+  roles: Role[];
 }
