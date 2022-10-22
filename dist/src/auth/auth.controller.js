@@ -31,10 +31,11 @@ let AuthController = class AuthController {
     }
     logout(req) {
         const user = req.user;
-        return this.authService.logout(user['id']);
+        return this.authService.logout(user['sub']);
     }
-    refreshToken() {
-        return this.authService.refreshToken();
+    refreshToken(req) {
+        const user = req.user;
+        return this.authService.refreshToken(user['sub'], user['hashedRt']);
     }
 };
 __decorate([
@@ -63,8 +64,10 @@ __decorate([
 __decorate([
     (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt-refresh')),
     (0, common_1.Post)('refresh'),
+    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
+    __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "refreshToken", null);
 AuthController = __decorate([

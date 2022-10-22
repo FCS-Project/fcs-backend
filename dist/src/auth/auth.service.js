@@ -131,8 +131,22 @@ let AuthService = class AuthService {
             },
         });
     }
-    refreshToken() {
-        return 'hi';
+    async refreshToken(userId, rt) {
+        const user = await this.prisma.user.findUnique({
+            where: {
+                id: userId,
+            },
+        });
+        if (!user) {
+            throw new common_1.ForbiddenException('Access Denied');
+        }
+        const rtMatches = await bcrypt.compare(rt, user.hashedRt);
+        if (!rtMatches) {
+            throw new common_1.ForbiddenException('Access Denied');
+        }
+        const tokens = await this.getTokens(user.id, user.email, user.roles);
+        await this.updateRtHash(user.id, tokens.refresh_token);
+        return tokens;
     }
 };
 AuthService = __decorate([

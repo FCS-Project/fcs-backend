@@ -9,5 +9,8 @@ export declare class AuthController {
     signIn(signInDto: SignInDto): Promise<Tokens>;
     signUp(signUpDto: SignUpDto): Promise<Tokens>;
     logout(req: Request): Promise<void>;
-    refreshToken(): string;
+    refreshToken(req: Request): Promise<{
+        access_token: string;
+        refresh_token: string;
+    }>;
 }

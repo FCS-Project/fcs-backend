@@ -1,4 +1,9 @@
-import { BadRequestException, HttpException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ForbiddenException,
+  HttpException,
+  Injectable,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { SignInDto } from './dto/signIn.dto';
 import { SignUpDto } from './dto/signUp.dto';
@@ -143,7 +148,21 @@ export class AuthService {
     });
   }
 
-  refreshToken() {
-    return 'hi';
+  async refreshToken(userId: string, rt: string) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+    if (!user) {
+      throw new ForbiddenException('Access Denied');
+    }
+    const rtMatches = await bcrypt.compare(rt, user.hashedRt);
+    if (!rtMatches) {
+      throw new ForbiddenException('Access Denied');
+    }
+    const tokens = await this.getTokens(user.id, user.email, user.roles);
+    await this.updateRtHash(user.id, tokens.refresh_token);
+    return tokens;
   }
 }
