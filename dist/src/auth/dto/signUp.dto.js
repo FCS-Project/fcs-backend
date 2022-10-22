@@ -43,6 +43,7 @@ __decorate([
 ], SignUpDto.prototype, "mobileNumber", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsArray)(),
     (0, swagger_1.ApiProperty)({ required: false }),
     __metadata("design:type", Array)
 ], SignUpDto.prototype, "roles", void 0);

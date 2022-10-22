@@ -13,10 +13,47 @@ exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
 const bcrypt = require("bcrypt");
+const jwt_1 = require("@nestjs/jwt");
 const saltRounds = 12;
 let AuthService = class AuthService {
-    constructor(prisma) {
+    constructor(prisma, jwtService) {
         this.prisma = prisma;
+        this.jwtService = jwtService;
+    }
+    async updateRtHash(userId, rt) {
+        const hash = await bcrypt.hash(rt, saltRounds);
+        await this.prisma.user.update({
+            where: {
+                id: userId,
+            },
+            data: {
+                hashedRt: hash,
+            },
+        });
+    }
+    async getTokens(userId, email, roles) {
+        const [at, rt] = await Promise.all([
+            this.jwtService.signAsync({
+                sub: userId,
+                email: email,
+                roles: roles,
+            }, {
+                secret: 'at-secret',
+                expiresIn: 60 * 15,
+            }),
+            this.jwtService.signAsync({
+                sub: userId,
+                email: email,
+                roles: roles,
+            }, {
+                secret: 'rt-secret',
+                expiresIn: 60 * 60 * 24 * 7,
+            }),
+        ]);
+        return {
+            access_token: at,
+            refresh_token: rt,
+        };
     }
     async signIn(signInDto) {
         try {
@@ -27,19 +64,9 @@ let AuthService = class AuthService {
                 if (user) {
                     const result = await bcrypt.compare(signInDto.password, user.password);
                     if (result) {
-                        const data = await this.prisma.user.findUnique({
-                            where: { email: signInDto.email },
-                            select: {
-                                id: true,
-                                name: true,
-                                email: true,
-                                mobileNumber: true,
-                                roles: true,
-                                Documents: true,
-                                createdAt: true,
-                            },
-                        });
-                        return { success: true, data: data };
+                        const tokens = await this.getTokens(user.id, user.email, user.roles);
+                        await this.updateRtHash(user.id, tokens.refresh_token);
+                        return tokens;
                     }
                     else {
                         throw new common_1.BadRequestException('Invalid User Credentials!');
@@ -56,7 +83,9 @@ let AuthService = class AuthService {
                 if (user) {
                     const result = await bcrypt.compare(signInDto.password, user.password);
                     if (result) {
-                        return { success: true, data: user };
+                        const tokens = await this.getTokens(user.id, user.email, user.roles);
+                        await this.updateRtHash(user.id, tokens.refresh_token);
+                        return tokens;
                     }
                     else {
                         throw new common_1.BadRequestException('Invalid User Credentials!');
@@ -77,17 +106,10 @@ let AuthService = class AuthService {
             signUpDto.password = hash;
             const user = await this.prisma.user.create({
                 data: signUpDto,
-                select: {
-                    id: true,
-                    name: true,
-                    email: true,
-                    mobileNumber: true,
-                    roles: true,
-                    Documents: true,
-                    createdAt: true,
-                },
             });
-            return { success: true, data: user };
+            const tokens = await this.getTokens(user.id, user.email, user.roles);
+            await this.updateRtHash(user.id, tokens.refresh_token);
+            return tokens;
         }
         catch (error) {
             if (error.code === 'P2002') {
@@ -98,10 +120,16 @@ let AuthService = class AuthService {
             }
         }
     }
+    logout() {
+        return 'hi';
+    }
+    refreshToken() {
+        return 'hi';
+    }
 };
 AuthService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [prisma_service_1.PrismaService])
+    __metadata("design:paramtypes", [prisma_service_1.PrismaService, jwt_1.JwtService])
 ], AuthService);
 exports.AuthService = AuthService;
 //# sourceMappingURL=auth.service.js.map

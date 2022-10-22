@@ -3,14 +3,60 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { SignInDto } from './dto/signIn.dto';
 import { SignUpDto } from './dto/signUp.dto';
 import * as bcrypt from 'bcrypt';
+import { Tokens } from './types';
+import { Role } from '@prisma/client';
+import { JwtService } from '@nestjs/jwt';
 
 const saltRounds = 12;
 
 @Injectable()
 export class AuthService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService, private jwtService: JwtService) {}
 
-  async signIn(signInDto: SignInDto) {
+  async updateRtHash(userId: string, rt: string) {
+    const hash = await bcrypt.hash(rt, saltRounds);
+    await this.prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        hashedRt: hash,
+      },
+    });
+  }
+
+  async getTokens(userId: string, email: string, roles: Role[]) {
+    const [at, rt] = await Promise.all([
+      this.jwtService.signAsync(
+        {
+          sub: userId,
+          email: email,
+          roles: roles,
+        },
+        {
+          secret: 'at-secret',
+          expiresIn: 60 * 15,
+        },
+      ),
+      this.jwtService.signAsync(
+        {
+          sub: userId,
+          email: email,
+          roles: roles,
+        },
+        {
+          secret: 'rt-secret',
+          expiresIn: 60 * 60 * 24 * 7,
+        },
+      ),
+    ]);
+    return {
+      access_token: at,
+      refresh_token: rt,
+    };
+  }
+
+  async signIn(signInDto: SignInDto): Promise<Tokens> {
     try {
       if (signInDto.email != '') {
         const user = await this.prisma.user.findUnique({
@@ -22,19 +68,13 @@ export class AuthService {
             user.password,
           );
           if (result) {
-            const data = await this.prisma.user.findUnique({
-              where: { email: signInDto.email },
-              select: {
-                id: true,
-                name: true,
-                email: true,
-                mobileNumber: true,
-                roles: true,
-                Documents: true,
-                createdAt: true,
-              },
-            });
-            return { success: true, data: data };
+            const tokens = await this.getTokens(
+              user.id,
+              user.email,
+              user.roles,
+            );
+            await this.updateRtHash(user.id, tokens.refresh_token);
+            return tokens;
           } else {
             throw new BadRequestException('Invalid User Credentials!');
           }
@@ -51,7 +91,13 @@ export class AuthService {
             user.password,
           );
           if (result) {
-            return { success: true, data: user };
+            const tokens = await this.getTokens(
+              user.id,
+              user.email,
+              user.roles,
+            );
+            await this.updateRtHash(user.id, tokens.refresh_token);
+            return tokens;
           } else {
             throw new BadRequestException('Invalid User Credentials!');
           }
@@ -64,23 +110,16 @@ export class AuthService {
     }
   }
 
-  async signUp(signUpDto: SignUpDto) {
+  async signUp(signUpDto: SignUpDto): Promise<Tokens> {
     try {
       const hash = await bcrypt.hash(signUpDto.password, saltRounds);
       signUpDto.password = hash;
       const user = await this.prisma.user.create({
         data: signUpDto,
-        select: {
-          id: true,
-          name: true,
-          email: true,
-          mobileNumber: true,
-          roles: true,
-          Documents: true,
-          createdAt: true,
-        },
       });
-      return { success: true, data: user };
+      const tokens = await this.getTokens(user.id, user.email, user.roles);
+      await this.updateRtHash(user.id, tokens.refresh_token);
+      return tokens;
     } catch (error) {
       if (error.code === 'P2002') {
         throw new BadRequestException(
@@ -90,5 +129,13 @@ export class AuthService {
         throw new HttpException(error, 500);
       }
     }
+  }
+
+  logout() {
+    return 'hi';
+  }
+
+  refreshToken() {
+    return 'hi';
   }
 }

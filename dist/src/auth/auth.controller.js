@@ -28,21 +28,39 @@ let AuthController = class AuthController {
     signUp(signUpDto) {
         return this.authService.signUp(signUpDto);
     }
+    logout() {
+        return this.authService.logout();
+    }
+    refreshToken() {
+        return this.authService.refreshToken();
+    }
 };
 __decorate([
     (0, common_1.Post)('signin'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [signIn_dto_1.SignInDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], AuthController.prototype, "signIn", null);
 __decorate([
     (0, common_1.Post)('signup'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [signUp_dto_1.SignUpDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], AuthController.prototype, "signUp", null);
+__decorate([
+    (0, common_1.Post)('logout'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "logout", null);
+__decorate([
+    (0, common_1.Post)('refresh'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "refreshToken", null);
 AuthController = __decorate([
     (0, swagger_1.ApiTags)('Auth'),
     (0, common_1.Controller)('auth'),
