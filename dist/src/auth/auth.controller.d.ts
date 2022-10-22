@@ -2,15 +2,11 @@ import { AuthService } from './auth.service';
 import { SignUpDto } from './dto/signUp.dto';
 import { SignInDto } from './dto/signIn.dto';
 import { Tokens } from './types';
-import { Request } from 'express';
 export declare class AuthController {
     private readonly authService;
     constructor(authService: AuthService);
     signIn(signInDto: SignInDto): Promise<Tokens>;
     signUp(signUpDto: SignUpDto): Promise<Tokens>;
-    logout(req: Request): Promise<void>;
-    refreshToken(req: Request): Promise<{
-        access_token: string;
-        refresh_token: string;
-    }>;
+    logout(userId: string): Promise<void>;
+    refreshToken(userId: string, refreshToken: string): Promise<Tokens>;
 }

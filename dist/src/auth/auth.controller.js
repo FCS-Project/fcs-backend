@@ -18,7 +18,9 @@ const auth_service_1 = require("./auth.service");
 const signUp_dto_1 = require("./dto/signUp.dto");
 const swagger_1 = require("@nestjs/swagger");
 const signIn_dto_1 = require("./dto/signIn.dto");
-const passport_1 = require("@nestjs/passport");
+const guards_1 = require("../common/guards");
+const decorators_1 = require("../common/decorators");
+const get_current_user_decorator_1 = require("../common/decorators/get-current-user.decorator");
 let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
@@ -29,13 +31,11 @@ let AuthController = class AuthController {
     signUp(signUpDto) {
         return this.authService.signUp(signUpDto);
     }
-    logout(req) {
-        const user = req.user;
-        return this.authService.logout(user['sub']);
+    logout(userId) {
+        return this.authService.logout(userId);
     }
-    refreshToken(req) {
-        const user = req.user;
-        return this.authService.refreshToken(user['sub'], user['hashedRt']);
+    refreshToken(userId, refreshToken) {
+        return this.authService.refreshToken(userId, refreshToken);
     }
 };
 __decorate([
@@ -53,22 +53,22 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "signUp", null);
 __decorate([
-    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
     (0, common_1.Post)('logout'),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
-    __param(0, (0, common_1.Req)()),
+    __param(0, (0, decorators_1.GetCurrentUserId)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "logout", null);
 __decorate([
-    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt-refresh')),
+    (0, common_1.UseGuards)(guards_1.RtGuard),
     (0, common_1.Post)('refresh'),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
-    __param(0, (0, common_1.Req)()),
+    __param(0, (0, decorators_1.GetCurrentUserId)()),
+    __param(1, (0, get_current_user_decorator_1.GetCurrentUser)('refreshToken')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:returntype", Promise)
 ], AuthController.prototype, "refreshToken", null);
 AuthController = __decorate([
     (0, swagger_1.ApiTags)('Auth'),
