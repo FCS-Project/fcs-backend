@@ -14,12 +14,20 @@ const user_module_1 = require("./user/user.module");
 const document_module_1 = require("./document/document.module");
 const prisma_module_1 = require("./prisma/prisma.module");
 const auth_module_1 = require("./auth/auth.module");
+const core_1 = require("@nestjs/core");
+const roles_guard_1 = require("./roles.guard");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
         controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService],
+        providers: [
+            app_service_1.AppService,
+            {
+                provide: core_1.APP_GUARD,
+                useClass: roles_guard_1.RolesGuard,
+            },
+        ],
         imports: [user_module_1.UserModule, document_module_1.DocumentModule, prisma_module_1.PrismaModule, auth_module_1.AuthModule],
     })
 ], AppModule);

@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 const saltRounds = 12;
 let AuthService = class AuthService {
     constructor(prisma) {
@@ -30,6 +30,7 @@ let AuthService = class AuthService {
                         const data = await this.prisma.user.findUnique({
                             where: { email: signInDto.email },
                             select: {
+                                id: true,
                                 name: true,
                                 email: true,
                                 mobileNumber: true,
@@ -77,6 +78,7 @@ let AuthService = class AuthService {
             const user = await this.prisma.user.create({
                 data: signUpDto,
                 select: {
+                    id: true,
                     name: true,
                     email: true,
                     mobileNumber: true,
