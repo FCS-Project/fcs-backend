@@ -4,7 +4,6 @@ import {
   HttpCode,
   HttpStatus,
   Post,
-  Req,
   UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
@@ -12,9 +11,7 @@ import { SignUpDto } from './dto/signUp.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { SignInDto } from './dto/signIn.dto';
 import { Tokens } from './types';
-import { AuthGuard } from '@nestjs/passport';
-import { Request } from 'express';
-import { AtGuard, RtGuard } from 'src/common/guards';
+import { RtGuard } from 'src/common/guards';
 import { GetCurrentUserId } from 'src/common/decorators';
 import { GetCurrentUser } from 'src/common/decorators/get-current-user.decorator';
 
