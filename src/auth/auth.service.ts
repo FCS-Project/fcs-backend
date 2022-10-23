@@ -8,7 +8,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { SignInDto } from './dto/signIn.dto';
 import { SignUpDto } from './dto/signUp.dto';
 import * as bcrypt from 'bcrypt';
-import { Tokens } from './types';
+import { JwtPayload, Tokens } from './types';
 import { Role } from '@prisma/client';
 import { JwtService } from '@nestjs/jwt';
 
@@ -30,31 +30,28 @@ export class AuthService {
     });
   }
 
-  async getTokens(userId: string, email: string, roles: Role[]) {
+  async getTokens(
+    userId: string,
+    email: string,
+    roles: Role[],
+  ): Promise<Tokens> {
+    const jwtPayload: JwtPayload = {
+      sub: userId,
+      email: email,
+      roles: roles,
+    };
+
     const [at, rt] = await Promise.all([
-      this.jwtService.signAsync(
-        {
-          sub: userId,
-          email: email,
-          roles: roles,
-        },
-        {
-          secret: 'at-secret',
-          expiresIn: 60 * 15,
-        },
-      ),
-      this.jwtService.signAsync(
-        {
-          sub: userId,
-          email: email,
-          roles: roles,
-        },
-        {
-          secret: 'rt-secret',
-          expiresIn: 60 * 60 * 24 * 7,
-        },
-      ),
+      this.jwtService.signAsync(jwtPayload, {
+        secret: 'at-secret',
+        expiresIn: '15m',
+      }),
+      this.jwtService.signAsync(jwtPayload, {
+        secret: 'rt-secret',
+        expiresIn: '7d',
+      }),
     ]);
+
     return {
       access_token: at,
       refresh_token: rt,

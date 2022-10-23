@@ -9,15 +9,9 @@ export declare class AuthService {
     private jwtService;
     constructor(prisma: PrismaService, jwtService: JwtService);
     updateRtHash(userId: string, rt: string): Promise<void>;
-    getTokens(userId: string, email: string, roles: Role[]): Promise<{
-        access_token: string;
-        refresh_token: string;
-    }>;
+    getTokens(userId: string, email: string, roles: Role[]): Promise<Tokens>;
     signIn(signInDto: SignInDto): Promise<Tokens>;
     signUp(signUpDto: SignUpDto): Promise<Tokens>;
     logout(userId: string): Promise<void>;
-    refreshToken(userId: string, rt: string): Promise<{
-        access_token: string;
-        refresh_token: string;
-    }>;
+    refreshToken(userId: string, rt: string): Promise<Tokens>;
 }

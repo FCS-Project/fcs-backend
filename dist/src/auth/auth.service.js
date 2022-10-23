@@ -32,22 +32,19 @@ let AuthService = class AuthService {
         });
     }
     async getTokens(userId, email, roles) {
+        const jwtPayload = {
+            sub: userId,
+            email: email,
+            roles: roles,
+        };
         const [at, rt] = await Promise.all([
-            this.jwtService.signAsync({
-                sub: userId,
-                email: email,
-                roles: roles,
-            }, {
+            this.jwtService.signAsync(jwtPayload, {
                 secret: 'at-secret',
-                expiresIn: 60 * 15,
+                expiresIn: '15m',
             }),
-            this.jwtService.signAsync({
-                sub: userId,
-                email: email,
-                roles: roles,
-            }, {
+            this.jwtService.signAsync(jwtPayload, {
                 secret: 'rt-secret',
-                expiresIn: 60 * 60 * 24 * 7,
+                expiresIn: '7d',
             }),
         ]);
         return {

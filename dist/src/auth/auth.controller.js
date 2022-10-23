@@ -39,6 +39,7 @@ let AuthController = class AuthController {
     }
 };
 __decorate([
+    (0, decorators_1.Public)(),
     (0, common_1.Post)('signin'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -46,6 +47,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "signIn", null);
 __decorate([
+    (0, decorators_1.Public)(),
     (0, common_1.Post)('signup'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -61,6 +63,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "logout", null);
 __decorate([
+    (0, decorators_1.Public)(),
     (0, common_1.UseGuards)(guards_1.RtGuard),
     (0, common_1.Post)('refresh'),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
