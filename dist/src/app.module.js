@@ -15,7 +15,7 @@ const document_module_1 = require("./document/document.module");
 const prisma_module_1 = require("./prisma/prisma.module");
 const auth_module_1 = require("./auth/auth.module");
 const core_1 = require("@nestjs/core");
-const roles_guard_1 = require("./roles.guard");
+const roles_guard_1 = require("./roles/roles.guard");
 const guards_1 = require("./common/guards");
 let AppModule = class AppModule {
 };
