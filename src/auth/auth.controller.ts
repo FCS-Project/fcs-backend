@@ -12,7 +12,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { SignInDto } from './dto/signIn.dto';
 import { Tokens } from './types';
 import { RtGuard } from 'src/common/guards';
-import { GetCurrentUserId } from 'src/common/decorators';
+import { GetCurrentUserId, Public } from 'src/common/decorators';
 import { GetCurrentUser } from 'src/common/decorators/get-current-user.decorator';
 
 @ApiTags('Auth')
@@ -20,11 +20,13 @@ import { GetCurrentUser } from 'src/common/decorators/get-current-user.decorator
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @Public()
   @Post('signin')
   signIn(@Body() signInDto: SignInDto): Promise<Tokens> {
     return this.authService.signIn(signInDto);
   }
 
+  @Public()
   @Post('signup')
   signUp(@Body() signUpDto: SignUpDto): Promise<Tokens> {
     return this.authService.signUp(signUpDto);
@@ -36,7 +38,7 @@ export class AuthController {
     return this.authService.logout(userId);
   }
 
-  // @Public()
+  @Public()
   @UseGuards(RtGuard)
   @Post('refresh')
   @HttpCode(HttpStatus.OK)
