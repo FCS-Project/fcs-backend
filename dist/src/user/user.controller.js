@@ -17,8 +17,6 @@ const common_1 = require("@nestjs/common");
 const user_service_1 = require("./user.service");
 const update_user_dto_1 = require("./dto/update-user.dto");
 const swagger_1 = require("@nestjs/swagger");
-const roles_1 = require("../roles");
-const client_1 = require("@prisma/client");
 let UserController = class UserController {
     constructor(userService) {
         this.userService = userService;
@@ -37,7 +35,6 @@ let UserController = class UserController {
     }
 };
 __decorate([
-    (0, roles_1.Roles)(client_1.Role.Admin),
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
