@@ -7,6 +7,8 @@ export declare class AuthController {
     constructor(authService: AuthService);
     signIn(signInDto: SignInDto): Promise<Tokens>;
     signUp(signUpDto: SignUpDto): Promise<Tokens>;
-    logout(userId: string): Promise<void>;
+    logout(userId: string): Promise<{
+        success: boolean;
+    }>;
     refreshToken(userId: string, refreshToken: string): Promise<Tokens>;
 }

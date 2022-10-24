@@ -127,6 +127,7 @@ let AuthService = class AuthService {
                 hashedRt: null,
             },
         });
+        return { success: true };
     }
     async refreshToken(userId, rt) {
         const user = await this.prisma.user.findUnique({
