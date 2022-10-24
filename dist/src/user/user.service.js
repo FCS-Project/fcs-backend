@@ -18,7 +18,16 @@ let UserService = class UserService {
     }
     async findOne(id) {
         try {
-            const user = await this.prisma.user.findUnique({ where: { id } });
+            const user = await this.prisma.user.findUnique({
+                where: { id },
+                select: {
+                    name: true,
+                    email: true,
+                    roles: true,
+                    createdAt: true,
+                    updatedAt: true,
+                },
+            });
             if (user) {
                 return { success: true, data: user };
             }
