@@ -2,22 +2,26 @@ import { Controller, Get, Body, Patch, Param, Delete } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { Public } from 'src/common/decorators';
+import { GetCurrentUserId } from 'src/common/decorators';
+import { GetCurrentUserRole } from 'src/common/decorators/get-current-user-role.decorator';
 
 @ApiTags('User')
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Public()
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(id);
+  findOne(
+    @Param('id') id: string,
+    @GetCurrentUserRole() role: string,
+    @GetCurrentUserId() userId: string,
+  ) {
+    return this.userService.findOne(id, role, userId);
   }
 
   @Get(':id/documents')
-  findDocuments(@Param('id') id: string) {
-    return this.userService.getUserDocuments(id);
+  findDocuments(@GetCurrentUserId() userId: string, @Param('id') id: string) {
+    return this.userService.getUserDocuments(id, userId);
   }
 
   @Patch(':id')

@@ -1,9 +1,10 @@
+import { BadRequestException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 export declare class UserService {
     private prisma;
     constructor(prisma: PrismaService);
-    findOne(id: string): Promise<{
+    findOne(id: string, role: string, userId: string): Promise<BadRequestException | {
         success: boolean;
         data: {
             name: string;
@@ -13,7 +14,7 @@ export declare class UserService {
             updatedAt: Date;
         };
     }>;
-    getUserDocuments(id: string): Promise<{
+    getUserDocuments(id: string, userId: string): Promise<{
         success: boolean;
         data: import(".prisma/client").Document[];
     }>;

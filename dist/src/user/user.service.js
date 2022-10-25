@@ -16,40 +16,53 @@ let UserService = class UserService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    async findOne(id) {
-        try {
-            const user = await this.prisma.user.findUnique({
-                where: { id },
-                select: {
-                    name: true,
-                    email: true,
-                    roles: true,
-                    createdAt: true,
-                    updatedAt: true,
-                },
-            });
-            if (user) {
-                return { success: true, data: user };
+    async findOne(id, role, userId) {
+        if (role === null || userId === null) {
+            return new common_1.BadRequestException('Access Denied Bitch');
+        }
+        if (role === 'Admin' || userId === id) {
+            try {
+                const user = await this.prisma.user.findUnique({
+                    where: { id },
+                    select: {
+                        name: true,
+                        email: true,
+                        roles: true,
+                        createdAt: true,
+                        updatedAt: true,
+                    },
+                });
+                if (user) {
+                    return { success: true, data: user };
+                }
+                else {
+                    throw new common_1.BadRequestException('User does not exist!');
+                }
             }
-            else {
-                throw new common_1.BadRequestException('User does not exist!');
+            catch (error) {
+                throw new common_1.HttpException(error, 500);
             }
         }
-        catch (error) {
-            throw new common_1.HttpException(error, 500);
+        else {
+            throw new common_1.BadRequestException('Access Denied');
         }
     }
-    async getUserDocuments(id) {
-        try {
-            const docs = await this.prisma.document.findMany({
-                where: { userId: id },
-            });
-            if (docs) {
-                return { success: true, data: docs };
+    async getUserDocuments(id, userId) {
+        if (id === userId) {
+            try {
+                const docs = await this.prisma.document.findMany({
+                    where: { userId: id },
+                });
+                if (docs) {
+                    return { success: true, data: docs };
+                }
+            }
+            catch (error) {
+                throw new common_1.HttpException(error, 500);
             }
         }
-        catch (error) {
-            throw new common_1.HttpException(error, 500);
+        else {
+            throw new common_1.BadRequestException('Access Denied');
         }
     }
     async update(id, updateUserDto) {

@@ -3,7 +3,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export declare class UserController {
     private readonly userService;
     constructor(userService: UserService);
-    findOne(id: string): Promise<{
+    findOne(id: string, role: string, userId: string): Promise<import("@nestjs/common").BadRequestException | {
         success: boolean;
         data: {
             name: string;
@@ -13,7 +13,7 @@ export declare class UserController {
             updatedAt: Date;
         };
     }>;
-    findDocuments(id: string): Promise<{
+    findDocuments(userId: string, id: string): Promise<{
         success: boolean;
         data: import(".prisma/client").Document[];
     }>;

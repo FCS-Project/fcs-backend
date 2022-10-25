@@ -6,38 +6,46 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
-  async findOne(id: string) {
-    try {
-      const user = await this.prisma.user.findUnique({
-        where: { id },
-        select: {
-          name: true,
-          email: true,
-          roles: true,
-          createdAt: true,
-          updatedAt: true,
-        },
-      });
-      if (user) {
-        return { success: true, data: user };
-      } else {
-        throw new BadRequestException('User does not exist!');
+  async findOne(id: string, role: string, userId: string) {
+    if (role === 'Admin' || userId === id) {
+      try {
+        const user = await this.prisma.user.findUnique({
+          where: { id },
+          select: {
+            name: true,
+            email: true,
+            roles: true,
+            createdAt: true,
+            updatedAt: true,
+          },
+        });
+        if (user) {
+          return { success: true, data: user };
+        } else {
+          throw new BadRequestException('User does not exist!');
+        }
+      } catch (error) {
+        throw new HttpException(error, 500);
       }
-    } catch (error) {
-      throw new HttpException(error, 500);
+    } else {
+      throw new BadRequestException('Access Denied');
     }
   }
 
-  async getUserDocuments(id: string) {
-    try {
-      const docs = await this.prisma.document.findMany({
-        where: { userId: id },
-      });
-      if (docs) {
-        return { success: true, data: docs };
+  async getUserDocuments(id: string, userId: string) {
+    if (id === userId) {
+      try {
+        const docs = await this.prisma.document.findMany({
+          where: { userId: id },
+        });
+        if (docs) {
+          return { success: true, data: docs };
+        }
+      } catch (error) {
+        throw new HttpException(error, 500);
       }
-    } catch (error) {
-      throw new HttpException(error, 500);
+    } else {
+      throw new BadRequestException('Access Denied');
     }
   }
 

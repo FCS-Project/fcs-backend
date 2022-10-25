@@ -18,15 +18,16 @@ const user_service_1 = require("./user.service");
 const update_user_dto_1 = require("./dto/update-user.dto");
 const swagger_1 = require("@nestjs/swagger");
 const decorators_1 = require("../common/decorators");
+const get_current_user_role_decorator_1 = require("../common/decorators/get-current-user-role.decorator");
 let UserController = class UserController {
     constructor(userService) {
         this.userService = userService;
     }
-    findOne(id) {
-        return this.userService.findOne(id);
+    findOne(id, role, userId) {
+        return this.userService.findOne(id, role, userId);
     }
-    findDocuments(id) {
-        return this.userService.getUserDocuments(id);
+    findDocuments(userId, id) {
+        return this.userService.getUserDocuments(id, userId);
     }
     update(id, updateUserDto) {
         return this.userService.update(id, updateUserDto);
@@ -36,18 +37,20 @@ let UserController = class UserController {
     }
 };
 __decorate([
-    (0, decorators_1.Public)(),
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, get_current_user_role_decorator_1.GetCurrentUserRole)()),
+    __param(2, (0, decorators_1.GetCurrentUserId)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [String, String, String]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Get)(':id/documents'),
-    __param(0, (0, common_1.Param)('id')),
+    __param(0, (0, decorators_1.GetCurrentUserId)()),
+    __param(1, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "findDocuments", null);
 __decorate([
