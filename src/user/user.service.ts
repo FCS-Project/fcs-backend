@@ -15,8 +15,8 @@ export class UserService {
             name: true,
             email: true,
             roles: true,
+            Documents: true,
             createdAt: true,
-            updatedAt: true,
           },
         });
         if (user) {
