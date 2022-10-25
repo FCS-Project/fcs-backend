@@ -9,7 +9,6 @@ import { CreateDocumentDto } from './dto/create-document.dto';
 export class DocumentController {
   constructor(private readonly documentService: DocumentService) {}
 
-  @Public()
   @Post()
   create(@Body() createDocumentDto: CreateDocumentDto) {
     return this.documentService.create(createDocumentDto);
