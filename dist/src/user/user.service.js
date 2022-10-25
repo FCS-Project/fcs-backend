@@ -17,9 +17,6 @@ let UserService = class UserService {
         this.prisma = prisma;
     }
     async findOne(id, role, userId) {
-        if (role === null || userId === null) {
-            return new common_1.BadRequestException('Access Denied Bitch');
-        }
         if (role === 'Admin' || userId === id) {
             try {
                 const user = await this.prisma.user.findUnique({
@@ -28,8 +25,8 @@ let UserService = class UserService {
                         name: true,
                         email: true,
                         roles: true,
+                        Documents: true,
                         createdAt: true,
-                        updatedAt: true,
                     },
                 });
                 if (user) {
@@ -77,18 +74,23 @@ let UserService = class UserService {
             throw new common_1.HttpException(error, 500);
         }
     }
-    async remove(id) {
-        try {
-            const user = await this.prisma.user.delete({ where: { id } });
-            if (user) {
-                return { success: true };
+    async remove(id, role) {
+        if (role === 'Admin') {
+            try {
+                const user = await this.prisma.user.delete({ where: { id } });
+                if (user) {
+                    return { success: true };
+                }
+            }
+            catch (error) {
+                if (error.code === 'P2025') {
+                    throw new common_1.BadRequestException('User does not exist!');
+                }
+                throw new common_1.HttpException(error, 500);
             }
         }
-        catch (error) {
-            if (error.code === 'P2025') {
-                throw new common_1.BadRequestException('User does not exist!');
-            }
-            throw new common_1.HttpException(error, 500);
+        else {
+            throw new common_1.BadRequestException('Access Denied');
         }
     }
 };

@@ -29,17 +29,32 @@ let DocumentService = class DocumentService {
     }
     async findOne(id) {
         try {
-            return await this.prisma.document.findUnique({ where: { id } });
+            const document = await this.prisma.document.findUnique({ where: { id } });
+            if (document) {
+                return {
+                    success: true,
+                    data: document,
+                };
+            }
+            else {
+                throw new common_1.BadRequestException('Document does not exist!');
+            }
         }
         catch (error) {
             throw new common_1.HttpException(error, 500);
         }
     }
-    async remove(id) {
+    async remove(id, userId) {
         try {
-            const document = await this.prisma.document.delete({ where: { id } });
+            const document = await this.prisma.document.findUnique({ where: { id } });
             if (document) {
-                return { success: true };
+                if (document.userId === userId) {
+                    await this.prisma.document.delete({ where: { id } });
+                    return { success: true };
+                }
+                else {
+                    return new common_1.BadRequestException('Access Denied');
+                }
             }
             else {
                 throw new common_1.BadRequestException('Document does not exist!');

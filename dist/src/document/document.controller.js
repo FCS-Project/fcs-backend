@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DocumentController = void 0;
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
+const decorators_1 = require("../common/decorators");
 const document_service_1 = require("./document.service");
 const create_document_dto_1 = require("./dto/create-document.dto");
 let DocumentController = class DocumentController {
@@ -30,11 +31,12 @@ let DocumentController = class DocumentController {
     findOne(id) {
         return this.documentService.findOne(id);
     }
-    remove(id) {
-        return this.documentService.remove(id);
+    remove(id, userId) {
+        return this.documentService.remove(id, userId);
     }
 };
 __decorate([
+    (0, decorators_1.Public)(),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -57,8 +59,9 @@ __decorate([
 __decorate([
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, decorators_1.GetCurrentUserId)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", void 0)
 ], DocumentController.prototype, "remove", null);
 DocumentController = __decorate([

@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { GetCurrentUserId } from 'src/common/decorators';
+import { GetCurrentUserId, Public } from 'src/common/decorators';
 import { DocumentService } from './document.service';
 import { CreateDocumentDto } from './dto/create-document.dto';
 
@@ -9,6 +9,7 @@ import { CreateDocumentDto } from './dto/create-document.dto';
 export class DocumentController {
   constructor(private readonly documentService: DocumentService) {}
 
+  @Public()
   @Post()
   create(@Body() createDocumentDto: CreateDocumentDto) {
     return this.documentService.create(createDocumentDto);
