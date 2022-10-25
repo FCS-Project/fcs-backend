@@ -61,17 +61,21 @@ export class UserService {
     }
   }
 
-  async remove(id: string) {
-    try {
-      const user = await this.prisma.user.delete({ where: { id } });
-      if (user) {
-        return { success: true };
+  async remove(id: string, role: string) {
+    if (role === 'Admin') {
+      try {
+        const user = await this.prisma.user.delete({ where: { id } });
+        if (user) {
+          return { success: true };
+        }
+      } catch (error) {
+        if (error.code === 'P2025') {
+          throw new BadRequestException('User does not exist!');
+        }
+        throw new HttpException(error, 500);
       }
-    } catch (error) {
-      if (error.code === 'P2025') {
-        throw new BadRequestException('User does not exist!');
-      }
-      throw new HttpException(error, 500);
+    } else {
+      throw new BadRequestException('Access Denied');
     }
   }
 }
