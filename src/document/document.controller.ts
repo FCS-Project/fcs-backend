@@ -1,5 +1,6 @@
 import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { GetCurrentUserId } from 'src/common/decorators';
 import { DocumentService } from './document.service';
 import { CreateDocumentDto } from './dto/create-document.dto';
 
@@ -24,7 +25,7 @@ export class DocumentController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.documentService.remove(id);
+  remove(@Param('id') id: string, @GetCurrentUserId() userId: string) {
+    return this.documentService.remove(id, userId);
   }
 }

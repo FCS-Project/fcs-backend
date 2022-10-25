@@ -33,11 +33,16 @@ export class DocumentService {
     }
   }
 
-  async remove(id: string) {
+  async remove(id: string, userId: string) {
     try {
-      const document = await this.prisma.document.delete({ where: { id } });
+      const document = await this.prisma.document.findUnique({ where: { id } });
       if (document) {
-        return { success: true };
+        if (document.userId === userId) {
+          await this.prisma.document.delete({ where: { id } });
+          return { success: true };
+        } else {
+          return new BadRequestException('Access Denied');
+        }
       } else {
         throw new BadRequestException('Document does not exist!');
       }
