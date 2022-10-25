@@ -19,7 +19,15 @@ export class DocumentService {
 
   async findOne(id: string) {
     try {
-      return await this.prisma.document.findUnique({ where: { id } });
+      const document = await this.prisma.document.findUnique({ where: { id } });
+      if (document) {
+        return {
+          success: true,
+          data: document,
+        };
+      } else {
+        throw new BadRequestException('Document does not exist!');
+      }
     } catch (error) {
       throw new HttpException(error, 500);
     }
