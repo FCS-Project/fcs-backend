@@ -33,5 +33,5 @@ model Document {
 enum Role {
   Admin
   Patient
-  Organization
+  Professional
 }
