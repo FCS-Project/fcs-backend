@@ -38,4 +38,25 @@ export class SignUpDto {
   @IsArray()
   @ApiProperty({ required: false })
   roles: Role[];
+
+  @IsString()
+  @IsOptional()
+  @ApiProperty({ required: false })
+  location: string;
+
+  @IsString()
+  @IsOptional()
+  @ApiProperty({ required: false })
+  displaySrc: string;
+
+  @IsString()
+  @IsOptional()
+  @ApiProperty({ required: false })
+  bannerSrc: string;
+
+  @IsString()
+  @IsOptional()
+  @MaxLength(200)
+  @ApiProperty({ required: false })
+  description: string;
 }
