@@ -21,6 +21,10 @@ model User {
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
   hashedRt     String?
+  description  String?
+  displaySrc   String?
+  bannerSrc    String?
+  location     String?
 }
 
 model Document {
@@ -34,4 +38,5 @@ enum Role {
   Admin
   Patient
   Professional
+  Organisation
 }
