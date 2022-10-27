@@ -221,6 +221,11 @@ export class AuthService {
         },
       });
       const result = await bcrypt.compare(verifyOtpDto.otp, user.otp);
+      if (verifyOtpDto.editInfo && result) {
+        return {
+          success: true,
+        };
+      }
       if (result) {
         const tokens = await this.getTokens(user.id, user.email, user.roles);
         await this.updateRtHash(user.id, tokens.refresh_token);

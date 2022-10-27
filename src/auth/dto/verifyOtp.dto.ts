@@ -1,7 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
+  isBoolean,
   IsEmail,
   IsNotEmpty,
+  IsOptional,
   IsString,
   MaxLength,
   MinLength,
@@ -20,4 +22,8 @@ export class VerifyOtpDto {
   @IsString()
   @ApiProperty()
   email: string;
+
+  @IsOptional()
+  @ApiProperty()
+  editInfo: boolean;
 }
