@@ -25,6 +25,8 @@ model User {
   displaySrc   String?
   bannerSrc    String?
   location     String?
+  otp          String?
+  otpCreatedAt DateTime?
 }
 
 model Document {
@@ -32,13 +34,6 @@ model Document {
   user      User     @relation(fields: [userId], references: [id])
   userId    String
   createdAt DateTime @default(now())
-}
-
-model Otp {
-  id           String   @id @default(uuid())
-  mobileNumber String
-  otp          String
-  createdAt    DateTime @default(now())
 }
 
 enum Role {
