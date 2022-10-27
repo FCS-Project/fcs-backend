@@ -47,5 +47,30 @@ __decorate([
     (0, swagger_1.ApiProperty)({ required: false }),
     __metadata("design:type", Array)
 ], SignUpDto.prototype, "roles", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    (0, swagger_1.ApiProperty)({ required: false }),
+    __metadata("design:type", String)
+], SignUpDto.prototype, "location", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    (0, swagger_1.ApiProperty)({ required: false }),
+    __metadata("design:type", String)
+], SignUpDto.prototype, "displaySrc", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    (0, swagger_1.ApiProperty)({ required: false }),
+    __metadata("design:type", String)
+], SignUpDto.prototype, "bannerSrc", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.MaxLength)(200),
+    (0, swagger_1.ApiProperty)({ required: false }),
+    __metadata("design:type", String)
+], SignUpDto.prototype, "description", void 0);
 exports.SignUpDto = SignUpDto;
 //# sourceMappingURL=signUp.dto.js.map

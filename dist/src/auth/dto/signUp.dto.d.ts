@@ -5,4 +5,8 @@ export declare class SignUpDto {
     password: string;
     mobileNumber: string;
     roles: Role[];
+    location: string;
+    displaySrc: string;
+    bannerSrc: string;
+    description: string;
 }

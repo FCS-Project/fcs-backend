@@ -34,6 +34,13 @@ model Document {
   createdAt DateTime @default(now())
 }
 
+model Otp {
+  id           String   @id @default(uuid())
+  mobileNumber String
+  otp          String
+  createdAt    DateTime @default(now())
+}
+
 enum Role {
   Admin
   Patient
