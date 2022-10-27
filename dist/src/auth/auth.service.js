@@ -14,6 +14,7 @@ const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
 const bcrypt = require("bcrypt");
 const jwt_1 = require("@nestjs/jwt");
+const nodemailer = require('nodemailer');
 const saltRounds = 12;
 let AuthService = class AuthService {
     constructor(prisma, jwtService) {
@@ -149,28 +150,36 @@ let AuthService = class AuthService {
     async otpSignIn(otpSignInDto) {
         try {
             const user = await this.prisma.user.findUnique({
-                where: { mobileNumber: otpSignInDto.mobileNumber },
+                where: { email: otpSignInDto.email },
             });
             if (user) {
-                const accountSid = process.env.TWILIO_ACCOUNT_SID;
-                const authToken = process.env.TWILIO_AUTH_TOKEN;
-                const client = require('twilio')(accountSid, authToken);
                 const otp = Math.floor(Math.random() * 1000000 + 1).toString();
-                client.messages
-                    .create({
-                    body: `Hi there, here's your OTP ${otp}`,
-                    from: '+18583300917',
-                    to: `+91${user.mobileNumber}`,
-                })
-                    .then(async (message) => {
-                    if (message) {
-                        const hashedOtp = await bcrypt.hash(otp, saltRounds);
-                        const dateTime = new Date();
-                        await this.prisma.user.update({
-                            where: { id: user.id },
-                            data: { otp: hashedOtp, otpCreatedAt: dateTime },
-                        });
+                const transporter = nodemailer.createTransport({
+                    service: 'hotmail',
+                    auth: {
+                        user: process.env.OUTLOOK_MAIL,
+                        pass: process.env.OUTLOOK_PASS,
+                    },
+                });
+                const mailOptions = {
+                    from: process.env.OUTLOOK_MAIL,
+                    to: user.email,
+                    subject: 'VamaCare: One Time Password',
+                    text: `${otp} is your One Time Password(OTP) for VamaCare.`,
+                };
+                await transporter.sendMail(mailOptions, async function (error, info) {
+                    if (error) {
+                        console.log(error);
                     }
+                    else {
+                        console.log('Email sent: ' + info.response);
+                    }
+                });
+                const hashedOtp = await bcrypt.hash(otp, saltRounds);
+                const dateTime = new Date();
+                await this.prisma.user.update({
+                    where: { id: user.id },
+                    data: { otp: hashedOtp, otpCreatedAt: dateTime },
                 });
                 return {
                     success: true,
@@ -188,7 +197,7 @@ let AuthService = class AuthService {
         try {
             const user = await this.prisma.user.findUnique({
                 where: {
-                    mobileNumber: verifyOtpDto.mobileNumber,
+                    email: verifyOtpDto.email,
                 },
             });
             const result = await bcrypt.compare(verifyOtpDto.otp, user.otp);

@@ -24,11 +24,10 @@ __decorate([
 ], VerifyOtpDto.prototype, "otp", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsEmail)(),
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.MaxLength)(10),
-    (0, class_validator_1.MinLength)(10),
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
-], VerifyOtpDto.prototype, "mobileNumber", void 0);
+], VerifyOtpDto.prototype, "email", void 0);
 exports.VerifyOtpDto = VerifyOtpDto;
 //# sourceMappingURL=verifyOtp.dto.js.map

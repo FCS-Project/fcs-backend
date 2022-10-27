@@ -1,3 +1,3 @@
 export declare class OtpSignInDto {
-    mobileNumber: string;
+    email: string;
 }

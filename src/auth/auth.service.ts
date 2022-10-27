@@ -14,7 +14,7 @@ import { Role } from '@prisma/client';
 import { JwtService } from '@nestjs/jwt';
 import { OtpSignInDto } from './dto/otpSignIn.dto';
 import { VerifyOtpDto } from './dto/verifyOtp.dto';
-
+const nodemailer = require('nodemailer');
 const saltRounds = 12;
 
 @Injectable()
@@ -170,29 +170,36 @@ export class AuthService {
   async otpSignIn(otpSignInDto: OtpSignInDto) {
     try {
       const user = await this.prisma.user.findUnique({
-        where: { mobileNumber: otpSignInDto.mobileNumber },
+        where: { email: otpSignInDto.email },
       });
       if (user) {
-        const accountSid = process.env.TWILIO_ACCOUNT_SID;
-        const authToken = process.env.TWILIO_AUTH_TOKEN;
-        const client = require('twilio')(accountSid, authToken);
         const otp = Math.floor(Math.random() * 1000000 + 1).toString();
-        client.messages
-          .create({
-            body: `Hi there, here's your OTP ${otp}`,
-            from: '+18583300917',
-            to: `+91${user.mobileNumber}`,
-          })
-          .then(async (message: any) => {
-            if (message) {
-              const hashedOtp = await bcrypt.hash(otp, saltRounds);
-              const dateTime = new Date();
-              await this.prisma.user.update({
-                where: { id: user.id },
-                data: { otp: hashedOtp, otpCreatedAt: dateTime },
-              });
-            }
-          });
+        const transporter = nodemailer.createTransport({
+          service: 'hotmail',
+          auth: {
+            user: process.env.OUTLOOK_MAIL,
+            pass: process.env.OUTLOOK_PASS,
+          },
+        });
+        const mailOptions = {
+          from: process.env.OUTLOOK_MAIL,
+          to: user.email,
+          subject: 'VamaCare: One Time Password',
+          text: `${otp} is your One Time Password(OTP) for VamaCare.`,
+        };
+        await transporter.sendMail(mailOptions, async function (error, info) {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log('Email sent: ' + info.response);
+          }
+        });
+        const hashedOtp = await bcrypt.hash(otp, saltRounds);
+        const dateTime = new Date();
+        await this.prisma.user.update({
+          where: { id: user.id },
+          data: { otp: hashedOtp, otpCreatedAt: dateTime },
+        });
         return {
           success: true,
         };
@@ -210,7 +217,7 @@ export class AuthService {
     try {
       const user = await this.prisma.user.findUnique({
         where: {
-          mobileNumber: verifyOtpDto.mobileNumber,
+          email: verifyOtpDto.email,
         },
       });
       const result = await bcrypt.compare(verifyOtpDto.otp, user.otp);

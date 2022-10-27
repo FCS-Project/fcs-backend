@@ -1,11 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString, MaxLength, MinLength } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
 export class OtpSignInDto {
   @IsNotEmpty()
+  @IsEmail()
   @IsString()
-  @MaxLength(10)
-  @MinLength(10)
   @ApiProperty()
-  mobileNumber: string;
+  email: string;
 }
