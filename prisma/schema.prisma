@@ -17,6 +17,7 @@ model User {
   password     String
   mobileNumber String?    @unique
   roles        Role[]
+  type         Type[]
   Documents    Document[]
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
@@ -38,7 +39,15 @@ model Document {
 
 enum Role {
   Admin
+  User
+  Organisation
+}
+
+enum Type {
+  Admin
   Patient
   Professional
-  Organisation
+  Hospital
+  Pharmacy
+  Insurance
 }
