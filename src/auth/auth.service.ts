@@ -231,6 +231,7 @@ export class AuthService {
           },
           data: {
             otp: null,
+            otpCreatedAt: null,
           },
         });
         return tokens;
