@@ -15,6 +15,7 @@ export class UserService {
             name: true,
             email: true,
             roles: true,
+            type: true,
             Documents: true,
             createdAt: true,
           },

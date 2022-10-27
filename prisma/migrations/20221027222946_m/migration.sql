@@ -11,7 +11,7 @@ CREATE TABLE "User" (
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "mobileNumber" TEXT,
-    "role" "Role"[],
+    "roles" "Role"[],
     "type" "Type"[],
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
