@@ -5,13 +5,7 @@ export declare class UserController {
     constructor(userService: UserService);
     findOne(id: string, role: string, userId: string): Promise<{
         success: boolean;
-        data: {
-            name: string;
-            email: string;
-            roles: import(".prisma/client").Role[];
-            Documents: import(".prisma/client").Document[];
-            createdAt: Date;
-        };
+        data: import(".prisma/client").User;
     }>;
     findDocuments(userId: string, id: string): Promise<{
         success: boolean;

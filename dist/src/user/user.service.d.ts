@@ -5,13 +5,7 @@ export declare class UserService {
     constructor(prisma: PrismaService);
     findOne(id: string, role: string, userId: string): Promise<{
         success: boolean;
-        data: {
-            name: string;
-            email: string;
-            roles: import(".prisma/client").Role[];
-            Documents: import(".prisma/client").Document[];
-            createdAt: Date;
-        };
+        data: import(".prisma/client").User;
     }>;
     getUserDocuments(id: string, userId: string): Promise<{
         success: boolean;
