@@ -4,6 +4,8 @@ import { SignUpDto } from './dto/signUp.dto';
 import { Tokens } from './types';
 import { Role } from '@prisma/client';
 import { JwtService } from '@nestjs/jwt';
+import { OtpSignInDto } from './dto/otpSignIn.dto';
+import { VerifyOtpDto } from './dto/verifyOtp.dto';
 export declare class AuthService {
     private prisma;
     private jwtService;
@@ -16,4 +18,8 @@ export declare class AuthService {
         success: boolean;
     }>;
     refreshToken(userId: string, rt: string): Promise<Tokens>;
+    otpSignIn(otpSignInDto: OtpSignInDto): Promise<{
+        success: boolean;
+    }>;
+    verifyOtp(verifyOtpDto: VerifyOtpDto): Promise<Tokens>;
 }

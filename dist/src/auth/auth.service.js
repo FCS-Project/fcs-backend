@@ -136,15 +136,83 @@ let AuthService = class AuthService {
             },
         });
         if (!user) {
-            throw new common_1.ForbiddenException('Access Denied');
+            throw new common_1.ForbiddenException('Access Denied.');
         }
         const rtMatches = await bcrypt.compare(rt, user.hashedRt);
         if (!rtMatches) {
-            throw new common_1.ForbiddenException('Access Denied');
+            throw new common_1.ForbiddenException('Access Denied.');
         }
         const tokens = await this.getTokens(user.id, user.email, user.roles);
         await this.updateRtHash(user.id, tokens.refresh_token);
         return tokens;
+    }
+    async otpSignIn(otpSignInDto) {
+        try {
+            const user = await this.prisma.user.findUnique({
+                where: { mobileNumber: otpSignInDto.mobileNumber },
+            });
+            if (user) {
+                const accountSid = process.env.TWILIO_ACCOUNT_SID;
+                const authToken = process.env.TWILIO_AUTH_TOKEN;
+                const client = require('twilio')(accountSid, authToken);
+                const otp = Math.floor(Math.random() * 1000000 + 1).toString();
+                client.messages
+                    .create({
+                    body: `Hi there, here's your OTP ${otp}`,
+                    from: '+18583300917',
+                    to: `+91${user.mobileNumber}`,
+                })
+                    .then(async (message) => {
+                    if (message) {
+                        const hashedOtp = await bcrypt.hash(otp, saltRounds);
+                        const dateTime = new Date();
+                        await this.prisma.user.update({
+                            where: { id: user.id },
+                            data: { otp: hashedOtp, otpCreatedAt: dateTime },
+                        });
+                    }
+                });
+                return {
+                    success: true,
+                };
+            }
+            else {
+                throw new common_1.BadRequestException('User with this mobile number does not exist!');
+            }
+        }
+        catch (error) {
+            throw new common_1.HttpException(error, 500);
+        }
+    }
+    async verifyOtp(verifyOtpDto) {
+        try {
+            const user = await this.prisma.user.findUnique({
+                where: {
+                    mobileNumber: verifyOtpDto.mobileNumber,
+                },
+            });
+            const result = await bcrypt.compare(verifyOtpDto.otp, user.otp);
+            if (result) {
+                const tokens = await this.getTokens(user.id, user.email, user.roles);
+                await this.updateRtHash(user.id, tokens.refresh_token);
+                await this.prisma.user.updateMany({
+                    where: {
+                        id: user.id,
+                        otp: { not: null },
+                    },
+                    data: {
+                        otp: null,
+                    },
+                });
+                return tokens;
+            }
+            else {
+                throw new common_1.BadRequestException('Invalid Otp!');
+            }
+        }
+        catch (error) {
+            throw new common_1.HttpException(error, 500);
+        }
     }
 };
 AuthService = __decorate([

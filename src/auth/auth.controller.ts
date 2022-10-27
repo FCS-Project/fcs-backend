@@ -14,6 +14,8 @@ import { Tokens } from './types';
 import { RtGuard } from 'src/common/guards';
 import { GetCurrentUserId, Public } from 'src/common/decorators';
 import { GetCurrentUser } from 'src/common/decorators/get-current-user.decorator';
+import { OtpSignInDto } from './dto/otpSignIn.dto';
+import { VerifyOtpDto } from './dto/verifyOtp.dto';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -24,6 +26,18 @@ export class AuthController {
   @Post('signin')
   signIn(@Body() signInDto: SignInDto): Promise<Tokens> {
     return this.authService.signIn(signInDto);
+  }
+
+  @Public()
+  @Post('otp-signin')
+  otpSignIn(@Body() otpSignIn: OtpSignInDto) {
+    return this.authService.otpSignIn(otpSignIn);
+  }
+
+  @Public()
+  @Post('verify-otp')
+  verifyOtp(@Body() verifyOtpDto: VerifyOtpDto) {
+    return this.authService.verifyOtp(verifyOtpDto);
   }
 
   @Public()

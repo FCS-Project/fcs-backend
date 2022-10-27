@@ -21,12 +21,20 @@ const signIn_dto_1 = require("./dto/signIn.dto");
 const guards_1 = require("../common/guards");
 const decorators_1 = require("../common/decorators");
 const get_current_user_decorator_1 = require("../common/decorators/get-current-user.decorator");
+const otpSignIn_dto_1 = require("./dto/otpSignIn.dto");
+const verifyOtp_dto_1 = require("./dto/verifyOtp.dto");
 let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
     }
     signIn(signInDto) {
         return this.authService.signIn(signInDto);
+    }
+    otpSignIn(otpSignIn) {
+        return this.authService.otpSignIn(otpSignIn);
+    }
+    verifyOtp(verifyOtpDto) {
+        return this.authService.verifyOtp(verifyOtpDto);
     }
     signUp(signUpDto) {
         return this.authService.signUp(signUpDto);
@@ -46,6 +54,22 @@ __decorate([
     __metadata("design:paramtypes", [signIn_dto_1.SignInDto]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "signIn", null);
+__decorate([
+    (0, decorators_1.Public)(),
+    (0, common_1.Post)('otp-signin'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [otpSignIn_dto_1.OtpSignInDto]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "otpSignIn", null);
+__decorate([
+    (0, decorators_1.Public)(),
+    (0, common_1.Post)('verify-otp'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [verifyOtp_dto_1.VerifyOtpDto]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "verifyOtp", null);
 __decorate([
     (0, decorators_1.Public)(),
     (0, common_1.Post)('signup'),
