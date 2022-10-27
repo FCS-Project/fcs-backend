@@ -202,6 +202,16 @@ let AuthService = class AuthService {
             });
             const result = await bcrypt.compare(verifyOtpDto.otp, user.otp);
             if (verifyOtpDto.editInfo && result) {
+                await this.prisma.user.updateMany({
+                    where: {
+                        id: user.id,
+                        otp: { not: null },
+                    },
+                    data: {
+                        otp: null,
+                        otpCreatedAt: null,
+                    },
+                });
                 return {
                     success: true,
                 };

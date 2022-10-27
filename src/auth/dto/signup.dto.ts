@@ -36,10 +36,12 @@ export class SignUpDto {
 
   @IsNotEmpty()
   @IsArray()
+  @ApiProperty()
   roles: Role[];
 
   @IsNotEmpty()
   @IsArray()
+  @ApiProperty()
   type: Type[];
 
   @IsString()

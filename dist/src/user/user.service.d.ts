@@ -6,9 +6,9 @@ export declare class UserService {
     findOne(id: string, role: string, userId: string): Promise<{
         success: boolean;
         data: {
+            name: string;
             email: string;
             roles: import(".prisma/client").Role[];
-            name: string;
             Documents: import(".prisma/client").Document[];
             createdAt: Date;
         };
