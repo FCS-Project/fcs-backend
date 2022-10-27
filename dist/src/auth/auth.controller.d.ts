@@ -11,7 +11,9 @@ export declare class AuthController {
     otpSignIn(otpSignIn: OtpSignInDto): Promise<{
         success: boolean;
     }>;
-    verifyOtp(verifyOtpDto: VerifyOtpDto): Promise<Tokens>;
+    verifyOtp(verifyOtpDto: VerifyOtpDto): Promise<Tokens | {
+        success: boolean;
+    }>;
     signUp(signUpDto: SignUpDto): Promise<Tokens>;
     logout(userId: string): Promise<{
         success: boolean;

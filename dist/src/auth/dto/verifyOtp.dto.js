@@ -29,5 +29,10 @@ __decorate([
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
 ], VerifyOtpDto.prototype, "email", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Boolean)
+], VerifyOtpDto.prototype, "editInfo", void 0);
 exports.VerifyOtpDto = VerifyOtpDto;
 //# sourceMappingURL=verifyOtp.dto.js.map

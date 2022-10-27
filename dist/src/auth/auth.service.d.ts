@@ -21,5 +21,7 @@ export declare class AuthService {
     otpSignIn(otpSignInDto: OtpSignInDto): Promise<{
         success: boolean;
     }>;
-    verifyOtp(verifyOtpDto: VerifyOtpDto): Promise<Tokens>;
+    verifyOtp(verifyOtpDto: VerifyOtpDto): Promise<Tokens | {
+        success: boolean;
+    }>;
 }
