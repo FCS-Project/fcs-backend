@@ -37,7 +37,7 @@ export class SignUpDto {
   @IsNotEmpty()
   @IsArray()
   @ApiProperty()
-  roles: Role[];
+  role: Role[];
 
   @IsNotEmpty()
   @IsArray()
