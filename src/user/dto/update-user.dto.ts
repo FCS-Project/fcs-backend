@@ -1,22 +1,22 @@
-import { IsNotEmpty, IsOptional, IsString, Length } from 'class-validator';
+import { IsOptional, IsString, Length } from 'class-validator';
 import { Role } from '@prisma/client';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateUserDto {
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   @ApiProperty()
   name: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   @ApiProperty()
   email: string;
 
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty()
-  password: string;
+  // @IsString()
+  // @IsNotEmpty()
+  // @ApiProperty()
+  // password: string;
 
   @IsString()
   @Length(10)
@@ -30,22 +30,22 @@ export class UpdateUserDto {
   role: Role;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   @ApiProperty()
   location: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   @ApiProperty()
   description: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   @ApiProperty()
   displaySrc: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   @ApiProperty()
   bannerSrc: string;
 }

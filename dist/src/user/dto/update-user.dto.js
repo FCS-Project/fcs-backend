@@ -17,22 +17,16 @@ class UpdateUserDto {
 }
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsOptional)(),
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
 ], UpdateUserDto.prototype, "name", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsOptional)(),
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
 ], UpdateUserDto.prototype, "email", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    (0, swagger_1.ApiProperty)(),
-    __metadata("design:type", String)
-], UpdateUserDto.prototype, "password", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.Length)(10),
@@ -48,25 +42,25 @@ __decorate([
 ], UpdateUserDto.prototype, "role", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsOptional)(),
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
 ], UpdateUserDto.prototype, "location", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsOptional)(),
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
 ], UpdateUserDto.prototype, "description", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsOptional)(),
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
 ], UpdateUserDto.prototype, "displaySrc", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsOptional)(),
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
 ], UpdateUserDto.prototype, "bannerSrc", void 0);
