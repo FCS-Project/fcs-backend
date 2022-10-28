@@ -24,16 +24,6 @@ export declare class UserController {
     }>;
     getProfile(id: string): Promise<{
         success: boolean;
-        data: {
-            name: string;
-            email: string;
-            mobileNumber: string;
-            roles: import(".prisma/client").Role[];
-            type: import(".prisma/client").Type[];
-            description: string;
-            displaySrc: string;
-            bannerSrc: string;
-            location: string;
-        };
+        data: Omit<import(".prisma/client").User, "password" | "hashedRt" | "otp" | "otpCreatedAt">;
     }>;
 }

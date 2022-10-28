@@ -112,22 +112,12 @@ let UserService = class UserService {
         try {
             const user = await this.prisma.user.findUnique({
                 where: { id },
-                select: {
-                    name: true,
-                    mobileNumber: true,
-                    location: true,
-                    email: true,
-                    displaySrc: true,
-                    bannerSrc: true,
-                    type: true,
-                    roles: true,
-                    description: true,
-                },
             });
+            const data = exclude(user, 'password', 'hashedRt', 'otp', 'otpCreatedAt');
             if (user.type[0] == 'Professional' || user.roles[0] == 'Organisation') {
                 return {
                     success: true,
-                    data: user,
+                    data: data,
                 };
             }
             else {
