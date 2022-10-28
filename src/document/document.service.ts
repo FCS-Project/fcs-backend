@@ -1,10 +1,13 @@
 import { BadRequestException, HttpException, Injectable } from '@nestjs/common';
+import { Public } from 'src/common/decorators';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateDocumentDto } from './dto/create-document.dto';
 
 @Injectable()
 export class DocumentService {
   constructor(private prisma: PrismaService) {}
+
+  @Public()
   async create(createDocumentDto: CreateDocumentDto) {
     try {
       return await this.prisma.document.create({ data: createDocumentDto });
