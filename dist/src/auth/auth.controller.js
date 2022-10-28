@@ -87,7 +87,6 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "logout", null);
 __decorate([
-    (0, decorators_1.Public)(),
     (0, common_1.UseGuards)(guards_1.RtGuard),
     (0, common_1.Post)('refresh'),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),

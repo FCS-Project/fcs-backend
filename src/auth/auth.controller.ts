@@ -52,7 +52,6 @@ export class AuthController {
     return this.authService.logout(userId);
   }
 
-  @Public()
   @UseGuards(RtGuard)
   @Post('refresh')
   @HttpCode(HttpStatus.OK)
