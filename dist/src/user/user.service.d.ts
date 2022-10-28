@@ -5,27 +5,13 @@ export declare class UserService {
     constructor(prisma: PrismaService);
     getMe(userId: string): Promise<{
         success: boolean;
-        data: {
-            name: string;
-            email: string;
-            roles: import(".prisma/client").Role[];
-            type: import(".prisma/client").Type[];
-            Documents: import(".prisma/client").Document[];
-            createdAt: Date;
-        };
+        data: Omit<import(".prisma/client").User, "password" | "hashedRt" | "otp" | "otpCreatedAt">;
     }>;
     findOne(id: string, role: string, userId: string): Promise<{
         success: boolean;
-        data: {
-            name: string;
-            email: string;
-            roles: import(".prisma/client").Role[];
-            type: import(".prisma/client").Type[];
-            Documents: import(".prisma/client").Document[];
-            createdAt: Date;
-        };
+        data: Omit<import(".prisma/client").User, "password" | "hashedRt" | "otp" | "otpCreatedAt">;
     }>;
-    getUserDocuments(id: string, userId: string): Promise<{
+    getUserDocuments(userId: string): Promise<{
         success: boolean;
         data: import(".prisma/client").Document[];
     }>;
@@ -41,9 +27,9 @@ export declare class UserService {
         data: {
             name: string;
             email: string;
+            mobileNumber: string;
             roles: import(".prisma/client").Role[];
             type: import(".prisma/client").Type[];
-            mobileNumber: string;
             description: string;
             displaySrc: string;
             bannerSrc: string;

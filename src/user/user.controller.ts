@@ -24,9 +24,9 @@ export class UserController {
     return this.userService.findOne(id, role, userId);
   }
 
-  @Get(':id/documents')
-  findDocuments(@GetCurrentUserId() userId: string, @Param('id') id: string) {
-    return this.userService.getUserDocuments(id, userId);
+  @Get('/documents')
+  findDocuments(@GetCurrentUserId() userId: string) {
+    return this.userService.getUserDocuments(userId);
   }
 
   @Patch(':id')

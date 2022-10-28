@@ -12,6 +12,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
+function exclude(user, ...keys) {
+    for (const key of keys) {
+        delete user[key];
+    }
+    return user;
+}
 let UserService = class UserService {
     constructor(prisma) {
         this.prisma = prisma;
@@ -20,19 +26,12 @@ let UserService = class UserService {
         try {
             const user = await this.prisma.user.findUnique({
                 where: { id: userId },
-                select: {
-                    name: true,
-                    email: true,
-                    roles: true,
-                    type: true,
-                    Documents: true,
-                    createdAt: true,
-                },
             });
+            const data = exclude(user, 'password', 'hashedRt', 'otp', 'otpCreatedAt');
             if (user) {
                 return {
                     success: true,
-                    data: user,
+                    data: data,
                 };
             }
             else {
@@ -48,17 +47,10 @@ let UserService = class UserService {
             try {
                 const user = await this.prisma.user.findUnique({
                     where: { id },
-                    select: {
-                        name: true,
-                        email: true,
-                        roles: true,
-                        type: true,
-                        Documents: true,
-                        createdAt: true,
-                    },
                 });
+                const data = exclude(user, 'password', 'hashedRt', 'otp', 'otpCreatedAt');
                 if (user) {
-                    return { success: true, data: user };
+                    return { success: true, data: data };
                 }
                 else {
                     throw new common_1.BadRequestException('User does not exist!');
@@ -72,22 +64,17 @@ let UserService = class UserService {
             throw new common_1.BadRequestException('Access Denied');
         }
     }
-    async getUserDocuments(id, userId) {
-        if (id === userId) {
-            try {
-                const docs = await this.prisma.document.findMany({
-                    where: { userId: id },
-                });
-                if (docs) {
-                    return { success: true, data: docs };
-                }
-            }
-            catch (error) {
-                throw new common_1.HttpException(error, 500);
+    async getUserDocuments(userId) {
+        try {
+            const docs = await this.prisma.document.findMany({
+                where: { id: userId },
+            });
+            if (docs) {
+                return { success: true, data: docs };
             }
         }
-        else {
-            throw new common_1.BadRequestException('Access Denied');
+        catch (error) {
+            throw new common_1.HttpException(error, 500);
         }
     }
     async update(id, updateUserDto) {

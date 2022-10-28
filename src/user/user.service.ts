@@ -2,6 +2,16 @@ import { BadRequestException, HttpException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 
+function exclude<User, Key extends keyof User>(
+  user: User,
+  ...keys: Key[]
+): Omit<User, Key> {
+  for (const key of keys) {
+    delete user[key];
+  }
+  return user;
+}
+
 @Injectable()
 export class UserService {
   constructor(private prisma: PrismaService) {}
@@ -10,20 +20,12 @@ export class UserService {
     try {
       const user = await this.prisma.user.findUnique({
         where: { id: userId },
-        select: {
-          name: true,
-          email: true,
-          roles: true,
-          type: true,
-          Documents: true,
-          createdAt: true,
-        },
       });
-
+      const data = exclude(user, 'password', 'hashedRt', 'otp', 'otpCreatedAt');
       if (user) {
         return {
           success: true,
-          data: user,
+          data: data,
         };
       } else {
         throw new BadRequestException('User does not exist');
@@ -38,17 +40,16 @@ export class UserService {
       try {
         const user = await this.prisma.user.findUnique({
           where: { id },
-          select: {
-            name: true,
-            email: true,
-            roles: true,
-            type: true,
-            Documents: true,
-            createdAt: true,
-          },
         });
+        const data = exclude(
+          user,
+          'password',
+          'hashedRt',
+          'otp',
+          'otpCreatedAt',
+        );
         if (user) {
-          return { success: true, data: user };
+          return { success: true, data: data };
         } else {
           throw new BadRequestException('User does not exist!');
         }
@@ -60,20 +61,16 @@ export class UserService {
     }
   }
 
-  async getUserDocuments(id: string, userId: string) {
-    if (id === userId) {
-      try {
-        const docs = await this.prisma.document.findMany({
-          where: { userId: id },
-        });
-        if (docs) {
-          return { success: true, data: docs };
-        }
-      } catch (error) {
-        throw new HttpException(error, 500);
+  async getUserDocuments(userId: string) {
+    try {
+      const docs = await this.prisma.document.findMany({
+        where: { id: userId },
+      });
+      if (docs) {
+        return { success: true, data: docs };
       }
-    } else {
-      throw new BadRequestException('Access Denied');
+    } catch (error) {
+      throw new HttpException(error, 500);
     }
   }
 
