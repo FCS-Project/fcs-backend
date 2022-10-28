@@ -79,4 +79,33 @@ export class UserService {
       throw new BadRequestException('Access Denied');
     }
   }
+
+  async getProfile(id: string) {
+    try {
+      const user = await this.prisma.user.findUnique({
+        where: { id },
+        select: {
+          name: true,
+          mobileNumber: true,
+          location: true,
+          email: true,
+          displaySrc: true,
+          bannerSrc: true,
+          type: true,
+          roles: true,
+          description: true,
+        },
+      });
+      if (user.type[0] == 'Professional' || user.roles[0] == 'Organisation') {
+        return {
+          success: true,
+          data: user,
+        };
+      } else {
+        throw new BadRequestException('Access Denied.');
+      }
+    } catch (error) {
+      throw new HttpException(error, 500);
+    }
+  }
 }

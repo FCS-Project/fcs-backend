@@ -2,7 +2,7 @@ import { Controller, Get, Body, Patch, Param, Delete } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { GetCurrentUserId } from 'src/common/decorators';
+import { GetCurrentUserId, Public } from 'src/common/decorators';
 import { GetCurrentUserRole } from 'src/common/decorators/get-current-user-role.decorator';
 
 @ApiTags('User')
@@ -32,5 +32,11 @@ export class UserController {
   @Delete(':id')
   remove(@Param('id') id: string, @GetCurrentUserRole() role: string) {
     return this.userService.remove(id, role);
+  }
+
+  @Public()
+  @Get('/profile/:id')
+  getProfile(@Param('id') id: string) {
+    return this.userService.getProfile(id);
   }
 }

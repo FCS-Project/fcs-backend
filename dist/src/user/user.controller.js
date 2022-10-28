@@ -35,6 +35,9 @@ let UserController = class UserController {
     remove(id, role) {
         return this.userService.remove(id, role);
     }
+    getProfile(id) {
+        return this.userService.getProfile(id);
+    }
 };
 __decorate([
     (0, common_1.Get)(':id'),
@@ -69,6 +72,14 @@ __decorate([
     __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "remove", null);
+__decorate([
+    (0, decorators_1.Public)(),
+    (0, common_1.Get)('/profile/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], UserController.prototype, "getProfile", null);
 UserController = __decorate([
     (0, swagger_1.ApiTags)('User'),
     (0, common_1.Controller)('user'),

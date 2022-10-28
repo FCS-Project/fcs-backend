@@ -61,7 +61,7 @@ export class SignUpDto {
 
   @IsString()
   @IsOptional()
-  @MaxLength(200)
+  @MaxLength(500)
   @ApiProperty({ required: false })
   description: string;
 }

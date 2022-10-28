@@ -25,4 +25,18 @@ export declare class UserService {
     remove(id: string, role: string): Promise<{
         success: boolean;
     }>;
+    getProfile(id: string): Promise<{
+        success: boolean;
+        data: {
+            name: string;
+            email: string;
+            roles: import(".prisma/client").Role[];
+            type: import(".prisma/client").Type[];
+            mobileNumber: string;
+            description: string;
+            displaySrc: string;
+            bannerSrc: string;
+            location: string;
+        };
+    }>;
 }

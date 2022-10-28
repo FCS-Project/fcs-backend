@@ -74,7 +74,7 @@ __decorate([
 __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.MaxLength)(200),
+    (0, class_validator_1.MaxLength)(500),
     (0, swagger_1.ApiProperty)({ required: false }),
     __metadata("design:type", String)
 ], SignUpDto.prototype, "description", void 0);

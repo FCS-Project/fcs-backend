@@ -11,7 +11,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DocumentService = void 0;
 const common_1 = require("@nestjs/common");
+const decorators_1 = require("../common/decorators");
 const prisma_service_1 = require("../prisma/prisma.service");
+const create_document_dto_1 = require("./dto/create-document.dto");
 let DocumentService = class DocumentService {
     constructor(prisma) {
         this.prisma = prisma;
@@ -65,6 +67,12 @@ let DocumentService = class DocumentService {
         }
     }
 };
+__decorate([
+    (0, decorators_1.Public)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [create_document_dto_1.CreateDocumentDto]),
+    __metadata("design:returntype", Promise)
+], DocumentService.prototype, "create", null);
 DocumentService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [prisma_service_1.PrismaService])

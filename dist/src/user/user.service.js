@@ -94,6 +94,36 @@ let UserService = class UserService {
             throw new common_1.BadRequestException('Access Denied');
         }
     }
+    async getProfile(id) {
+        try {
+            const user = await this.prisma.user.findUnique({
+                where: { id },
+                select: {
+                    name: true,
+                    mobileNumber: true,
+                    location: true,
+                    email: true,
+                    displaySrc: true,
+                    bannerSrc: true,
+                    type: true,
+                    roles: true,
+                    description: true,
+                },
+            });
+            if (user.type[0] == 'Professional' || user.roles[0] == 'Organisation') {
+                return {
+                    success: true,
+                    data: user,
+                };
+            }
+            else {
+                throw new common_1.BadRequestException('Cannot Access Patient Data.');
+            }
+        }
+        catch (error) {
+            throw new common_1.HttpException(error, 500);
+        }
+    }
 };
 UserService = __decorate([
     (0, common_1.Injectable)(),

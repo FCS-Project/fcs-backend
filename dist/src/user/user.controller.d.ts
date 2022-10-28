@@ -6,9 +6,9 @@ export declare class UserController {
     findOne(id: string, role: string, userId: string): Promise<{
         success: boolean;
         data: {
+            roles: import(".prisma/client").Role[];
             name: string;
             email: string;
-            roles: import(".prisma/client").Role[];
             type: import(".prisma/client").Type[];
             Documents: import(".prisma/client").Document[];
             createdAt: Date;
@@ -24,5 +24,19 @@ export declare class UserController {
     }>;
     remove(id: string, role: string): Promise<{
         success: boolean;
+    }>;
+    getProfile(id: string): Promise<{
+        success: boolean;
+        data: {
+            roles: import(".prisma/client").Role[];
+            name: string;
+            email: string;
+            type: import(".prisma/client").Type[];
+            mobileNumber: string;
+            description: string;
+            displaySrc: string;
+            bannerSrc: string;
+            location: string;
+        };
     }>;
 }
