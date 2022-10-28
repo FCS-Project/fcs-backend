@@ -16,6 +16,33 @@ let UserService = class UserService {
     constructor(prisma) {
         this.prisma = prisma;
     }
+    async getMe(userId) {
+        try {
+            const user = this.prisma.user.findUnique({
+                where: { id: userId },
+                select: {
+                    name: true,
+                    email: true,
+                    roles: true,
+                    type: true,
+                    Documents: true,
+                    createdAt: true,
+                },
+            });
+            if (user) {
+                return {
+                    success: true,
+                    data: user,
+                };
+            }
+            else {
+                throw new common_1.BadRequestException('User does not exist');
+            }
+        }
+        catch (error) {
+            throw new common_1.HttpException(error, 500);
+        }
+    }
     async findOne(id, role, userId) {
         if (role === 'Admin' || userId === id) {
             try {
@@ -117,7 +144,7 @@ let UserService = class UserService {
                 };
             }
             else {
-                throw new common_1.BadRequestException('Cannot Access Patient Data.');
+                throw new common_1.BadRequestException('Access Denied.');
             }
         }
         catch (error) {

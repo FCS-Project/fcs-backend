@@ -23,6 +23,9 @@ let UserController = class UserController {
     constructor(userService) {
         this.userService = userService;
     }
+    getMe(userId) {
+        return this.userService.getMe(userId);
+    }
     findOne(id, role, userId) {
         return this.userService.findOne(id, role, userId);
     }
@@ -39,6 +42,13 @@ let UserController = class UserController {
         return this.userService.getProfile(id);
     }
 };
+__decorate([
+    (0, common_1.Get)('/me'),
+    __param(0, (0, decorators_1.GetCurrentUserId)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], UserController.prototype, "getMe", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),

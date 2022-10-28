@@ -6,6 +6,32 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
+  async getMe(userId: string) {
+    try {
+      const user = this.prisma.user.findUnique({
+        where: { id: userId },
+        select: {
+          name: true,
+          email: true,
+          roles: true,
+          type: true,
+          Documents: true,
+          createdAt: true,
+        },
+      });
+      if (user) {
+        return {
+          success: true,
+          data: user,
+        };
+      } else {
+        throw new BadRequestException('User does not exist');
+      }
+    } catch (error) {
+      throw new HttpException(error, 500);
+    }
+  }
+
   async findOne(id: string, role: string, userId: string) {
     if (role === 'Admin' || userId === id) {
       try {

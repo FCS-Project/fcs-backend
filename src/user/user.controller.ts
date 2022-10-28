@@ -10,6 +10,11 @@ import { GetCurrentUserRole } from 'src/common/decorators/get-current-user-role.
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @Get('/me')
+  getMe(@GetCurrentUserId() userId: string) {
+    return this.userService.getMe(userId);
+  }
+
   @Get(':id')
   findOne(
     @Param('id') id: string,

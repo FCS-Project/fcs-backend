@@ -3,6 +3,17 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export declare class UserService {
     private prisma;
     constructor(prisma: PrismaService);
+    getMe(userId: string): Promise<{
+        success: boolean;
+        data: import(".prisma/client").Prisma.Prisma__UserClient<{
+            name: string;
+            email: string;
+            roles: import(".prisma/client").Role[];
+            type: import(".prisma/client").Type[];
+            Documents: import(".prisma/client").Document[];
+            createdAt: Date;
+        }, never>;
+    }>;
     findOne(id: string, role: string, userId: string): Promise<{
         success: boolean;
         data: {
