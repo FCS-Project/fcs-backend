@@ -77,16 +77,21 @@ let UserService = class UserService {
             throw new common_1.HttpException(error, 500);
         }
     }
-    async update(id, updateUserDto) {
-        try {
-            const updatedData = await this.prisma.user.update({
-                where: { id },
-                data: updateUserDto,
-            });
-            return { success: true, data: updatedData };
+    async update(id, updateUserDto, userId) {
+        if (id === userId) {
+            try {
+                const updatedData = await this.prisma.user.update({
+                    where: { id },
+                    data: updateUserDto,
+                });
+                return { success: true, data: updatedData };
+            }
+            catch (error) {
+                throw new common_1.HttpException(error, 500);
+            }
         }
-        catch (error) {
-            throw new common_1.HttpException(error, 500);
+        else {
+            throw new common_1.BadRequestException('Access Denied.');
         }
     }
     async remove(id, role) {

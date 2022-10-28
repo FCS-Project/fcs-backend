@@ -74,15 +74,19 @@ export class UserService {
     }
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto) {
-    try {
-      const updatedData = await this.prisma.user.update({
-        where: { id },
-        data: updateUserDto,
-      });
-      return { success: true, data: updatedData };
-    } catch (error) {
-      throw new HttpException(error, 500);
+  async update(id: string, updateUserDto: UpdateUserDto, userId) {
+    if (id === userId) {
+      try {
+        const updatedData = await this.prisma.user.update({
+          where: { id },
+          data: updateUserDto,
+        });
+        return { success: true, data: updatedData };
+      } catch (error) {
+        throw new HttpException(error, 500);
+      }
+    } else {
+      throw new BadRequestException('Access Denied.');
     }
   }
 

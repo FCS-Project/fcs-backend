@@ -35,8 +35,8 @@ let UserController = class UserController {
     findDocuments(userId) {
         return this.userService.getUserDocuments(userId);
     }
-    update(id, updateUserDto) {
-        return this.userService.update(id, updateUserDto);
+    update(id, updateUserDto, userId) {
+        return this.userService.update(id, updateUserDto, userId);
     }
     remove(id, role) {
         return this.userService.remove(id, role);
@@ -79,8 +79,9 @@ __decorate([
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
+    __param(2, (0, decorators_1.GetCurrentUserId)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_user_dto_1.UpdateUserDto]),
+    __metadata("design:paramtypes", [String, update_user_dto_1.UpdateUserDto, String]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "update", null);
 __decorate([
