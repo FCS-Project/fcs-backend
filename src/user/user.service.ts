@@ -8,7 +8,7 @@ export class UserService {
 
   async getMe(userId: string) {
     try {
-      const user = this.prisma.user.findUnique({
+      const user = await this.prisma.user.findUnique({
         where: { id: userId },
         select: {
           name: true,
@@ -19,6 +19,7 @@ export class UserService {
           createdAt: true,
         },
       });
+
       if (user) {
         return {
           success: true,

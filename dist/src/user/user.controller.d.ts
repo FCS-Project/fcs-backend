@@ -5,14 +5,14 @@ export declare class UserController {
     constructor(userService: UserService);
     getMe(userId: string): Promise<{
         success: boolean;
-        data: import(".prisma/client").Prisma.Prisma__UserClient<{
+        data: {
             name: string;
             email: string;
             roles: import(".prisma/client").Role[];
             type: import(".prisma/client").Type[];
             Documents: import(".prisma/client").Document[];
             createdAt: Date;
-        }, never>;
+        };
     }>;
     findOne(id: string, role: string, userId: string): Promise<{
         success: boolean;

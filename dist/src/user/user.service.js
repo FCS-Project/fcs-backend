@@ -18,7 +18,7 @@ let UserService = class UserService {
     }
     async getMe(userId) {
         try {
-            const user = this.prisma.user.findUnique({
+            const user = await this.prisma.user.findUnique({
                 where: { id: userId },
                 select: {
                     name: true,
