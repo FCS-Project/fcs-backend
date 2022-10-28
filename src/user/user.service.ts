@@ -74,7 +74,7 @@ export class UserService {
     }
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto, userId) {
+  async update(id: string, updateUserDto: UpdateUserDto, userId: string) {
     if (id === userId) {
       try {
         const updatedData = await this.prisma.user.update({
