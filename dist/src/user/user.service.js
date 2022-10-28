@@ -128,6 +128,29 @@ let UserService = class UserService {
             throw new common_1.HttpException(error, 500);
         }
     }
+    async getHome() {
+        try {
+            const users = await this.prisma.user.findMany();
+            const homeData = [];
+            let len = 0;
+            for (let i = 0; i < users.length; i++) {
+                if (users[i].type[0] === 'Professional' ||
+                    users[i].roles[0] === 'Organisation') {
+                    const user = exclude(users[i], 'password', 'hashedRt', 'otp', 'otpCreatedAt');
+                    homeData[len] = user;
+                    len++;
+                    console.log(homeData);
+                }
+            }
+            return {
+                success: true,
+                data: homeData,
+            };
+        }
+        catch (error) {
+            throw new common_1.HttpException(error, 500);
+        }
+    }
 };
 UserService = __decorate([
     (0, common_1.Injectable)(),

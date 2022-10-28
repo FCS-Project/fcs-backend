@@ -26,4 +26,8 @@ export declare class UserService {
         success: boolean;
         data: Omit<import(".prisma/client").User, "password" | "hashedRt" | "otp" | "otpCreatedAt">;
     }>;
+    getHome(): Promise<{
+        success: boolean;
+        data: any[];
+    }>;
 }

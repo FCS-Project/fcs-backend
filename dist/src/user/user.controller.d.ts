@@ -7,6 +7,10 @@ export declare class UserController {
         success: boolean;
         data: Omit<import(".prisma/client").User, "password" | "hashedRt" | "otp" | "otpCreatedAt">;
     }>;
+    getHome(): Promise<{
+        success: boolean;
+        data: any[];
+    }>;
     findOne(id: string, role: string, userId: string): Promise<{
         success: boolean;
         data: Omit<import(".prisma/client").User, "password" | "hashedRt" | "otp" | "otpCreatedAt">;

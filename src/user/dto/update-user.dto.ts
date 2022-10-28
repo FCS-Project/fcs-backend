@@ -28,4 +28,24 @@ export class UpdateUserDto {
   @IsOptional()
   @ApiProperty({ required: false })
   role: Role;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  location: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  description: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  displaySrc: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  bannerSrc: string;
 }

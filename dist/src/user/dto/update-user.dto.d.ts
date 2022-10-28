@@ -5,4 +5,8 @@ export declare class UpdateUserDto {
     password: string;
     mobileNumber: string;
     role: Role;
+    location: string;
+    description: string;
+    displaySrc: string;
+    bannerSrc: string;
 }
