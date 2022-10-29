@@ -9,7 +9,13 @@ export declare class UserController {
     }>;
     getHome(): Promise<{
         success: boolean;
-        data: any[];
+        data: {
+            id: string;
+            name: string;
+            type: import(".prisma/client").Type[];
+            displaySrc: string;
+            location: string;
+        }[];
     }>;
     findOne(id: string, role: string, userId: string): Promise<{
         success: boolean;
@@ -28,6 +34,6 @@ export declare class UserController {
     }>;
     getProfile(id: string): Promise<{
         success: boolean;
-        data: Omit<import(".prisma/client").User, "password" | "hashedRt" | "otp" | "otpCreatedAt">;
+        data: import(".prisma/client").User[];
     }>;
 }

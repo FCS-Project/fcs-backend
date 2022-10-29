@@ -24,10 +24,16 @@ export declare class UserService {
     }>;
     getProfile(id: string): Promise<{
         success: boolean;
-        data: Omit<import(".prisma/client").User, "password" | "hashedRt" | "otp" | "otpCreatedAt">;
+        data: import(".prisma/client").User[];
     }>;
     getHome(): Promise<{
         success: boolean;
-        data: any[];
+        data: {
+            id: string;
+            name: string;
+            type: import(".prisma/client").Type[];
+            displaySrc: string;
+            location: string;
+        }[];
     }>;
 }

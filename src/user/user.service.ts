@@ -110,14 +110,22 @@ export class UserService {
 
   async getProfile(id: string) {
     try {
-      const user = await this.prisma.user.findUnique({
-        where: { id },
+      const user = await this.prisma.user.findMany({
+        where: {
+          OR: [
+            { type: { has: 'Professional' } },
+            { roles: { has: 'Organisation' } },
+          ],
+          id: id,
+        },
       });
-      const data = exclude(user, 'password', 'hashedRt', 'otp', 'otpCreatedAt');
-      if (user.type[0] == 'Professional' || user.roles[0] == 'Organisation') {
+      for (const element of user) {
+        exclude(element, 'password', 'hashedRt', 'otp', 'otpCreatedAt');
+      }
+      if (user.length) {
         return {
           success: true,
-          data: data,
+          data: user,
         };
       } else {
         throw new BadRequestException('Access Denied.');
@@ -129,29 +137,29 @@ export class UserService {
 
   async getHome() {
     try {
-      const users = await this.prisma.user.findMany();
-      const homeData = [];
-      let len = 0;
-      for (let i = 0; i < users.length; i++) {
-        if (
-          users[i].type[0] === 'Professional' ||
-          users[i].roles[0] === 'Organisation'
-        ) {
-          const user = exclude(
-            users[i],
-            'password',
-            'hashedRt',
-            'otp',
-            'otpCreatedAt',
-          );
-          homeData[len] = user;
-          len++;
-        }
+      const users = await this.prisma.user.findMany({
+        where: {
+          OR: [
+            { type: { has: 'Professional' } },
+            { roles: { has: 'Organisation' } },
+          ],
+        },
+        select: {
+          id: true,
+          name: true,
+          type: true,
+          displaySrc: true,
+          location: true,
+        },
+      });
+      if (users) {
+        return {
+          success: true,
+          data: users,
+        };
+      } else {
+        throw new BadRequestException('No Data.');
       }
-      return {
-        success: true,
-        data: homeData,
-      };
     } catch (error) {
       throw new HttpException(error, 500);
     }
