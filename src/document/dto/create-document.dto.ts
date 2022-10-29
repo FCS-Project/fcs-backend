@@ -6,4 +6,9 @@ export class CreateDocumentDto {
   @IsNotEmpty()
   @ApiProperty()
   userId: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  dataURI: string;
 }

@@ -10,7 +10,8 @@ export class DocumentService {
   @Public()
   async create(createDocumentDto: CreateDocumentDto) {
     try {
-      return await this.prisma.document.create({ data: createDocumentDto });
+      console.log(createDocumentDto);
+      // return await this.prisma.document.create({ data: createDocumentDto });
     } catch (error) {
       throw new HttpException(error, 500);
     }
