@@ -24,7 +24,7 @@ export declare class UserService {
     }>;
     getProfile(id: string): Promise<{
         success: boolean;
-        data: import(".prisma/client").User[];
+        data: import(".prisma/client").User;
     }>;
     getHome(): Promise<{
         success: boolean;
@@ -32,7 +32,7 @@ export declare class UserService {
             id: string;
             name: string;
             type: import(".prisma/client").Type[];
-            displaySrc: string;
+            bannerSrc: string;
             location: string;
         }[];
     }>;

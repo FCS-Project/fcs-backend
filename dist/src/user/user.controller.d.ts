@@ -13,7 +13,7 @@ export declare class UserController {
             id: string;
             name: string;
             type: import(".prisma/client").Type[];
-            displaySrc: string;
+            bannerSrc: string;
             location: string;
         }[];
     }>;
@@ -34,6 +34,6 @@ export declare class UserController {
     }>;
     getProfile(id: string): Promise<{
         success: boolean;
-        data: import(".prisma/client").User[];
+        data: import(".prisma/client").User;
     }>;
 }

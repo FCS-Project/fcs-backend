@@ -127,10 +127,11 @@ let UserService = class UserService {
             for (const element of user) {
                 exclude(element, 'password', 'hashedRt', 'otp', 'otpCreatedAt');
             }
-            if (user.length) {
+            const data = user[0];
+            if (data) {
                 return {
                     success: true,
-                    data: user,
+                    data: data,
                 };
             }
             else {
@@ -154,7 +155,7 @@ let UserService = class UserService {
                     id: true,
                     name: true,
                     type: true,
-                    displaySrc: true,
+                    bannerSrc: true,
                     location: true,
                 },
             });
