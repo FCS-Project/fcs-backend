@@ -53,7 +53,6 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "getMe", null);
 __decorate([
-    (0, decorators_1.Public)(),
     (0, common_1.Get)('/home'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),

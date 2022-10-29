@@ -15,7 +15,6 @@ export class UserController {
     return this.userService.getMe(userId);
   }
 
-  @Public()
   @Get('/home')
   getHome() {
     return this.userService.getHome();
