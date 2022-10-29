@@ -144,7 +144,6 @@ let UserService = class UserService {
                     const user = exclude(users[i], 'password', 'hashedRt', 'otp', 'otpCreatedAt');
                     homeData[len] = user;
                     len++;
-                    console.log(homeData);
                 }
             }
             return {

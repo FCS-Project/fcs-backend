@@ -146,10 +146,8 @@ export class UserService {
           );
           homeData[len] = user;
           len++;
-          console.log(homeData);
         }
       }
-
       return {
         success: true,
         data: homeData,
