@@ -24,9 +24,9 @@ export declare class UserService {
     remove(id: string, role: string): Promise<{
         success: boolean;
     }>;
-    getProfile(id: string, userId: string): Promise<{
+    getProfile(id: string, userId: string, role: string): Promise<{
         success: boolean;
-        data: import(".prisma/client").User;
+        data: Omit<import(".prisma/client").User, "password" | "hashedRt" | "otp" | "otpCreatedAt" | "createdAt" | "updatedAt">;
     }>;
     getHome(): Promise<{
         success: boolean;

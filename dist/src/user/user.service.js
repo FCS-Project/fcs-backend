@@ -114,7 +114,25 @@ let UserService = class UserService {
             throw new common_1.BadRequestException('Access Denied');
         }
     }
-    async getProfile(id, userId) {
+    async getProfile(id, userId, role) {
+        if (role === 'Admin') {
+            try {
+                const user = await this.prisma.user.findUnique({ where: { id } });
+                const data = exclude(user, 'password', 'hashedRt', 'otp', 'otpCreatedAt', 'createdAt', 'updatedAt');
+                if (data) {
+                    return {
+                        success: true,
+                        data: data,
+                    };
+                }
+                else {
+                    throw new common_1.BadRequestException('Access Denied.');
+                }
+            }
+            catch (error) {
+                throw new common_1.HttpException(error, 500);
+            }
+        }
         if (userId) {
             try {
                 const user = await this.prisma.user.findMany({

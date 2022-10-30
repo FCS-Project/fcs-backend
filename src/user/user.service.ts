@@ -119,7 +119,31 @@ export class UserService {
     }
   }
 
-  async getProfile(id: string, userId: string) {
+  async getProfile(id: string, userId: string, role: string) {
+    if (role === 'Admin') {
+      try {
+        const user = await this.prisma.user.findUnique({ where: { id } });
+        const data = exclude(
+          user,
+          'password',
+          'hashedRt',
+          'otp',
+          'otpCreatedAt',
+          'createdAt',
+          'updatedAt',
+        );
+        if (data) {
+          return {
+            success: true,
+            data: data,
+          };
+        } else {
+          throw new BadRequestException('Access Denied.');
+        }
+      } catch (error) {
+        throw new HttpException(error, 500);
+      }
+    }
     if (userId) {
       try {
         const user = await this.prisma.user.findMany({

@@ -47,8 +47,8 @@ let UserController = class UserController {
     remove(id, role) {
         return this.userService.remove(id, role);
     }
-    getProfile(id, userId) {
-        return this.userService.getProfile(id, userId);
+    getProfile(id, userId, role) {
+        return this.userService.getProfile(id, userId, role);
     }
 };
 __decorate([
@@ -115,8 +115,9 @@ __decorate([
     (0, common_1.Get)('/profile/:id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, decorators_1.GetCurrentUserId)()),
+    __param(2, (0, get_current_user_role_decorator_1.GetCurrentUserRole)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:paramtypes", [String, String, String]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "getProfile", null);
 UserController = __decorate([
