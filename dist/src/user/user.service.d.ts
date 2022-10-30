@@ -34,6 +34,29 @@ export declare class UserService {
             id: string;
             name: string;
             type: import(".prisma/client").Type[];
+            displaySrc: string;
+            bannerSrc: string;
+            location: string;
+        }[];
+    }>;
+    getUsers(role: string): Promise<{
+        success: boolean;
+        data: {
+            id: string;
+            name: string;
+            type: import(".prisma/client").Type[];
+            displaySrc: string;
+            bannerSrc: string;
+            location: string;
+        }[];
+    }>;
+    getOrganisations(role: string): Promise<{
+        success: boolean;
+        data: {
+            id: string;
+            name: string;
+            type: import(".prisma/client").Type[];
+            displaySrc: string;
             bannerSrc: string;
             location: string;
         }[];

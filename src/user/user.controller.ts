@@ -25,6 +25,16 @@ export class UserController {
     return this.userService.getHome();
   }
 
+  @Get('/admin/users')
+  getUsers(@GetCurrentUserRole() role: string) {
+    return this.userService.getUsers(role);
+  }
+
+  @Get('/admin/organisations')
+  getOrganisations(@GetCurrentUserRole() role: string) {
+    return this.userService.getOrganisations(role);
+  }
+
   @Get(':id')
   findOne(
     @Param('id') id: string,

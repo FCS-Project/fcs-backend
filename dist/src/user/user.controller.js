@@ -32,6 +32,12 @@ let UserController = class UserController {
     getHome() {
         return this.userService.getHome();
     }
+    getUsers(role) {
+        return this.userService.getUsers(role);
+    }
+    getOrganisations(role) {
+        return this.userService.getOrganisations(role);
+    }
     findOne(id, role, userId) {
         return this.userService.findOne(id, role, userId);
     }
@@ -65,6 +71,20 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "getHome", null);
+__decorate([
+    (0, common_1.Get)('/admin/users'),
+    __param(0, (0, get_current_user_role_decorator_1.GetCurrentUserRole)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], UserController.prototype, "getUsers", null);
+__decorate([
+    (0, common_1.Get)('/admin/organisations'),
+    __param(0, (0, get_current_user_role_decorator_1.GetCurrentUserRole)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], UserController.prototype, "getOrganisations", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),

@@ -158,6 +158,7 @@ let UserService = class UserService {
                     id: true,
                     name: true,
                     type: true,
+                    displaySrc: true,
                     bannerSrc: true,
                     location: true,
                 },
@@ -170,6 +171,60 @@ let UserService = class UserService {
             }
             else {
                 throw new common_1.BadRequestException('No Data.');
+            }
+        }
+        catch (error) {
+            throw new common_1.HttpException(error, 500);
+        }
+    }
+    async getUsers(role) {
+        try {
+            if (role === 'Admin') {
+                const users = await this.prisma.user.findMany({
+                    where: { roles: { has: 'User' } },
+                    select: {
+                        id: true,
+                        name: true,
+                        type: true,
+                        displaySrc: true,
+                        bannerSrc: true,
+                        location: true,
+                    },
+                });
+                return {
+                    success: true,
+                    data: users,
+                };
+            }
+            else {
+                throw new common_1.BadRequestException('Access Denied');
+            }
+        }
+        catch (error) {
+            throw new common_1.HttpException(error, 500);
+        }
+    }
+    async getOrganisations(role) {
+        try {
+            if (role === 'Admin') {
+                const users = await this.prisma.user.findMany({
+                    where: { roles: { has: 'Organisation' } },
+                    select: {
+                        id: true,
+                        name: true,
+                        type: true,
+                        displaySrc: true,
+                        bannerSrc: true,
+                        location: true,
+                    },
+                });
+                return {
+                    success: true,
+                    data: users,
+                };
+            }
+            else {
+                throw new common_1.BadRequestException('Access Denied');
             }
         }
         catch (error) {

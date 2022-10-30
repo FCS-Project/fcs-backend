@@ -170,6 +170,7 @@ export class UserService {
           id: true,
           name: true,
           type: true,
+          displaySrc: true,
           bannerSrc: true,
           location: true,
         },
@@ -181,6 +182,58 @@ export class UserService {
         };
       } else {
         throw new BadRequestException('No Data.');
+      }
+    } catch (error) {
+      throw new HttpException(error, 500);
+    }
+  }
+
+  async getUsers(role: string) {
+    try {
+      if (role === 'Admin') {
+        const users = await this.prisma.user.findMany({
+          where: { roles: { has: 'User' } },
+          select: {
+            id: true,
+            name: true,
+            type: true,
+            displaySrc: true,
+            bannerSrc: true,
+            location: true,
+          },
+        });
+        return {
+          success: true,
+          data: users,
+        };
+      } else {
+        throw new BadRequestException('Access Denied');
+      }
+    } catch (error) {
+      throw new HttpException(error, 500);
+    }
+  }
+
+  async getOrganisations(role: string) {
+    try {
+      if (role === 'Admin') {
+        const users = await this.prisma.user.findMany({
+          where: { roles: { has: 'Organisation' } },
+          select: {
+            id: true,
+            name: true,
+            type: true,
+            displaySrc: true,
+            bannerSrc: true,
+            location: true,
+          },
+        });
+        return {
+          success: true,
+          data: users,
+        };
+      } else {
+        throw new BadRequestException('Access Denied');
       }
     } catch (error) {
       throw new HttpException(error, 500);
