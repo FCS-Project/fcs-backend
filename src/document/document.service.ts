@@ -78,9 +78,7 @@ export class DocumentService {
     ).then((response: any) => {
       return response;
     });
-    console.log('HI', file);
     formData.append('file', 'data:application/pdf;base64,' + file);
-    console.log('HI', file);
     formData.append('upload_preset', 'my-uploads');
     const responseData: any = await firstValueFrom(
       this.httpService
@@ -95,7 +93,6 @@ export class DocumentService {
         )
         .pipe(map((response) => [response.data, response.status])),
     );
-    console.log(responseData);
     return responseData[0].secure_url;
   }
 }

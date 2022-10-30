@@ -86,9 +86,7 @@ let DocumentService = class DocumentService {
         const file = await pdf2base64('src/document/test_assets/exported_file.pdf').then((response) => {
             return response;
         });
-        console.log('HI', file);
         formData.append('file', 'data:application/pdf;base64,' + file);
-        console.log('HI', file);
         formData.append('upload_preset', 'my-uploads');
         const responseData = await (0, rxjs_1.firstValueFrom)(this.httpService
             .post('https://api.cloudinary.com/v1_1/simply-sites1/image/upload', formData, {
@@ -97,7 +95,6 @@ let DocumentService = class DocumentService {
             },
         })
             .pipe((0, rxjs_1.map)((response) => [response.data, response.status])));
-        console.log(responseData);
         return responseData[0].secure_url;
     }
 };

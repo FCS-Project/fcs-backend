@@ -26,5 +26,4 @@ export async function signingPDF(dataURI: string) {
   const signedDocs = await signPDF(certificate, pdfDoc);
   const pdfName = `src/document/test_assets/exported_file.pdf`;
   fs.writeFileSync(pdfName, signedDocs);
-  console.log(`New Signed PDF created called: ${pdfName}`);
 }
