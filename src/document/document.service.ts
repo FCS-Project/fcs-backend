@@ -20,6 +20,7 @@ export class DocumentService {
       const pdfSrc = await this.uploadImage();
       const data = {
         userId: userId,
+        sharedWith: createDocumentDto.sharedWith,
         dataSrc: pdfSrc,
       };
       return await this.prisma.document.create({ data: data });

@@ -29,11 +29,11 @@ export declare class UserService {
     getHome(): Promise<{
         success: boolean;
         data: {
+            id: string;
             name: string;
             type: import(".prisma/client").Type[];
-            location: string;
             bannerSrc: string;
-            id: string;
+            location: string;
         }[];
     }>;
 }
