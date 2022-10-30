@@ -109,31 +109,33 @@ export class UserService {
     }
   }
 
-  async getProfile(id: string) {
-    try {
-      const user = await this.prisma.user.findMany({
-        where: {
-          OR: [
-            { type: { has: 'Professional' } },
-            { roles: { has: 'Organisation' } },
-          ],
-          id: id,
-        },
-      });
-      for (const element of user) {
-        exclude(element, 'password', 'hashedRt', 'otp', 'otpCreatedAt');
+  async getProfile(id: string, userId: string) {
+    if (userId) {
+      try {
+        const user = await this.prisma.user.findMany({
+          where: {
+            OR: [
+              { type: { has: 'Professional' } },
+              { roles: { has: 'Organisation' } },
+            ],
+            id: id,
+          },
+        });
+        for (const element of user) {
+          exclude(element, 'password', 'hashedRt', 'otp', 'otpCreatedAt');
+        }
+        const data = user[0];
+        if (data) {
+          return {
+            success: true,
+            data: data,
+          };
+        } else {
+          throw new BadRequestException('Access Denied.');
+        }
+      } catch (error) {
+        throw new HttpException(error, 500);
       }
-      const data = user[0];
-      if (data) {
-        return {
-          success: true,
-          data: data,
-        };
-      } else {
-        throw new BadRequestException('Access Denied.');
-      }
-    } catch (error) {
-      throw new HttpException(error, 500);
     }
   }
 

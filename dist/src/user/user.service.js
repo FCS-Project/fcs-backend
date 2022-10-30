@@ -114,33 +114,35 @@ let UserService = class UserService {
             throw new common_1.BadRequestException('Access Denied');
         }
     }
-    async getProfile(id) {
-        try {
-            const user = await this.prisma.user.findMany({
-                where: {
-                    OR: [
-                        { type: { has: 'Professional' } },
-                        { roles: { has: 'Organisation' } },
-                    ],
-                    id: id,
-                },
-            });
-            for (const element of user) {
-                exclude(element, 'password', 'hashedRt', 'otp', 'otpCreatedAt');
+    async getProfile(id, userId) {
+        if (userId) {
+            try {
+                const user = await this.prisma.user.findMany({
+                    where: {
+                        OR: [
+                            { type: { has: 'Professional' } },
+                            { roles: { has: 'Organisation' } },
+                        ],
+                        id: id,
+                    },
+                });
+                for (const element of user) {
+                    exclude(element, 'password', 'hashedRt', 'otp', 'otpCreatedAt');
+                }
+                const data = user[0];
+                if (data) {
+                    return {
+                        success: true,
+                        data: data,
+                    };
+                }
+                else {
+                    throw new common_1.BadRequestException('Access Denied.');
+                }
             }
-            const data = user[0];
-            if (data) {
-                return {
-                    success: true,
-                    data: data,
-                };
+            catch (error) {
+                throw new common_1.HttpException(error, 500);
             }
-            else {
-                throw new common_1.BadRequestException('Access Denied.');
-            }
-        }
-        catch (error) {
-            throw new common_1.HttpException(error, 500);
         }
     }
     async getHome() {

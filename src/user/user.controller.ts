@@ -48,9 +48,8 @@ export class UserController {
     return this.userService.remove(id, role);
   }
 
-  @Public()
   @Get('/profile/:id')
-  getProfile(@Param('id') id: string) {
-    return this.userService.getProfile(id);
+  getProfile(@Param('id') id: string, @GetCurrentUserId() userId: string) {
+    return this.userService.getProfile(id, userId);
   }
 }

@@ -24,7 +24,7 @@ export declare class UserService {
     remove(id: string, role: string): Promise<{
         success: boolean;
     }>;
-    getProfile(id: string): Promise<{
+    getProfile(id: string, userId: string): Promise<{
         success: boolean;
         data: import(".prisma/client").User;
     }>;
