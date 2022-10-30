@@ -14,14 +14,27 @@ const common_1 = require("@nestjs/common");
 const decorators_1 = require("../common/decorators");
 const prisma_service_1 = require("../prisma/prisma.service");
 const create_document_dto_1 = require("./dto/create-document.dto");
-const base64 = require('base64topdf');
+const FormData = require("form-data");
+const axios_1 = require("@nestjs/axios");
+const rxjs_1 = require("rxjs");
+const sign_pdf_util_1 = require("./utils/sign-pdf.util");
 let DocumentService = class DocumentService {
-    constructor(prisma) {
+    constructor(prisma, httpService) {
         this.prisma = prisma;
+        this.httpService = httpService;
     }
     async create(createDocumentDto) {
         try {
             console.log(createDocumentDto);
+            console.log('dataUri', createDocumentDto.dataURI);
+            await (0, sign_pdf_util_1.signingPDF)(createDocumentDto.dataURI);
+            const pdfSrc = await this.uploadImage();
+            console.log('urll', pdfSrc);
+            const data = {
+                userId: createDocumentDto.userId,
+                dataSrc: pdfSrc,
+            };
+            return await this.prisma.document.create({ data: data });
         }
         catch (error) {
             throw new common_1.HttpException(error, 500);
@@ -67,6 +80,24 @@ let DocumentService = class DocumentService {
             throw new common_1.HttpException(error, 500);
         }
     }
+    async uploadImage() {
+        const pdf2base64 = require('pdf-to-base64');
+        const formData = new FormData();
+        const file = await pdf2base64('src/document/test_assets/exported_file.pdf').then((response) => {
+            return response;
+        });
+        formData.append('file', 'data:application/pdf;base64,' + file);
+        formData.append('upload_preset', 'my-uploads');
+        const responseData = await (0, rxjs_1.firstValueFrom)(this.httpService
+            .post('https://api.cloudinary.com/v1_1/simply-sites1/image/upload', formData, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+        })
+            .pipe((0, rxjs_1.map)((response) => [response.data, response.status])));
+        console.log(responseData);
+        return responseData[0].secure_url;
+    }
 };
 __decorate([
     (0, decorators_1.Public)(),
@@ -76,7 +107,8 @@ __decorate([
 ], DocumentService.prototype, "create", null);
 DocumentService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [prisma_service_1.PrismaService])
+    __metadata("design:paramtypes", [prisma_service_1.PrismaService,
+        axios_1.HttpService])
 ], DocumentService);
 exports.DocumentService = DocumentService;
 //# sourceMappingURL=document.service.js.map

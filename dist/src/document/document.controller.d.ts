@@ -3,7 +3,7 @@ import { CreateDocumentDto } from './dto/create-document.dto';
 export declare class DocumentController {
     private readonly documentService;
     constructor(documentService: DocumentService);
-    create(createDocumentDto: CreateDocumentDto): Promise<void>;
+    create(createDocumentDto: CreateDocumentDto): Promise<import(".prisma/client").Document>;
     findAll(): Promise<import(".prisma/client").Document[]>;
     findOne(id: string): Promise<{
         success: boolean;

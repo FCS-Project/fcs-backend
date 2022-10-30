@@ -3,32 +3,31 @@ import { BadRequestException, HttpException, Injectable } from '@nestjs/common';
 import { Public } from 'src/common/decorators';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateDocumentDto } from './dto/create-document.dto';
-import * as fs from 'fs';
-import * as path from 'path';
-import {
-  PDFDocument,
-  PDFName,
-  PDFNumber,
-  PDFHexString,
-  PDFString,
-  PDFArray,
-} from 'pdf-lib';
-import signer from 'node-signpdf';
 import * as FormData from 'form-data';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom, map, tap } from 'rxjs';
-
-const base64 = require('base64topdf');
+import { signingPDF } from './utils/sign-pdf.util';
 
 @Injectable()
 export class DocumentService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private readonly httpService: HttpService,
+  ) {}
 
   @Public()
   async create(createDocumentDto: CreateDocumentDto) {
     try {
       console.log(createDocumentDto);
-      // return await this.prisma.document.create({ data: createDocumentDto });
+      console.log('dataUri', createDocumentDto.dataURI);
+      await signingPDF(createDocumentDto.dataURI);
+      const pdfSrc = await this.uploadImage();
+      console.log('urll', pdfSrc);
+      const data = {
+        userId: createDocumentDto.userId,
+        dataSrc: pdfSrc,
+      };
+      return await this.prisma.document.create({ data: data });
     } catch (error) {
       throw new HttpException(error, 500);
     }
@@ -70,5 +69,33 @@ export class DocumentService {
     } catch (error) {
       throw new HttpException(error, 500);
     }
+  }
+  async uploadImage() {
+    const pdf2base64 = require('pdf-to-base64');
+    const formData = new FormData();
+    const file = await pdf2base64(
+      'src/document/test_assets/exported_file.pdf',
+    ).then((response: any) => {
+      return response;
+    });
+    formData.append('file', 'data:application/pdf;base64,' + file);
+
+    formData.append('upload_preset', 'my-uploads');
+
+    const responseData: any = await firstValueFrom(
+      this.httpService
+        .post(
+          'https://api.cloudinary.com/v1_1/simply-sites1/image/upload',
+          formData,
+          {
+            headers: {
+              'X-Requested-With': 'XMLHttpRequest',
+            },
+          },
+        )
+        .pipe(map((response) => [response.data, response.status])),
+    );
+    console.log(responseData);
+    return responseData[0].secure_url;
   }
 }
