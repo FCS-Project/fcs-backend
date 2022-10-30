@@ -63,13 +63,12 @@ export class UserService {
 
   async getUserDocuments(userId: string) {
     try {
-      const docs = await this.prisma.document.findMany({
+      const docs = await this.prisma.user.findUnique({
         where: { id: userId },
+        select: { Documents: true },
       });
       if (docs) {
         return { success: true, data: docs };
-      } else {
-        throw new BadRequestException('Access Denied');
       }
     } catch (error) {
       throw new HttpException(error, 500);

@@ -23,6 +23,9 @@ let UserController = class UserController {
     constructor(userService) {
         this.userService = userService;
     }
+    findDocuments(userId) {
+        return this.userService.getUserDocuments(userId);
+    }
     getMe(userId) {
         return this.userService.getMe(userId);
     }
@@ -31,9 +34,6 @@ let UserController = class UserController {
     }
     findOne(id, role, userId) {
         return this.userService.findOne(id, role, userId);
-    }
-    findDocuments(userId) {
-        return this.userService.getUserDocuments(userId);
     }
     update(id, updateUserDto, userId) {
         return this.userService.update(id, updateUserDto, userId);
@@ -46,6 +46,13 @@ let UserController = class UserController {
     }
 };
 __decorate([
+    (0, common_1.Get)('/documents'),
+    __param(0, (0, decorators_1.GetCurrentUserId)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], UserController.prototype, "findDocuments", null);
+__decorate([
     (0, common_1.Get)('/me'),
     __param(0, (0, decorators_1.GetCurrentUserId)()),
     __metadata("design:type", Function),
@@ -53,7 +60,6 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "getMe", null);
 __decorate([
-    (0, decorators_1.Public)(),
     (0, common_1.Get)('/home'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
@@ -68,13 +74,6 @@ __decorate([
     __metadata("design:paramtypes", [String, String, String]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "findOne", null);
-__decorate([
-    (0, common_1.Get)('/documents'),
-    __param(0, (0, decorators_1.GetCurrentUserId)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], UserController.prototype, "findDocuments", null);
 __decorate([
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id')),

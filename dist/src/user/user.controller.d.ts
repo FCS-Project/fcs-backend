@@ -3,6 +3,12 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export declare class UserController {
     private readonly userService;
     constructor(userService: UserService);
+    findDocuments(userId: string): Promise<{
+        success: boolean;
+        data: {
+            Documents: import(".prisma/client").Document[];
+        };
+    }>;
     getMe(userId: string): Promise<{
         success: boolean;
         data: Omit<import(".prisma/client").User, "password" | "hashedRt" | "otp" | "otpCreatedAt">;
@@ -20,10 +26,6 @@ export declare class UserController {
     findOne(id: string, role: string, userId: string): Promise<{
         success: boolean;
         data: Omit<import(".prisma/client").User, "password" | "hashedRt" | "otp" | "otpCreatedAt">;
-    }>;
-    findDocuments(userId: string): Promise<{
-        success: boolean;
-        data: import(".prisma/client").Document[];
     }>;
     update(id: string, updateUserDto: UpdateUserDto, userId: string): Promise<{
         success: boolean;
