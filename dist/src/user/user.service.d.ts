@@ -5,11 +5,11 @@ export declare class UserService {
     constructor(prisma: PrismaService);
     getMe(userId: string): Promise<{
         success: boolean;
-        data: Omit<import(".prisma/client").User, "password" | "hashedRt" | "otp" | "otpCreatedAt">;
+        data: Omit<import(".prisma/client").User, "password" | "hashedRt" | "otp" | "otpCreatedAt" | "createdAt" | "updatedAt">;
     }>;
     findOne(id: string, role: string, userId: string): Promise<{
         success: boolean;
-        data: Omit<import(".prisma/client").User, "password" | "hashedRt" | "otp" | "otpCreatedAt">;
+        data: Omit<import(".prisma/client").User, "password" | "hashedRt" | "otp" | "otpCreatedAt" | "createdAt" | "updatedAt">;
     }>;
     getUserDocuments(userId: string): Promise<{
         success: boolean;

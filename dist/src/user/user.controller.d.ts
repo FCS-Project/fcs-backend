@@ -5,7 +5,7 @@ export declare class UserController {
     constructor(userService: UserService);
     getMe(userId: string): Promise<{
         success: boolean;
-        data: Omit<import(".prisma/client").User, "password" | "hashedRt" | "otp" | "otpCreatedAt">;
+        data: Omit<import(".prisma/client").User, "password" | "hashedRt" | "otp" | "otpCreatedAt" | "createdAt" | "updatedAt">;
     }>;
     findDocuments(userId: string): Promise<{
         success: boolean;
@@ -25,7 +25,7 @@ export declare class UserController {
     }>;
     findOne(id: string, role: string, userId: string): Promise<{
         success: boolean;
-        data: Omit<import(".prisma/client").User, "password" | "hashedRt" | "otp" | "otpCreatedAt">;
+        data: Omit<import(".prisma/client").User, "password" | "hashedRt" | "otp" | "otpCreatedAt" | "createdAt" | "updatedAt">;
     }>;
     update(id: string, updateUserDto: UpdateUserDto, userId: string): Promise<{
         success: boolean;

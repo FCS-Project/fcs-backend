@@ -27,7 +27,7 @@ let UserService = class UserService {
             const user = await this.prisma.user.findUnique({
                 where: { id: userId },
             });
-            const data = exclude(user, 'password', 'hashedRt', 'otp', 'otpCreatedAt');
+            const data = exclude(user, 'password', 'hashedRt', 'otp', 'otpCreatedAt', 'createdAt', 'updatedAt');
             if (user) {
                 return {
                     success: true,
@@ -48,7 +48,7 @@ let UserService = class UserService {
                 const user = await this.prisma.user.findUnique({
                     where: { id },
                 });
-                const data = exclude(user, 'password', 'hashedRt', 'otp', 'otpCreatedAt');
+                const data = exclude(user, 'password', 'hashedRt', 'otp', 'otpCreatedAt', 'createdAt', 'updatedAt');
                 if (user) {
                     return { success: true, data: data };
                 }
@@ -127,7 +127,7 @@ let UserService = class UserService {
                     },
                 });
                 for (const element of user) {
-                    exclude(element, 'password', 'hashedRt', 'otp', 'otpCreatedAt');
+                    exclude(element, 'password', 'hashedRt', 'otp', 'otpCreatedAt', 'createdAt', 'updatedAt');
                 }
                 const data = user[0];
                 if (data) {
