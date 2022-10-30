@@ -1,4 +1,4 @@
 export declare class CreateDocumentDto {
-    userId: string;
+    sharedWith: string;
     dataURI: string;
 }

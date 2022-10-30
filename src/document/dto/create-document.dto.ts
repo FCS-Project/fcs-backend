@@ -5,7 +5,7 @@ export class CreateDocumentDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  userId: string;
+  sharedWith: string;
 
   @IsString()
   @IsNotEmpty()

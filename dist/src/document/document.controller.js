@@ -22,8 +22,8 @@ let DocumentController = class DocumentController {
     constructor(documentService) {
         this.documentService = documentService;
     }
-    create(createDocumentDto) {
-        return this.documentService.create(createDocumentDto);
+    create(createDocumentDto, userId) {
+        return this.documentService.create(createDocumentDto, userId);
     }
     findAll() {
         return this.documentService.findAll();
@@ -36,11 +36,11 @@ let DocumentController = class DocumentController {
     }
 };
 __decorate([
-    (0, decorators_1.Public)(),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, decorators_1.GetCurrentUserId)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_document_dto_1.CreateDocumentDto]),
+    __metadata("design:paramtypes", [create_document_dto_1.CreateDocumentDto, String]),
     __metadata("design:returntype", void 0)
 ], DocumentController.prototype, "create", null);
 __decorate([

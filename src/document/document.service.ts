@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { BadRequestException, HttpException, Injectable } from '@nestjs/common';
-import { Public } from 'src/common/decorators';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateDocumentDto } from './dto/create-document.dto';
 import * as FormData from 'form-data';
@@ -15,16 +14,12 @@ export class DocumentService {
     private readonly httpService: HttpService,
   ) {}
 
-  @Public()
-  async create(createDocumentDto: CreateDocumentDto) {
+  async create(createDocumentDto: CreateDocumentDto, userId: string) {
     try {
-      console.log(createDocumentDto);
-      console.log('dataUri', createDocumentDto.dataURI);
       await signingPDF(createDocumentDto.dataURI);
       const pdfSrc = await this.uploadImage();
-      console.log('urll', pdfSrc);
       const data = {
-        userId: createDocumentDto.userId,
+        userId: userId,
         dataSrc: pdfSrc,
       };
       return await this.prisma.document.create({ data: data });
@@ -78,10 +73,10 @@ export class DocumentService {
     ).then((response: any) => {
       return response;
     });
+    console.log('HI', file);
     formData.append('file', 'data:application/pdf;base64,' + file);
-
+    console.log('HI', file);
     formData.append('upload_preset', 'my-uploads');
-
     const responseData: any = await firstValueFrom(
       this.httpService
         .post(

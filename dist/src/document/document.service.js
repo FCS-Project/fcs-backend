@@ -11,9 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DocumentService = void 0;
 const common_1 = require("@nestjs/common");
-const decorators_1 = require("../common/decorators");
 const prisma_service_1 = require("../prisma/prisma.service");
-const create_document_dto_1 = require("./dto/create-document.dto");
 const FormData = require("form-data");
 const axios_1 = require("@nestjs/axios");
 const rxjs_1 = require("rxjs");
@@ -23,15 +21,12 @@ let DocumentService = class DocumentService {
         this.prisma = prisma;
         this.httpService = httpService;
     }
-    async create(createDocumentDto) {
+    async create(createDocumentDto, userId) {
         try {
-            console.log(createDocumentDto);
-            console.log('dataUri', createDocumentDto.dataURI);
             await (0, sign_pdf_util_1.signingPDF)(createDocumentDto.dataURI);
             const pdfSrc = await this.uploadImage();
-            console.log('urll', pdfSrc);
             const data = {
-                userId: createDocumentDto.userId,
+                userId: userId,
                 dataSrc: pdfSrc,
             };
             return await this.prisma.document.create({ data: data });
@@ -86,7 +81,9 @@ let DocumentService = class DocumentService {
         const file = await pdf2base64('src/document/test_assets/exported_file.pdf').then((response) => {
             return response;
         });
+        console.log('HI', file);
         formData.append('file', 'data:application/pdf;base64,' + file);
+        console.log('HI', file);
         formData.append('upload_preset', 'my-uploads');
         const responseData = await (0, rxjs_1.firstValueFrom)(this.httpService
             .post('https://api.cloudinary.com/v1_1/simply-sites1/image/upload', formData, {
@@ -99,12 +96,6 @@ let DocumentService = class DocumentService {
         return responseData[0].secure_url;
     }
 };
-__decorate([
-    (0, decorators_1.Public)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_document_dto_1.CreateDocumentDto]),
-    __metadata("design:returntype", Promise)
-], DocumentService.prototype, "create", null);
 DocumentService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [prisma_service_1.PrismaService,
