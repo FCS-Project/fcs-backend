@@ -2,7 +2,7 @@ import { Controller, Get, Body, Patch, Param, Delete } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { GetCurrentUserId, Public } from 'src/common/decorators';
+import { GetCurrentUserId } from 'src/common/decorators';
 import { GetCurrentUserRole } from 'src/common/decorators/get-current-user-role.decorator';
 
 @ApiTags('User')
