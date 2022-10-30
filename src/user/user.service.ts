@@ -68,6 +68,8 @@ export class UserService {
       });
       if (docs) {
         return { success: true, data: docs };
+      } else {
+        throw new BadRequestException('Access Denied');
       }
     } catch (error) {
       throw new HttpException(error, 500);

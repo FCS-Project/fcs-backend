@@ -72,6 +72,9 @@ let UserService = class UserService {
             if (docs) {
                 return { success: true, data: docs };
             }
+            else {
+                throw new common_1.BadRequestException('Access Denied');
+            }
         }
         catch (error) {
             throw new common_1.HttpException(error, 500);

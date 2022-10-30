@@ -6,7 +6,9 @@ export declare class DocumentService {
     private prisma;
     private readonly httpService;
     constructor(prisma: PrismaService, httpService: HttpService);
-    create(createDocumentDto: CreateDocumentDto, userId: string): Promise<import(".prisma/client").Document>;
+    create(createDocumentDto: CreateDocumentDto, userId: string): Promise<{
+        success: boolean;
+    }>;
     findAll(): Promise<import(".prisma/client").Document[]>;
     findOne(id: string): Promise<{
         success: boolean;

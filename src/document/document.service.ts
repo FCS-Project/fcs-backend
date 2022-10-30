@@ -23,7 +23,10 @@ export class DocumentService {
         sharedWith: createDocumentDto.sharedWith,
         dataSrc: pdfSrc,
       };
-      return await this.prisma.document.create({ data: data });
+      await this.prisma.document.create({ data: data });
+      return {
+        success: true,
+      };
     } catch (error) {
       throw new HttpException(error, 500);
     }
