@@ -10,11 +10,6 @@ import { GetCurrentUserRole } from 'src/common/decorators/get-current-user-role.
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get('/documents')
-  findDocuments(@GetCurrentUserId() userId: string) {
-    return this.userService.getUserDocuments(userId);
-  }
-
   @Get('/me')
   getMe(@GetCurrentUserId() userId: string) {
     return this.userService.getMe(userId);
@@ -52,5 +47,10 @@ export class UserController {
   @Get('/profile/:id')
   getProfile(@Param('id') id: string) {
     return this.userService.getProfile(id);
+  }
+
+  @Get('/documents')
+  findDocuments(@GetCurrentUserId() userId: string) {
+    return this.userService.getUserDocuments(userId);
   }
 }
