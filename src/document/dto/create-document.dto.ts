@@ -11,4 +11,9 @@ export class CreateDocumentDto {
   @IsNotEmpty()
   @ApiProperty()
   dataURI: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  name: string;
 }

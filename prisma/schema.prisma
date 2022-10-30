@@ -36,6 +36,7 @@ model Document {
   userId     String
   sharedWith String
   dataSrc    String
+  name       String
   createdAt  DateTime @default(now())
 }
 

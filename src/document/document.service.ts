@@ -22,6 +22,7 @@ export class DocumentService {
         userId: userId,
         sharedWith: createDocumentDto.sharedWith,
         dataSrc: pdfSrc,
+        name: createDocumentDto.name,
       };
       await this.prisma.document.create({ data: data });
       return {

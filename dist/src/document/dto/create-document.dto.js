@@ -26,5 +26,11 @@ __decorate([
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
 ], CreateDocumentDto.prototype, "dataURI", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", String)
+], CreateDocumentDto.prototype, "name", void 0);
 exports.CreateDocumentDto = CreateDocumentDto;
 //# sourceMappingURL=create-document.dto.js.map
