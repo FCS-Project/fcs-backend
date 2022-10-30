@@ -20,7 +20,7 @@ let DocumentService = class DocumentService {
     }
     async create(createDocumentDto) {
         try {
-            return await this.prisma.document.create({ data: createDocumentDto });
+            console.log(createDocumentDto);
         }
         catch (error) {
             throw new common_1.HttpException(error, 500);

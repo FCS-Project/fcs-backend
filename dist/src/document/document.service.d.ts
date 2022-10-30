@@ -4,7 +4,7 @@ import { CreateDocumentDto } from './dto/create-document.dto';
 export declare class DocumentService {
     private prisma;
     constructor(prisma: PrismaService);
-    create(createDocumentDto: CreateDocumentDto): Promise<import(".prisma/client").Document>;
+    create(createDocumentDto: CreateDocumentDto): Promise<void>;
     findAll(): Promise<import(".prisma/client").Document[]>;
     findOne(id: string): Promise<{
         success: boolean;
