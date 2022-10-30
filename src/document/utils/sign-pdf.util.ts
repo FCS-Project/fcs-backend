@@ -16,21 +16,15 @@ export async function signingPDF(dataURI: string) {
     dataURI,
     'src/document/test_assets/imported_file.pdf',
   );
-
   console.log(decodedBase64);
-
   const pdfDoc = fs.readFileSync(
     path.resolve('src/document/test_assets/imported_file.pdf'),
   );
   const certificate = fs.readFileSync(
     path.resolve('src/document/test_assets/certificate.p12'),
   );
-
   const signedDocs = await signPDF(certificate, pdfDoc);
-
-  const randomNumber = Math.floor(Math.random() * 5000);
   const pdfName = `src/document/test_assets/exported_file.pdf`;
-
   fs.writeFileSync(pdfName, signedDocs);
   console.log(`New Signed PDF created called: ${pdfName}`);
 }

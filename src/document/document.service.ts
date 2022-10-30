@@ -5,7 +5,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateDocumentDto } from './dto/create-document.dto';
 import * as FormData from 'form-data';
 import { HttpService } from '@nestjs/axios';
-import { firstValueFrom, map, tap } from 'rxjs';
+import { firstValueFrom, map } from 'rxjs';
 import { signingPDF } from './utils/sign-pdf.util';
 
 @Injectable()
