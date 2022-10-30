@@ -10,11 +10,11 @@ export declare class UserController {
     getHome(): Promise<{
         success: boolean;
         data: {
-            id: string;
             name: string;
             type: import(".prisma/client").Type[];
-            bannerSrc: string;
             location: string;
+            bannerSrc: string;
+            id: string;
         }[];
     }>;
     findOne(id: string, role: string, userId: string): Promise<{

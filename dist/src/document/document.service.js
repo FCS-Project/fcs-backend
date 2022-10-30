@@ -14,6 +14,7 @@ const common_1 = require("@nestjs/common");
 const decorators_1 = require("../common/decorators");
 const prisma_service_1 = require("../prisma/prisma.service");
 const create_document_dto_1 = require("./dto/create-document.dto");
+const base64 = require('base64topdf');
 let DocumentService = class DocumentService {
     constructor(prisma) {
         this.prisma = prisma;

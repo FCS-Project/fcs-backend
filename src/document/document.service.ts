@@ -1,7 +1,24 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { BadRequestException, HttpException, Injectable } from '@nestjs/common';
 import { Public } from 'src/common/decorators';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateDocumentDto } from './dto/create-document.dto';
+import * as fs from 'fs';
+import * as path from 'path';
+import {
+  PDFDocument,
+  PDFName,
+  PDFNumber,
+  PDFHexString,
+  PDFString,
+  PDFArray,
+} from 'pdf-lib';
+import signer from 'node-signpdf';
+import * as FormData from 'form-data';
+import { HttpService } from '@nestjs/axios';
+import { firstValueFrom, map, tap } from 'rxjs';
+
+const base64 = require('base64topdf');
 
 @Injectable()
 export class DocumentService {
