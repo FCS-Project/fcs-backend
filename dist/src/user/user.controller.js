@@ -26,6 +26,9 @@ let UserController = class UserController {
     getMe(userId) {
         return this.userService.getMe(userId);
     }
+    findDocuments(userId) {
+        return this.userService.getUserDocuments(userId);
+    }
     getHome() {
         return this.userService.getHome();
     }
@@ -41,9 +44,6 @@ let UserController = class UserController {
     getProfile(id) {
         return this.userService.getProfile(id);
     }
-    findDocuments(userId) {
-        return this.userService.getUserDocuments(userId);
-    }
 };
 __decorate([
     (0, common_1.Get)('/me'),
@@ -52,6 +52,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "getMe", null);
+__decorate([
+    (0, common_1.Get)('/documents'),
+    __param(0, (0, decorators_1.GetCurrentUserId)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], UserController.prototype, "findDocuments", null);
 __decorate([
     (0, common_1.Get)('/home'),
     __metadata("design:type", Function),
@@ -92,13 +99,6 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "getProfile", null);
-__decorate([
-    (0, common_1.Get)('/documents'),
-    __param(0, (0, decorators_1.GetCurrentUserId)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], UserController.prototype, "findDocuments", null);
 UserController = __decorate([
     (0, swagger_1.ApiTags)('User'),
     (0, common_1.Controller)('user'),

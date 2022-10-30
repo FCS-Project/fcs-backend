@@ -15,6 +15,11 @@ export class UserController {
     return this.userService.getMe(userId);
   }
 
+  @Get('/documents')
+  findDocuments(@GetCurrentUserId() userId: string) {
+    return this.userService.getUserDocuments(userId);
+  }
+
   @Get('/home')
   getHome() {
     return this.userService.getHome();
@@ -47,10 +52,5 @@ export class UserController {
   @Get('/profile/:id')
   getProfile(@Param('id') id: string) {
     return this.userService.getProfile(id);
-  }
-
-  @Get('/documents')
-  findDocuments(@GetCurrentUserId() userId: string) {
-    return this.userService.getUserDocuments(userId);
   }
 }

@@ -7,6 +7,12 @@ export declare class UserController {
         success: boolean;
         data: Omit<import(".prisma/client").User, "password" | "hashedRt" | "otp" | "otpCreatedAt">;
     }>;
+    findDocuments(userId: string): Promise<{
+        success: boolean;
+        data: {
+            Documents: import(".prisma/client").Document[];
+        };
+    }>;
     getHome(): Promise<{
         success: boolean;
         data: {
@@ -31,11 +37,5 @@ export declare class UserController {
     getProfile(id: string): Promise<{
         success: boolean;
         data: import(".prisma/client").User;
-    }>;
-    findDocuments(userId: string): Promise<{
-        success: boolean;
-        data: {
-            Documents: import(".prisma/client").Document[];
-        };
     }>;
 }
