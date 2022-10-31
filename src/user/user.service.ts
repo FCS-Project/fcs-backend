@@ -104,9 +104,17 @@ export class UserService {
   async remove(id: string, role: string) {
     if (role === 'Admin') {
       try {
-        const user = await this.prisma.user.delete({ where: { id } });
-        if (user) {
-          return { success: true };
+        const docs = await this.prisma.document.deleteMany({
+          where: { userId: id },
+        });
+        const sharedDocs = await this.prisma.document.deleteMany({
+          where: { sharedWith: id },
+        });
+        if (docs && sharedDocs) {
+          const user = await this.prisma.user.delete({ where: { id } });
+          if (user) {
+            return { success: true };
+          }
         }
       } catch (error) {
         if (error.code === 'P2025') {
