@@ -6,14 +6,14 @@ export declare class DocumentController {
     create(createDocumentDto: CreateDocumentDto, userId: string): Promise<{
         success: boolean;
     }>;
+    getSharedDocs(userId: string): Promise<{
+        success: boolean;
+        data: import(".prisma/client").Document[];
+    }>;
     findAll(): Promise<import(".prisma/client").Document[]>;
     findOne(id: string): Promise<{
         success: boolean;
         data: import(".prisma/client").Document;
-    }>;
-    getSharedDocs(userId: string): Promise<{
-        success: boolean;
-        data: import(".prisma/client").Document[];
     }>;
     remove(id: string, userId: string): Promise<import("@nestjs/common").BadRequestException | {
         success: boolean;

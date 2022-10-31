@@ -17,6 +17,11 @@ export class DocumentController {
     return this.documentService.create(createDocumentDto, userId);
   }
 
+  @Get('/shared')
+  getSharedDocs(@GetCurrentUserId() userId: string) {
+    return this.documentService.getSharedDocs(userId);
+  }
+
   @Get()
   findAll() {
     return this.documentService.findAll();
@@ -25,11 +30,6 @@ export class DocumentController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.documentService.findOne(id);
-  }
-
-  @Get('/shared')
-  getSharedDocs(@GetCurrentUserId() userId: string) {
-    return this.documentService.getSharedDocs(userId);
   }
 
   @Delete(':id')
