@@ -109,10 +109,17 @@ export class DocumentService {
           },
         },
       });
-      return {
-        success: true,
-        data: sharedDocs,
-      };
+      if (sharedDocs) {
+        return {
+          success: true,
+          data: sharedDocs,
+        };
+      } else {
+        return {
+          success: true,
+          data: null,
+        };
+      }
     } catch (error) {
       throw new HttpException(error, 500);
     }

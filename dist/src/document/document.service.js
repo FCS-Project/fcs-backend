@@ -110,10 +110,18 @@ let DocumentService = class DocumentService {
                     },
                 },
             });
-            return {
-                success: true,
-                data: sharedDocs,
-            };
+            if (sharedDocs) {
+                return {
+                    success: true,
+                    data: sharedDocs,
+                };
+            }
+            else {
+                return {
+                    success: true,
+                    data: null,
+                };
+            }
         }
         catch (error) {
             throw new common_1.HttpException(error, 500);
