@@ -97,6 +97,28 @@ let DocumentService = class DocumentService {
             .pipe((0, rxjs_1.map)((response) => [response.data, response.status])));
         return responseData[0].secure_url;
     }
+    async getSharedDocs(userId) {
+        try {
+            const sharedDocs = await this.prisma.document.findMany({
+                where: { sharedWith: userId },
+                select: {
+                    user: {
+                        select: {
+                            name: true,
+                            displaySrc: true,
+                        },
+                    },
+                },
+            });
+            return {
+                success: true,
+                data: sharedDocs,
+            };
+        }
+        catch (error) {
+            throw new common_1.HttpException(error, 500);
+        }
+    }
 };
 DocumentService = __decorate([
     (0, common_1.Injectable)(),

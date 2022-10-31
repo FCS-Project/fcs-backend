@@ -14,4 +14,13 @@ export declare class DocumentController {
     remove(id: string, userId: string): Promise<import("@nestjs/common").BadRequestException | {
         success: boolean;
     }>;
+    getSharedDocs(userId: string): Promise<{
+        success: boolean;
+        data: {
+            user: {
+                name: string;
+                displaySrc: string;
+            };
+        }[];
+    }>;
 }

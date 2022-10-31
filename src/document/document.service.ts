@@ -95,4 +95,26 @@ export class DocumentService {
     );
     return responseData[0].secure_url;
   }
+
+  async getSharedDocs(userId: string) {
+    try {
+      const sharedDocs = await this.prisma.document.findMany({
+        where: { sharedWith: userId },
+        select: {
+          user: {
+            select: {
+              name: true,
+              displaySrc: true,
+            },
+          },
+        },
+      });
+      return {
+        success: true,
+        data: sharedDocs,
+      };
+    } catch (error) {
+      throw new HttpException(error, 500);
+    }
+  }
 }

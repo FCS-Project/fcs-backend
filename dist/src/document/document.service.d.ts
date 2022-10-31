@@ -18,4 +18,13 @@ export declare class DocumentService {
         success: boolean;
     }>;
     uploadImage(): Promise<any>;
+    getSharedDocs(userId: string): Promise<{
+        success: boolean;
+        data: {
+            user: {
+                name: string;
+                displaySrc: string;
+            };
+        }[];
+    }>;
 }

@@ -31,4 +31,9 @@ export class DocumentController {
   remove(@Param('id') id: string, @GetCurrentUserId() userId: string) {
     return this.documentService.remove(id, userId);
   }
+
+  @Get('/shared')
+  getSharedDocs(@GetCurrentUserId() userId: string) {
+    return this.documentService.getSharedDocs(userId);
+  }
 }

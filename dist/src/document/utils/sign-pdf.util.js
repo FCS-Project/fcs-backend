@@ -13,8 +13,7 @@ async function signPDF(certificate, pdfDoc) {
 }
 exports.signPDF = signPDF;
 async function signingPDF(dataURI) {
-    const decodedBase64 = base64.base64Decode(dataURI, 'src/document/test_assets/imported_file.pdf');
-    console.log(decodedBase64);
+    base64.base64Decode(dataURI, 'src/document/test_assets/imported_file.pdf');
     const pdfDoc = fs.readFileSync(path.resolve('src/document/test_assets/imported_file.pdf'));
     const certificate = fs.readFileSync(path.resolve('src/document/test_assets/certificate.p12'));
     const signedDocs = await signPDF(certificate, pdfDoc);
