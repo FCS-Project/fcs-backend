@@ -20,11 +20,6 @@ export declare class DocumentService {
     uploadImage(): Promise<any>;
     getSharedDocs(userId: string): Promise<{
         success: boolean;
-        data: {
-            user: {
-                name: string;
-                displaySrc: string;
-            };
-        }[];
+        data: import(".prisma/client").Document[];
     }>;
 }

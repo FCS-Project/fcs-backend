@@ -16,11 +16,6 @@ export declare class DocumentController {
     }>;
     getSharedDocs(userId: string): Promise<{
         success: boolean;
-        data: {
-            user: {
-                name: string;
-                displaySrc: string;
-            };
-        }[];
+        data: import(".prisma/client").Document[];
     }>;
 }
