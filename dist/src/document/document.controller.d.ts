@@ -11,11 +11,11 @@ export declare class DocumentController {
         success: boolean;
         data: import(".prisma/client").Document;
     }>;
-    remove(id: string, userId: string): Promise<import("@nestjs/common").BadRequestException | {
-        success: boolean;
-    }>;
     getSharedDocs(userId: string): Promise<{
         success: boolean;
         data: import(".prisma/client").Document[];
+    }>;
+    remove(id: string, userId: string): Promise<import("@nestjs/common").BadRequestException | {
+        success: boolean;
     }>;
 }

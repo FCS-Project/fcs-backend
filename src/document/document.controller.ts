@@ -27,13 +27,13 @@ export class DocumentController {
     return this.documentService.findOne(id);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string, @GetCurrentUserId() userId: string) {
-    return this.documentService.remove(id, userId);
-  }
-
   @Get('/shared')
   getSharedDocs(@GetCurrentUserId() userId: string) {
     return this.documentService.getSharedDocs(userId);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string, @GetCurrentUserId() userId: string) {
+    return this.documentService.remove(id, userId);
   }
 }

@@ -31,11 +31,11 @@ let DocumentController = class DocumentController {
     findOne(id) {
         return this.documentService.findOne(id);
     }
-    remove(id, userId) {
-        return this.documentService.remove(id, userId);
-    }
     getSharedDocs(userId) {
         return this.documentService.getSharedDocs(userId);
+    }
+    remove(id, userId) {
+        return this.documentService.remove(id, userId);
     }
 };
 __decorate([
@@ -60,6 +60,13 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], DocumentController.prototype, "findOne", null);
 __decorate([
+    (0, common_1.Get)('/shared'),
+    __param(0, (0, decorators_1.GetCurrentUserId)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], DocumentController.prototype, "getSharedDocs", null);
+__decorate([
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, decorators_1.GetCurrentUserId)()),
@@ -67,13 +74,6 @@ __decorate([
     __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", void 0)
 ], DocumentController.prototype, "remove", null);
-__decorate([
-    (0, common_1.Get)('/shared'),
-    __param(0, (0, decorators_1.GetCurrentUserId)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], DocumentController.prototype, "getSharedDocs", null);
 DocumentController = __decorate([
     (0, swagger_1.ApiTags)('Document'),
     (0, common_1.Controller)('document'),
