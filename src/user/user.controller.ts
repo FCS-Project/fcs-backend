@@ -44,6 +44,15 @@ export class UserController {
     return this.userService.findOne(id, role, userId);
   }
 
+  @Get('/profile/:id')
+  getProfile(
+    @Param('id') id: string,
+    @GetCurrentUserId() userId: string,
+    @GetCurrentUserRole() role: string,
+  ) {
+    return this.userService.getProfile(id, userId, role);
+  }
+
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -56,14 +65,5 @@ export class UserController {
   @Delete(':id')
   remove(@Param('id') id: string, @GetCurrentUserRole() role: string) {
     return this.userService.remove(id, role);
-  }
-
-  @Get('/profile/:id')
-  getProfile(
-    @Param('id') id: string,
-    @GetCurrentUserId() userId: string,
-    @GetCurrentUserRole() role: string,
-  ) {
-    return this.userService.getProfile(id, userId, role);
   }
 }

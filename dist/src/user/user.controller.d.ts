@@ -50,15 +50,15 @@ export declare class UserController {
         success: boolean;
         data: Omit<import(".prisma/client").User, "password" | "hashedRt" | "otp" | "otpCreatedAt" | "createdAt" | "updatedAt">;
     }>;
+    getProfile(id: string, userId: string, role: string): Promise<{
+        success: boolean;
+        data: Omit<import(".prisma/client").User, "password" | "hashedRt" | "otp" | "otpCreatedAt" | "createdAt" | "updatedAt">;
+    }>;
     update(id: string, updateUserDto: UpdateUserDto, userId: string): Promise<{
         success: boolean;
         data: import(".prisma/client").User;
     }>;
     remove(id: string, role: string): Promise<{
         success: boolean;
-    }>;
-    getProfile(id: string, userId: string, role: string): Promise<{
-        success: boolean;
-        data: Omit<import(".prisma/client").User, "password" | "hashedRt" | "otp" | "otpCreatedAt" | "createdAt" | "updatedAt">;
     }>;
 }
