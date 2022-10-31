@@ -100,14 +100,17 @@ export class DocumentService {
     try {
       const sharedDocs = await this.prisma.document.findMany({
         where: { sharedWith: userId },
-        // select: {
-        //   user: {
-        //     select: {
-        //       name: true,
-        //       displaySrc: true,
-        //     },
-        //   },
-        // },
+        select: {
+          name: true,
+          dataSrc: true,
+          createdAt: true,
+          user: {
+            select: {
+              name: true,
+              displaySrc: true,
+            },
+          },
+        },
       });
       if (sharedDocs) {
         return {
