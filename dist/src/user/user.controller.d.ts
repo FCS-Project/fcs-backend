@@ -3,27 +3,6 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export declare class UserController {
     private readonly userService;
     constructor(userService: UserService);
-    getMe(userId: string): Promise<{
-        success: boolean;
-        data: Omit<import(".prisma/client").User, "password" | "hashedRt" | "otp" | "otpCreatedAt" | "createdAt" | "updatedAt">;
-    }>;
-    findDocuments(userId: string): Promise<{
-        success: boolean;
-        data: {
-            Documents: import(".prisma/client").Document[];
-        };
-    }>;
-    getHome(userId: string): Promise<{
-        success: boolean;
-        data: {
-            id: string;
-            name: string;
-            type: import(".prisma/client").Type[];
-            displaySrc: string;
-            bannerSrc: string;
-            location: string;
-        }[];
-    }>;
     getUsers(role: string): Promise<{
         success: boolean;
         data: {
@@ -36,6 +15,27 @@ export declare class UserController {
         }[];
     }>;
     getOrganisations(role: string): Promise<{
+        success: boolean;
+        data: {
+            id: string;
+            name: string;
+            type: import(".prisma/client").Type[];
+            displaySrc: string;
+            bannerSrc: string;
+            location: string;
+        }[];
+    }>;
+    getMe(userId: string): Promise<{
+        success: boolean;
+        data: Omit<import(".prisma/client").User, "password" | "hashedRt" | "otp" | "otpCreatedAt" | "createdAt" | "updatedAt">;
+    }>;
+    findDocuments(userId: string): Promise<{
+        success: boolean;
+        data: {
+            Documents: import(".prisma/client").Document[];
+        };
+    }>;
+    getHome(userId: string): Promise<{
         success: boolean;
         data: {
             id: string;
