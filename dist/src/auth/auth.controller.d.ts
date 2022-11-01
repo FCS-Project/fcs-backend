@@ -1,9 +1,9 @@
 import { AuthService } from './auth.service';
-import { SignUpDto } from './dto/signUp.dto';
 import { SignInDto } from './dto/signIn.dto';
 import { Tokens } from './types';
 import { OtpSignInDto } from './dto/otpSignIn.dto';
 import { VerifyOtpDto } from './dto/verifyOtp.dto';
+import { SignUpDto } from './dto/signUp.dto';
 export declare class AuthController {
     private readonly authService;
     constructor(authService: AuthService);

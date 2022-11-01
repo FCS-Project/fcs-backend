@@ -9,13 +9,13 @@ export declare class DocumentController {
     getSharedDocs(userId: string): Promise<{
         success: boolean;
         data: {
-            name: string;
             user: {
                 name: string;
                 displaySrc: string;
             };
-            dataSrc: string;
+            name: string;
             createdAt: Date;
+            dataSrc: string;
         }[];
     }>;
     findAll(): Promise<import(".prisma/client").Document[]>;

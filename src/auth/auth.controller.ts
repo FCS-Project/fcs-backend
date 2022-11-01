@@ -7,7 +7,6 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { SignUpDto } from './dto/signUp.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { SignInDto } from './dto/signIn.dto';
 import { Tokens } from './types';
@@ -16,6 +15,7 @@ import { GetCurrentUserId, Public } from 'src/common/decorators';
 import { GetCurrentUser } from 'src/common/decorators/get-current-user.decorator';
 import { OtpSignInDto } from './dto/otpSignIn.dto';
 import { VerifyOtpDto } from './dto/verifyOtp.dto';
+import { SignUpDto } from './dto/signUp.dto';
 
 @ApiTags('Auth')
 @Controller('auth')

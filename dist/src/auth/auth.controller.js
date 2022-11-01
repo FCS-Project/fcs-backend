@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthController = void 0;
 const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth.service");
-const signUp_dto_1 = require("./dto/signUp.dto");
 const swagger_1 = require("@nestjs/swagger");
 const signIn_dto_1 = require("./dto/signIn.dto");
 const guards_1 = require("../common/guards");
@@ -23,6 +22,7 @@ const decorators_1 = require("../common/decorators");
 const get_current_user_decorator_1 = require("../common/decorators/get-current-user.decorator");
 const otpSignIn_dto_1 = require("./dto/otpSignIn.dto");
 const verifyOtp_dto_1 = require("./dto/verifyOtp.dto");
+const signUp_dto_1 = require("./dto/signUp.dto");
 let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
