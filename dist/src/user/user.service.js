@@ -171,7 +171,7 @@ let UserService = class UserService {
             }
         }
     }
-    async getHome() {
+    async getHome(userId) {
         try {
             const users = await this.prisma.user.findMany({
                 where: {
@@ -179,6 +179,7 @@ let UserService = class UserService {
                         { type: { has: 'Professional' } },
                         { roles: { has: 'Organisation' } },
                     ],
+                    NOT: [{ id: userId }],
                 },
                 select: {
                     id: true,

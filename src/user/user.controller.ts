@@ -21,8 +21,8 @@ export class UserController {
   }
 
   @Get('/home')
-  getHome() {
-    return this.userService.getHome();
+  getHome(@GetCurrentUserId() userId: string) {
+    return this.userService.getHome(userId);
   }
 
   @Get('/admin/users')

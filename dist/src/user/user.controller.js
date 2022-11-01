@@ -29,8 +29,8 @@ let UserController = class UserController {
     findDocuments(userId) {
         return this.userService.getUserDocuments(userId);
     }
-    getHome() {
-        return this.userService.getHome();
+    getHome(userId) {
+        return this.userService.getHome(userId);
     }
     getUsers(role) {
         return this.userService.getUsers(role);
@@ -67,8 +67,9 @@ __decorate([
 ], UserController.prototype, "findDocuments", null);
 __decorate([
     (0, common_1.Get)('/home'),
+    __param(0, (0, decorators_1.GetCurrentUserId)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "getHome", null);
 __decorate([

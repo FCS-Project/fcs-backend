@@ -13,7 +13,7 @@ export declare class UserController {
             Documents: import(".prisma/client").Document[];
         };
     }>;
-    getHome(): Promise<{
+    getHome(userId: string): Promise<{
         success: boolean;
         data: {
             id: string;
