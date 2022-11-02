@@ -18,6 +18,12 @@ import { ProductModule } from './product/product.module';
       useClass: AtGuard,
     },
   ],
-  imports: [UserModule, DocumentModule, PrismaModule, AuthModule, ProductModule],
+  imports: [
+    UserModule,
+    DocumentModule,
+    PrismaModule,
+    AuthModule,
+    ProductModule,
+  ],
 })
 export class AppModule {}
