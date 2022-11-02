@@ -21,13 +21,13 @@ export declare class DocumentService {
     getSharedDocs(userId: string): Promise<{
         success: boolean;
         data: {
+            createdAt: Date;
             name: string;
             user: {
                 name: string;
                 displaySrc: string;
             };
             dataSrc: string;
-            createdAt: Date;
         }[];
     }>;
 }

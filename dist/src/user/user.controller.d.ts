@@ -32,7 +32,7 @@ export declare class UserController {
     findDocuments(userId: string): Promise<{
         success: boolean;
         data: {
-            Documents: import(".prisma/client").Document[];
+            documents: import(".prisma/client").Document[];
         };
     }>;
     getHome(userId: string): Promise<{

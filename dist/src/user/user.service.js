@@ -68,7 +68,7 @@ let UserService = class UserService {
         try {
             const docs = await this.prisma.user.findUnique({
                 where: { id: userId },
-                select: { Documents: true },
+                select: { documents: true },
             });
             if (docs) {
                 return { success: true, data: docs };
