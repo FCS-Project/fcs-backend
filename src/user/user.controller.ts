@@ -35,13 +35,13 @@ export class UserController {
     return this.userService.getHome(userId);
   }
 
-  @Get('/profile/:id')
+  @Get('/profile/:handle')
   getProfile(
-    @Param('id') id: string,
+    @Param('handle') handle: string,
     @GetCurrentUserId() userId: string,
     @GetCurrentUserRole() role: string,
   ) {
-    return this.userService.getProfile(id, userId, role);
+    return this.userService.getProfile(handle, userId, role);
   }
 
   @Patch(':id')

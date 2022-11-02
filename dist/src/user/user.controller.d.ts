@@ -44,13 +44,10 @@ export declare class UserController {
             displaySrc: string;
             bannerSrc: string;
             location: string;
+            handle: string;
         }[];
     }>;
-    findOne(id: string, role: string, userId: string): Promise<{
-        success: boolean;
-        data: Omit<import(".prisma/client").User, "password" | "hashedRt" | "otp" | "otpCreatedAt" | "createdAt" | "updatedAt">;
-    }>;
-    getProfile(id: string, userId: string, role: string): Promise<{
+    getProfile(handle: string, userId: string, role: string): Promise<{
         success: boolean;
         data: Omit<import(".prisma/client").User, "password" | "hashedRt" | "otp" | "otpCreatedAt" | "createdAt" | "updatedAt">;
     }>;

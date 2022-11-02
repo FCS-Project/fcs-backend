@@ -42,28 +42,6 @@ let UserService = class UserService {
             throw new common_1.HttpException(error, 500);
         }
     }
-    async findOne(id, role, userId) {
-        if (role === 'Admin' || userId === id) {
-            try {
-                const user = await this.prisma.user.findUnique({
-                    where: { id },
-                });
-                const data = exclude(user, 'password', 'hashedRt', 'otp', 'otpCreatedAt', 'createdAt', 'updatedAt');
-                if (user) {
-                    return { success: true, data: data };
-                }
-                else {
-                    throw new common_1.BadRequestException('User does not exist!');
-                }
-            }
-            catch (error) {
-                throw new common_1.HttpException(error, 500);
-            }
-        }
-        else {
-            throw new common_1.BadRequestException('Access Denied');
-        }
-    }
     async getUserDocuments(userId) {
         try {
             const docs = await this.prisma.user.findUnique({
@@ -122,10 +100,12 @@ let UserService = class UserService {
             throw new common_1.BadRequestException('Access Denied');
         }
     }
-    async getProfile(id, userId, role) {
+    async getProfile(handle, userId, role) {
         if (role === 'Admin') {
             try {
-                const user = await this.prisma.user.findUnique({ where: { id } });
+                const user = await this.prisma.user.findUnique({
+                    where: { handle: handle },
+                });
                 const data = exclude(user, 'password', 'hashedRt', 'otp', 'otpCreatedAt', 'createdAt', 'updatedAt');
                 if (data) {
                     return {
@@ -149,7 +129,7 @@ let UserService = class UserService {
                             { type: { has: 'Professional' } },
                             { roles: { has: 'Organisation' } },
                         ],
-                        id: id,
+                        handle: handle,
                     },
                 });
                 for (const element of user) {
@@ -188,6 +168,7 @@ let UserService = class UserService {
                     displaySrc: true,
                     bannerSrc: true,
                     location: true,
+                    handle: true,
                 },
             });
             if (users) {

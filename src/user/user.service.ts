@@ -99,10 +99,12 @@ export class UserService {
     }
   }
 
-  async getProfile(id: string, userId: string, role: string) {
+  async getProfile(handle: string, userId: string, role: string) {
     if (role === 'Admin') {
       try {
-        const user = await this.prisma.user.findUnique({ where: { id } });
+        const user = await this.prisma.user.findUnique({
+          where: { handle: handle },
+        });
         const data = exclude(
           user,
           'password',
@@ -132,7 +134,7 @@ export class UserService {
               { type: { has: 'Professional' } },
               { roles: { has: 'Organisation' } },
             ],
-            handle: id,
+            handle: handle,
           },
         });
         for (const element of user) {
@@ -178,6 +180,7 @@ export class UserService {
           displaySrc: true,
           bannerSrc: true,
           location: true,
+          handle: true,
         },
       });
       if (users) {

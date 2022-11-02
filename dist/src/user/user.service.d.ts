@@ -7,10 +7,6 @@ export declare class UserService {
         success: boolean;
         data: Omit<import(".prisma/client").User, "password" | "hashedRt" | "otp" | "otpCreatedAt" | "createdAt" | "updatedAt">;
     }>;
-    findOne(id: string, role: string, userId: string): Promise<{
-        success: boolean;
-        data: Omit<import(".prisma/client").User, "password" | "hashedRt" | "otp" | "otpCreatedAt" | "createdAt" | "updatedAt">;
-    }>;
     getUserDocuments(userId: string): Promise<{
         success: boolean;
         data: {
@@ -24,7 +20,7 @@ export declare class UserService {
     remove(id: string, role: string): Promise<{
         success: boolean;
     }>;
-    getProfile(id: string, userId: string, role: string): Promise<{
+    getProfile(handle: string, userId: string, role: string): Promise<{
         success: boolean;
         data: Omit<import(".prisma/client").User, "password" | "hashedRt" | "otp" | "otpCreatedAt" | "createdAt" | "updatedAt">;
     }>;
@@ -37,6 +33,7 @@ export declare class UserService {
             displaySrc: string;
             bannerSrc: string;
             location: string;
+            handle: string;
         }[];
     }>;
     getUsers(role: string): Promise<{
