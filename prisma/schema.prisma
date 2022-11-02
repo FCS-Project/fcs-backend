@@ -48,7 +48,8 @@ model Product {
   imgSrc    String
   createdAt DateTime @default(now())
   userId    String
-  buyerId   String
+  buyerId   String?
+  price String
 }
 
 enum Role {
