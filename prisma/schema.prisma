@@ -29,6 +29,7 @@ model User {
   otp          String?
   otpCreatedAt DateTime?
   products     Product[]
+  handle       String     @default(uuid())
 }
 
 model Document {
