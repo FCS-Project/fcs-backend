@@ -7,6 +7,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AtGuard } from './common/guards';
+import { ProductModule } from './product/product.module';
 
 @Module({
   controllers: [AppController],
@@ -17,6 +18,6 @@ import { AtGuard } from './common/guards';
       useClass: AtGuard,
     },
   ],
-  imports: [UserModule, DocumentModule, PrismaModule, AuthModule],
+  imports: [UserModule, DocumentModule, PrismaModule, AuthModule, ProductModule],
 })
 export class AppModule {}
