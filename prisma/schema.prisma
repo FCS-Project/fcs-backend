@@ -18,7 +18,7 @@ model User {
   mobileNumber String?    @unique
   roles        Role[]
   type         Type[]
-  Documents    Document[]
+  documents    Document[]
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
   hashedRt     String?
@@ -28,6 +28,7 @@ model User {
   location     String?
   otp          String?
   otpCreatedAt DateTime?
+  products     Product[]
 }
 
 model Document {
@@ -38,6 +39,16 @@ model Document {
   sharedWith String
   dataSrc    String
   createdAt  DateTime @default(now())
+}
+
+model Product {
+  id        String   @id @default(uuid())
+  name      String
+  user      User     @relation(fields: [userId], references: [id])
+  imgSrc    String
+  createdAt DateTime @default(now())
+  userId    String
+  buyerId   String
 }
 
 enum Role {
