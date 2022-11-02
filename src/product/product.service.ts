@@ -11,14 +11,14 @@ export class ProductService {
   }
 
   findAll() {
-    return `This action returns all product`;
+    return ``;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  findOne(id: string) {
+    return `${id}`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  remove(id: string) {
+    return `${id}`;
   }
 }
