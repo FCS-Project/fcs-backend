@@ -49,7 +49,7 @@ model Product {
   createdAt DateTime @default(now())
   userId    String
   buyerId   String?
-  price String
+  price     String
 }
 
 enum Role {
