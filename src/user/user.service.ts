@@ -43,34 +43,6 @@ export class UserService {
     }
   }
 
-  async findOne(id: string, role: string, userId: string) {
-    if (role === 'Admin' || userId === id) {
-      try {
-        const user = await this.prisma.user.findUnique({
-          where: { id },
-        });
-        const data = exclude(
-          user,
-          'password',
-          'hashedRt',
-          'otp',
-          'otpCreatedAt',
-          'createdAt',
-          'updatedAt',
-        );
-        if (user) {
-          return { success: true, data: data };
-        } else {
-          throw new BadRequestException('User does not exist!');
-        }
-      } catch (error) {
-        throw new HttpException(error, 500);
-      }
-    } else {
-      throw new BadRequestException('Access Denied');
-    }
-  }
-
   async getUserDocuments(userId: string) {
     try {
       const docs = await this.prisma.user.findUnique({
@@ -160,7 +132,7 @@ export class UserService {
               { type: { has: 'Professional' } },
               { roles: { has: 'Organisation' } },
             ],
-            id: id,
+            handle: id,
           },
         });
         for (const element of user) {

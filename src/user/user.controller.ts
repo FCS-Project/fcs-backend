@@ -35,15 +35,6 @@ export class UserController {
     return this.userService.getHome(userId);
   }
 
-  @Get(':id')
-  findOne(
-    @Param('id') id: string,
-    @GetCurrentUserRole() role: string,
-    @GetCurrentUserId() userId: string,
-  ) {
-    return this.userService.findOne(id, role, userId);
-  }
-
   @Get('/profile/:id')
   getProfile(
     @Param('id') id: string,
