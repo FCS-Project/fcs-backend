@@ -30,10 +30,11 @@ let OrderService = class OrderService {
                 currency: 'INR',
             };
             const order = await instance.orders.create(options);
-            await this.prisma.order.create({ data: createOrderDto });
+            const data = await this.prisma.order.create({ data: createOrderDto });
             return {
                 success: true,
-                data: order,
+                data: data,
+                razorpayData: order,
             };
         }
         catch (error) {
@@ -46,8 +47,22 @@ let OrderService = class OrderService {
     findOne(id) {
         return `This action returns a #${id} order`;
     }
-    update(id, updateOrderDto) {
-        return `This action updates a #${id} order`;
+    async update(id, updateOrderDto) {
+        try {
+            const order = await this.prisma.order.findUnique({ where: { id } });
+            if (order) {
+                await this.prisma.order.update({ where: { id }, data: updateOrderDto });
+                return {
+                    success: true,
+                };
+            }
+            else {
+                throw new common_1.BadRequestException('Invalid Order ID!');
+            }
+        }
+        catch (error) {
+            throw new common_1.HttpException(error, 500);
+        }
     }
     remove(id) {
         return `This action removes a #${id} order`;

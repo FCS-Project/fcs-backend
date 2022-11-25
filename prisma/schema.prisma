@@ -55,14 +55,14 @@ model Product {
 }
 
 model Order {
-  id            String   @id @default(uuid())
-  amount        String
-  product       Product  @relation(fields: [productId], references: [id])
-  productId     String
-  createdAt     DateTime @default(now())
-  paymentId     String?
-  paymentStatus Boolean  @default(false)
-  razorpayId    String?
+  id                String   @id @default(uuid())
+  amount            String
+  product           Product  @relation(fields: [productId], references: [id])
+  productId         String
+  createdAt         DateTime @default(now())
+  razorpayPaymentId String?
+  paymentStatus     Boolean  @default(false)
+  razorpayOrderId   String?
 }
 
 enum Role {

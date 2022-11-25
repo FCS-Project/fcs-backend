@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import { HttpException, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, Injectable } from '@nestjs/common';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -21,10 +21,11 @@ export class OrderService {
         currency: 'INR',
       };
       const order = await instance.orders.create(options);
-      await this.prisma.order.create({ data: createOrderDto });
+      const data = await this.prisma.order.create({ data: createOrderDto });
       return {
         success: true,
-        data: order,
+        data: data,
+        razorpayData: order,
       };
     } catch (error) {
       throw new HttpException(error, 500);
@@ -39,8 +40,20 @@ export class OrderService {
     return `This action returns a #${id} order`;
   }
 
-  update(id: number, updateOrderDto: UpdateOrderDto) {
-    return `This action updates a #${id} order`;
+  async update(id: string, updateOrderDto: UpdateOrderDto) {
+    try {
+      const order = await this.prisma.order.findUnique({ where: { id } });
+      if (order) {
+        await this.prisma.order.update({ where: { id }, data: updateOrderDto });
+        return {
+          success: true,
+        };
+      } else {
+        throw new BadRequestException('Invalid Order ID!');
+      }
+    } catch (error) {
+      throw new HttpException(error, 500);
+    }
   }
 
   remove(id: number) {

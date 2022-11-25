@@ -6,10 +6,13 @@ export declare class OrderService {
     constructor(prisma: PrismaService);
     create(createOrderDto: CreateOrderDto): Promise<{
         success: boolean;
-        data: import("razorpay-typescript/dist/resources/order").IRazorOrderId;
+        data: import(".prisma/client").Order;
+        razorpayData: import("razorpay-typescript/dist/resources/order").IRazorOrderId;
     }>;
     findAll(): string;
     findOne(id: number): string;
-    update(id: number, updateOrderDto: UpdateOrderDto): string;
+    update(id: string, updateOrderDto: UpdateOrderDto): Promise<{
+        success: boolean;
+    }>;
     remove(id: number): string;
 }

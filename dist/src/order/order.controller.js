@@ -31,7 +31,7 @@ let OrderController = class OrderController {
         return this.orderService.findOne(+id);
     }
     update(id, updateOrderDto) {
-        return this.orderService.update(+id, updateOrderDto);
+        return this.orderService.update(id, updateOrderDto);
     }
     remove(id) {
         return this.orderService.remove(+id);
