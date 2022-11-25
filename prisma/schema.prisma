@@ -60,8 +60,9 @@ model Order {
   product       Product  @relation(fields: [productId], references: [id])
   createdAt     DateTime @default(now())
   productId     String
-  paymentId     String
+  paymentId     String?
   paymentStatus Boolean  @default(false)
+  razorpayId    String?
 }
 
 enum Role {
