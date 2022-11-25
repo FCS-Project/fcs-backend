@@ -6,7 +6,16 @@ export declare class ProductService {
     create(createProductDto: CreateProductDto): Promise<import(".prisma/client").Product>;
     findAll(): Promise<{
         success: boolean;
-        data: import(".prisma/client").Product[];
+        data: {
+            id: string;
+            name: string;
+            user: {
+                name: string;
+                displaySrc: string;
+            };
+            imgSrc: string;
+            price: string;
+        }[];
     }>;
     findOne(id: string): string;
     remove(id: string): string;

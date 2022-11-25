@@ -21,7 +21,20 @@ let ProductService = class ProductService {
     }
     async findAll() {
         try {
-            const data = await this.prisma.product.findMany();
+            const data = await this.prisma.product.findMany({
+                select: {
+                    id: true,
+                    name: true,
+                    price: true,
+                    imgSrc: true,
+                    user: {
+                        select: {
+                            name: true,
+                            displaySrc: true,
+                        },
+                    },
+                },
+            });
             if (data) {
                 return {
                     success: true,
