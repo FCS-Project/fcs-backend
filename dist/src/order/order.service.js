@@ -41,9 +41,6 @@ let OrderService = class OrderService {
             throw new common_1.HttpException(error, 500);
         }
     }
-    findAll() {
-        return `This action returns all order`;
-    }
     findOne(id) {
         return `This action returns a #${id} order`;
     }

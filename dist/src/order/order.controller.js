@@ -24,9 +24,6 @@ let OrderController = class OrderController {
     async create(createOrderDto) {
         return this.orderService.create(createOrderDto);
     }
-    findAll() {
-        return this.orderService.findAll();
-    }
     findOne(id) {
         return this.orderService.findOne(+id);
     }
@@ -44,12 +41,6 @@ __decorate([
     __metadata("design:paramtypes", [create_order_dto_1.CreateOrderDto]),
     __metadata("design:returntype", Promise)
 ], OrderController.prototype, "create", null);
-__decorate([
-    (0, common_1.Get)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], OrderController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),

@@ -9,7 +9,6 @@ export declare class OrderService {
         data: import(".prisma/client").Order;
         razorpayData: import("razorpay-typescript/dist/resources/order").IRazorOrderId;
     }>;
-    findAll(): string;
     findOne(id: number): string;
     update(id: string, updateOrderDto: UpdateOrderDto): Promise<{
         success: boolean;

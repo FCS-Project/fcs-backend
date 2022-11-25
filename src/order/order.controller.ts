@@ -20,11 +20,6 @@ export class OrderController {
     return this.orderService.create(createOrderDto);
   }
 
-  @Get()
-  findAll() {
-    return this.orderService.findAll();
-  }
-
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.orderService.findOne(+id);

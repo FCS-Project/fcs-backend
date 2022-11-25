@@ -9,7 +9,6 @@ export declare class OrderController {
         data: import(".prisma/client").Order;
         razorpayData: import("razorpay-typescript/dist/resources/order").IRazorOrderId;
     }>;
-    findAll(): string;
     findOne(id: string): string;
     update(id: string, updateOrderDto: UpdateOrderDto): Promise<{
         success: boolean;
