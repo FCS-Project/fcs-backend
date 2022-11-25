@@ -1,11 +1,31 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { Razorpay } from 'razorpay';
 
 @Injectable()
 export class OrderService {
-  create(createOrderDto: CreateOrderDto) {
-    return 'This action adds a new order';
+  constructor(private prisma: PrismaService) {}
+  async create(createOrderDto: CreateOrderDto) {
+    try {
+      const instance = new Razorpay({
+        key_id: process.env.RAZORPAY_KEY_ID,
+        key_secret: process.env.RAZORPAY_SECRET,
+      });
+      const options = {
+        amount: createOrderDto.amount,
+        currency: 'INR',
+      };
+      const order = await instance.orders.create(options);
+      await this.prisma.order.create({ data: createOrderDto });
+      return {
+        success: true,
+        data: order,
+      };
+    } catch (error) {
+      throw new HttpException(error, 500);
+    }
   }
 
   findAll() {
