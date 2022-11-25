@@ -11,7 +11,7 @@ import {
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
-import Razorpay from 'razorpay';
+import { Razorpay } from 'razorpay';
 
 @Controller('order')
 export class OrderController {

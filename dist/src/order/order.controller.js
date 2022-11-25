@@ -24,7 +24,7 @@ let OrderController = class OrderController {
     }
     async create(createOrderDto) {
         try {
-            const instance = new razorpay_1.default({
+            const instance = new razorpay_1.Razorpay({
                 key_id: process.env.RAZORPAY_KEY_ID,
                 key_secret: process.env.RAZORPAY_SECRET,
             });
