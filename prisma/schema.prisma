@@ -63,6 +63,7 @@ model Order {
   razorpayPaymentId String?
   paymentStatus     Boolean  @default(false)
   razorpayOrderId   String?
+  updatedAt         DateTime @updatedAt
 }
 
 enum Role {
