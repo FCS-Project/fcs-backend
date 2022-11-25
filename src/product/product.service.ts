@@ -12,7 +12,7 @@ export class ProductService {
 
   async findAll() {
     try {
-      const data = this.prisma.product.findMany();
+      const data = await this.prisma.product.findMany();
       if (data) {
         return {
           success: true,

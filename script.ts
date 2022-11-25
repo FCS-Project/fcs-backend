@@ -8,6 +8,16 @@ async function main() {
   //   data: { name: 'xyz', email: 'xyz@gmail.com', password: 'xyz' },
   // });
   // console.log(user);
+  const data = {
+    name: 'Crocin',
+    imgSrc: 'hi',
+    price: '1111',
+    userId: '8936450f-6c72-4641-89e9-348bc353ddca',
+  };
+  const product = await prisma.product.create({ data: data });
+
+  const pros = await prisma.product.findMany();
+  console.log(pros);
 }
 
 main()
