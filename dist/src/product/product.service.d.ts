@@ -4,7 +4,7 @@ export declare class ProductService {
     private prisma;
     constructor(prisma: PrismaService);
     create(createProductDto: CreateProductDto): Promise<import(".prisma/client").Product>;
-    findAll(): string;
+    findAll(): Promise<import(".prisma/client").Product[]>;
     findOne(id: string): string;
     remove(id: string): string;
 }

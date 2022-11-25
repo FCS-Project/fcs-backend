@@ -19,8 +19,8 @@ let ProductService = class ProductService {
     async create(createProductDto) {
         return this.prisma.product.create({ data: createProductDto });
     }
-    findAll() {
-        return ``;
+    async findAll() {
+        return this.prisma.product.findMany();
     }
     findOne(id) {
         return `${id}`;
