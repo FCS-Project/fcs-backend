@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const product_service_1 = require("./product.service");
 const create_product_dto_1 = require("./dto/create-product.dto");
 const swagger_1 = require("@nestjs/swagger");
+const decorators_1 = require("../common/decorators");
 let ProductController = class ProductController {
     constructor(productService) {
         this.productService = productService;
@@ -35,6 +36,7 @@ let ProductController = class ProductController {
     }
 };
 __decorate([
+    (0, decorators_1.Public)(),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -42,6 +44,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProductController.prototype, "create", null);
 __decorate([
+    (0, decorators_1.Public)(),
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
