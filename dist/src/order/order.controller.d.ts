@@ -6,7 +6,7 @@ export declare class OrderController {
     constructor(orderService: OrderService);
     create(createOrderDto: CreateOrderDto): Promise<{
         success: boolean;
-        data: any;
+        data: import("razorpay-typescript/dist/resources/order").IRazorOrderId;
     }>;
     findAll(): string;
     findOne(id: string): string;

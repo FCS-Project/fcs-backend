@@ -6,7 +6,7 @@ export declare class OrderService {
     constructor(prisma: PrismaService);
     create(createOrderDto: CreateOrderDto): Promise<{
         success: boolean;
-        data: any;
+        data: import("razorpay-typescript/dist/resources/order").IRazorOrderId;
     }>;
     findAll(): string;
     findOne(id: number): string;
