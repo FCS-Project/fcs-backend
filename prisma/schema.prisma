@@ -51,6 +51,16 @@ model Product {
   userId    String
   buyerId   String?
   price     String
+  Order     Order[]
+}
+
+model Order {
+  id        String   @id @default(uuid())
+  amount    String
+  product   Product  @relation(fields: [productId], references: [id])
+  createdAt DateTime @default(now())
+  productId String
+  payment Boolean @default(false)
 }
 
 enum Role {
