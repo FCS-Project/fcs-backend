@@ -17,12 +17,32 @@ const common_1 = require("@nestjs/common");
 const order_service_1 = require("./order.service");
 const create_order_dto_1 = require("./dto/create-order.dto");
 const update_order_dto_1 = require("./dto/update-order.dto");
+const razorpay_1 = require("razorpay");
 let OrderController = class OrderController {
     constructor(orderService) {
         this.orderService = orderService;
     }
-    create(createOrderDto) {
-        return this.orderService.create(createOrderDto);
+    async create(createOrderDto) {
+        try {
+            const instance = new razorpay_1.default({
+                key_id: process.env.RAZORPAY_KEY_ID,
+                key_secret: process.env.RAZORPAY_SECRET,
+            });
+            const options = {
+                amount: createOrderDto.amount,
+                currency: 'INR',
+                receipt: 'receipt_order_74394',
+            };
+            const order = await instance.orders.create(options);
+            this.orderService.create(createOrderDto);
+            return {
+                success: true,
+                data: order,
+            };
+        }
+        catch (error) {
+            throw new common_1.HttpException(error, 500);
+        }
     }
     findAll() {
         return this.orderService.findAll();
@@ -42,7 +62,7 @@ __decorate([
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_order_dto_1.CreateOrderDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], OrderController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
