@@ -58,8 +58,8 @@ model Order {
   id            String   @id @default(uuid())
   amount        String
   product       Product  @relation(fields: [productId], references: [id])
-  createdAt     DateTime @default(now())
   productId     String
+  createdAt     DateTime @default(now())
   paymentId     String?
   paymentStatus Boolean  @default(false)
   razorpayId    String?
