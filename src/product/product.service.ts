@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateProductDto } from './dto/create-product.dto';
 
@@ -11,7 +11,19 @@ export class ProductService {
   }
 
   async findAll() {
-    return this.prisma.product.findMany();
+    try {
+      const data = this.prisma.product.findMany();
+      if (data) {
+        return {
+          success: true,
+          data: data,
+        };
+      } else {
+        throw new BadRequestException('No Products');
+      }
+    } catch (error) {
+      throw new HttpException(error, 500);
+    }
   }
 
   findOne(id: string) {

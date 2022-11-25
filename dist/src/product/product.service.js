@@ -20,7 +20,21 @@ let ProductService = class ProductService {
         return this.prisma.product.create({ data: createProductDto });
     }
     async findAll() {
-        return this.prisma.product.findMany();
+        try {
+            const data = this.prisma.product.findMany();
+            if (data) {
+                return {
+                    success: true,
+                    data: data,
+                };
+            }
+            else {
+                throw new common_1.BadRequestException('No Products');
+            }
+        }
+        catch (error) {
+            throw new common_1.HttpException(error, 500);
+        }
     }
     findOne(id) {
         return `${id}`;
