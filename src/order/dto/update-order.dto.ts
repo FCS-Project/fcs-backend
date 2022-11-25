@@ -1,5 +1,5 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
 import { CreateOrderDto } from './create-order.dto';
 
 export class UpdateOrderDto extends PartialType(CreateOrderDto) {
@@ -13,7 +13,7 @@ export class UpdateOrderDto extends PartialType(CreateOrderDto) {
   @ApiProperty()
   razorpayOrderId: string;
 
-  @IsString()
+  @IsBoolean()
   @IsNotEmpty()
   @ApiProperty()
   paymentStatus: boolean;
