@@ -12,7 +12,7 @@ export class CreateOrderDto {
   @ApiProperty()
   productId: string;
 
-  @IsBoolean()
-  @IsNotEmpty()
-  paymentStatus: boolean;
+  //   @IsBoolean()
+  //   @IsNotEmpty()
+  //   paymentStatus: boolean;
 }
