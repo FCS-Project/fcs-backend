@@ -12,14 +12,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrderService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
-const razorpay_1 = require("razorpay");
+const Razorpay = require('razorpay');
 let OrderService = class OrderService {
     constructor(prisma) {
         this.prisma = prisma;
     }
     async create(createOrderDto) {
         try {
-            const instance = new razorpay_1.Razorpay({
+            const instance = new Razorpay({
                 key_id: process.env.RAZORPAY_KEY_ID,
                 key_secret: process.env.RAZORPAY_SECRET,
             });
