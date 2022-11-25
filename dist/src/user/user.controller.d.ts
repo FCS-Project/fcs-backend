@@ -6,23 +6,23 @@ export declare class UserController {
     getUsers(role: string): Promise<{
         success: boolean;
         data: {
-            id: string;
             name: string;
             type: import(".prisma/client").Type[];
             displaySrc: string;
             bannerSrc: string;
             location: string;
+            handle: string;
         }[];
     }>;
     getOrganisations(role: string): Promise<{
         success: boolean;
         data: {
-            id: string;
             name: string;
             type: import(".prisma/client").Type[];
             displaySrc: string;
             bannerSrc: string;
             location: string;
+            handle: string;
         }[];
     }>;
     getMe(userId: string): Promise<{

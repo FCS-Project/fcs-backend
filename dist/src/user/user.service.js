@@ -191,7 +191,7 @@ let UserService = class UserService {
                 const users = await this.prisma.user.findMany({
                     where: { roles: { has: 'User' } },
                     select: {
-                        id: true,
+                        handle: true,
                         name: true,
                         type: true,
                         displaySrc: true,
@@ -218,7 +218,7 @@ let UserService = class UserService {
                 const users = await this.prisma.user.findMany({
                     where: { roles: { has: 'Organisation' } },
                     select: {
-                        id: true,
+                        handle: true,
                         name: true,
                         type: true,
                         displaySrc: true,
