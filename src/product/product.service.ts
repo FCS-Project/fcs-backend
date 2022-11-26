@@ -6,8 +6,19 @@ import { CreateProductDto } from './dto/create-product.dto';
 export class ProductService {
   constructor(private prisma: PrismaService) {}
 
-  async create(createProductDto: CreateProductDto) {
-    return this.prisma.product.create({ data: createProductDto });
+  async create(createProductDto: CreateProductDto, type: string) {
+    try {
+      if (type == 'Pharmacy') {
+        await this.prisma.product.create({ data: createProductDto });
+        return {
+          sucess: true,
+        };
+      } else {
+        throw new BadRequestException('Access Denied.');
+      }
+    } catch (error) {
+      throw new HttpException(error, 500);
+    }
   }
 
   async findAll() {
