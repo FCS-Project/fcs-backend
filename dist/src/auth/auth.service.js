@@ -41,11 +41,11 @@ let AuthService = class AuthService {
         };
         const [at, rt] = await Promise.all([
             this.jwtService.signAsync(jwtPayload, {
-                secret: 'at-secret',
+                secret: process.env.AT_SECRET,
                 expiresIn: '1d',
             }),
             this.jwtService.signAsync(jwtPayload, {
-                secret: 'rt-secret',
+                secret: process.env.RT_SECRET,
                 expiresIn: '7d',
             }),
         ]);
