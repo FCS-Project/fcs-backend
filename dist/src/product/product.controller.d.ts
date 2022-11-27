@@ -4,19 +4,19 @@ export declare class ProductController {
     private readonly productService;
     constructor(productService: ProductService);
     create(createProductDto: CreateProductDto, type: string): Promise<{
-        sucess: boolean;
+        success: boolean;
     }>;
     findAll(): Promise<{
         success: boolean;
         data: {
             id: string;
             name: string;
-            price: string;
-            imgSrc: string;
             user: {
                 name: string;
                 displaySrc: string;
             };
+            imgSrc: string;
+            price: string;
         }[];
     }>;
     findOne(id: string): string;

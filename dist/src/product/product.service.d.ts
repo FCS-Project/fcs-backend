@@ -4,7 +4,7 @@ export declare class ProductService {
     private prisma;
     constructor(prisma: PrismaService);
     create(createProductDto: CreateProductDto, type: string): Promise<{
-        sucess: boolean;
+        success: boolean;
     }>;
     findAll(): Promise<{
         success: boolean;

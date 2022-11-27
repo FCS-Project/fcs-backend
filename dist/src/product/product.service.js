@@ -21,7 +21,7 @@ let ProductService = class ProductService {
             if (type === 'Pharmacy') {
                 await this.prisma.product.create({ data: createProductDto });
                 return {
-                    sucess: true,
+                    success: true,
                 };
             }
             else {
