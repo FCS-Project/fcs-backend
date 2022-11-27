@@ -17,6 +17,8 @@ import { SignUpDto } from './dto/signUp.dto';
 
 const nodemailer = require('nodemailer');
 const saltRounds = 12;
+const NodeRSA = require('node-rsa');
+const key = new NodeRSA(process.env.RSA_PRIVATE_KEY);
 
 @Injectable()
 export class AuthService {
@@ -71,8 +73,6 @@ export class AuthService {
           where: { email: signInDto.email },
         });
         if (user) {
-          const NodeRSA = require('node-rsa');
-          const key = new NodeRSA(process.env.RSA_PRIVATE_KEY);
           signInDto.password = key.decrypt(signInDto.password, 'utf8');
           const result = await bcrypt.compare(
             signInDto.password,
@@ -125,8 +125,6 @@ export class AuthService {
 
   async signUp(signUpDto: SignUpDto): Promise<Tokens> {
     try {
-      const NodeRSA = require('node-rsa');
-      const key = new NodeRSA(process.env.RSA_PRIVATE_KEY);
       signUpDto.password = key.decrypt(signUpDto.password, 'utf8');
       const hash = await bcrypt.hash(signUpDto.password, saltRounds);
       signUpDto.password = hash;
@@ -206,7 +204,7 @@ export class AuthService {
           from: process.env.OUTLOOK_MAIL,
           to: user.email,
           subject: 'VamaCare: One Time Password',
-          text: `${otp} is your One Time Password(OTP) for VamaCare.`,
+          text: `${otp} is your One Time Password (OTP) for VamaCare.`,
         };
         await transporter.sendMail(mailOptions, async function (error, info) {
           if (error) {
@@ -241,6 +239,7 @@ export class AuthService {
           email: verifyOtpDto.email,
         },
       });
+      verifyOtpDto.otp = key.decrypt(verifyOtpDto.otp, 'utf8');
       const result = await bcrypt.compare(verifyOtpDto.otp, user.otp);
       if (verifyOtpDto.editInfo && result) {
         await this.prisma.user.updateMany({
