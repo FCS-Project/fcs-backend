@@ -61,11 +61,9 @@ let AuthService = class AuthService {
                     where: { email: signInDto.email },
                 });
                 if (user) {
-                    console.log(signInDto.password, 'NAKLI');
                     const NodeRSA = require('node-rsa');
                     const key = new NodeRSA(process.env.RSA_PRIVATE_KEY);
                     signInDto.password = key.decrypt(signInDto.password, 'utf8');
-                    console.log(signInDto.password, 'ASLi');
                     const result = await bcrypt.compare(signInDto.password, user.password);
                     if (result) {
                         const tokens = await this.getTokens(user.id, user.email, user.roles, user.type);
@@ -106,11 +104,9 @@ let AuthService = class AuthService {
     }
     async signUp(signUpDto) {
         try {
-            console.log(signUpDto.password, 'NAKLI');
             const NodeRSA = require('node-rsa');
             const key = new NodeRSA(process.env.RSA_PRIVATE_KEY);
             signUpDto.password = key.decrypt(signUpDto.password, 'utf8');
-            console.log(signUpDto.password, 'ASLi');
             const hash = await bcrypt.hash(signUpDto.password, saltRounds);
             signUpDto.password = hash;
             const user = await this.prisma.user.create({
