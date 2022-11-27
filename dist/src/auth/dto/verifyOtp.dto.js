@@ -17,8 +17,6 @@ class VerifyOtpDto {
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.MaxLength)(6),
-    (0, class_validator_1.MinLength)(6),
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
 ], VerifyOtpDto.prototype, "otp", void 0);
