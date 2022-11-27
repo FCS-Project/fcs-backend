@@ -7,7 +7,6 @@ export class ProductService {
   constructor(private prisma: PrismaService) {}
 
   async create(createProductDto: CreateProductDto, type: string) {
-    console.log('type', type);
     try {
       if (type === 'Pharmacy') {
         await this.prisma.product.create({ data: createProductDto });
