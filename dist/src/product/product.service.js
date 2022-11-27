@@ -16,8 +16,21 @@ let ProductService = class ProductService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    async create(createProductDto) {
-        return this.prisma.product.create({ data: createProductDto });
+    async create(createProductDto, type) {
+        try {
+            if (type == 'Pharmacy') {
+                await this.prisma.product.create({ data: createProductDto });
+                return {
+                    sucess: true,
+                };
+            }
+            else {
+                throw new common_1.BadRequestException('Access Denied.');
+            }
+        }
+        catch (error) {
+            throw new common_1.HttpException(error, 500);
+        }
     }
     async findAll() {
         try {

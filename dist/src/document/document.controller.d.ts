@@ -9,12 +9,12 @@ export declare class DocumentController {
     getSharedDocs(userId: string): Promise<{
         success: boolean;
         data: {
-            createdAt: Date;
-            name: string;
             user: {
                 name: string;
                 displaySrc: string;
             };
+            name: string;
+            createdAt: Date;
             dataSrc: string;
         }[];
     }>;

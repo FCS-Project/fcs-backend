@@ -6,23 +6,23 @@ export declare class UserController {
     getUsers(role: string): Promise<{
         success: boolean;
         data: {
-            name: string;
             type: import(".prisma/client").Type[];
+            handle: string;
+            name: string;
             displaySrc: string;
             bannerSrc: string;
             location: string;
-            handle: string;
         }[];
     }>;
     getOrganisations(role: string): Promise<{
         success: boolean;
         data: {
-            name: string;
             type: import(".prisma/client").Type[];
+            handle: string;
+            name: string;
             displaySrc: string;
             bannerSrc: string;
             location: string;
-            handle: string;
         }[];
     }>;
     getMe(userId: string): Promise<{
@@ -38,13 +38,13 @@ export declare class UserController {
     getHome(userId: string): Promise<{
         success: boolean;
         data: {
-            id: string;
-            name: string;
             type: import(".prisma/client").Type[];
+            handle: string;
+            name: string;
             displaySrc: string;
             bannerSrc: string;
             location: string;
-            handle: string;
+            id: string;
         }[];
     }>;
     getProfile(handle: string, userId: string, role: string): Promise<{

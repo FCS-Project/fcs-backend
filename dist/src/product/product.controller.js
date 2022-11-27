@@ -18,12 +18,13 @@ const product_service_1 = require("./product.service");
 const create_product_dto_1 = require("./dto/create-product.dto");
 const swagger_1 = require("@nestjs/swagger");
 const decorators_1 = require("../common/decorators");
+const get_current_user_type_decorator_1 = require("../common/decorators/get-current-user-type.decorator");
 let ProductController = class ProductController {
     constructor(productService) {
         this.productService = productService;
     }
-    create(createProductDto) {
-        return this.productService.create(createProductDto);
+    create(createProductDto, type) {
+        return this.productService.create(createProductDto, type);
     }
     findAll() {
         return this.productService.findAll();
@@ -39,8 +40,9 @@ __decorate([
     (0, decorators_1.Public)(),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, get_current_user_type_decorator_1.GetCurrentUserType)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_product_dto_1.CreateProductDto]),
+    __metadata("design:paramtypes", [create_product_dto_1.CreateProductDto, String]),
     __metadata("design:returntype", void 0)
 ], ProductController.prototype, "create", null);
 __decorate([

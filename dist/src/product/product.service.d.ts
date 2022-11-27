@@ -3,7 +3,9 @@ import { CreateProductDto } from './dto/create-product.dto';
 export declare class ProductService {
     private prisma;
     constructor(prisma: PrismaService);
-    create(createProductDto: CreateProductDto): Promise<import(".prisma/client").Product>;
+    create(createProductDto: CreateProductDto, type: string): Promise<{
+        sucess: boolean;
+    }>;
     findAll(): Promise<{
         success: boolean;
         data: {

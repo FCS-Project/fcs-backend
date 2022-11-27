@@ -32,11 +32,12 @@ let AuthService = class AuthService {
             },
         });
     }
-    async getTokens(userId, email, roles) {
+    async getTokens(userId, email, roles, type) {
         const jwtPayload = {
             sub: userId,
             email: email,
             roles: roles,
+            type: type,
         };
         const [at, rt] = await Promise.all([
             this.jwtService.signAsync(jwtPayload, {
@@ -62,7 +63,7 @@ let AuthService = class AuthService {
                 if (user) {
                     const result = await bcrypt.compare(signInDto.password, user.password);
                     if (result) {
-                        const tokens = await this.getTokens(user.id, user.email, user.roles);
+                        const tokens = await this.getTokens(user.id, user.email, user.roles, user.type);
                         await this.updateRtHash(user.id, tokens.refresh_token);
                         return tokens;
                     }
@@ -81,7 +82,7 @@ let AuthService = class AuthService {
                 if (user) {
                     const result = await bcrypt.compare(signInDto.password, user.password);
                     if (result) {
-                        const tokens = await this.getTokens(user.id, user.email, user.roles);
+                        const tokens = await this.getTokens(user.id, user.email, user.roles, user.type);
                         await this.updateRtHash(user.id, tokens.refresh_token);
                         return tokens;
                     }
@@ -105,7 +106,7 @@ let AuthService = class AuthService {
             const user = await this.prisma.user.create({
                 data: signUpDto,
             });
-            const tokens = await this.getTokens(user.id, user.email, user.roles);
+            const tokens = await this.getTokens(user.id, user.email, user.roles, user.type);
             await this.updateRtHash(user.id, tokens.refresh_token);
             return tokens;
         }
@@ -143,7 +144,7 @@ let AuthService = class AuthService {
         if (!rtMatches) {
             throw new common_1.ForbiddenException('Access Denied.');
         }
-        const tokens = await this.getTokens(user.id, user.email, user.roles);
+        const tokens = await this.getTokens(user.id, user.email, user.roles, user.type);
         await this.updateRtHash(user.id, tokens.refresh_token);
         return tokens;
     }
@@ -217,7 +218,7 @@ let AuthService = class AuthService {
                 };
             }
             if (result) {
-                const tokens = await this.getTokens(user.id, user.email, user.roles);
+                const tokens = await this.getTokens(user.id, user.email, user.roles, user.type);
                 await this.updateRtHash(user.id, tokens.refresh_token);
                 await this.prisma.user.updateMany({
                     where: {

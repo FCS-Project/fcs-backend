@@ -9,7 +9,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { SignInDto } from './dto/signIn.dto';
 import * as bcrypt from 'bcrypt';
 import { JwtPayload, Tokens } from './types';
-import { Role } from '@prisma/client';
+import { Role, Type } from '@prisma/client';
 import { JwtService } from '@nestjs/jwt';
 import { OtpSignInDto } from './dto/otpSignIn.dto';
 import { VerifyOtpDto } from './dto/verifyOtp.dto';
@@ -38,11 +38,13 @@ export class AuthService {
     userId: string,
     email: string,
     roles: Role[],
+    type: Type[],
   ): Promise<Tokens> {
     const jwtPayload: JwtPayload = {
       sub: userId,
       email: email,
       roles: roles,
+      type: type,
     };
 
     const [at, rt] = await Promise.all([
@@ -78,6 +80,7 @@ export class AuthService {
               user.id,
               user.email,
               user.roles,
+              user.type,
             );
             await this.updateRtHash(user.id, tokens.refresh_token);
             return tokens;
@@ -101,6 +104,7 @@ export class AuthService {
               user.id,
               user.email,
               user.roles,
+              user.type,
             );
             await this.updateRtHash(user.id, tokens.refresh_token);
             return tokens;
@@ -123,7 +127,12 @@ export class AuthService {
       const user = await this.prisma.user.create({
         data: signUpDto,
       });
-      const tokens = await this.getTokens(user.id, user.email, user.roles);
+      const tokens = await this.getTokens(
+        user.id,
+        user.email,
+        user.roles,
+        user.type,
+      );
       await this.updateRtHash(user.id, tokens.refresh_token);
       return tokens;
     } catch (error) {
@@ -163,7 +172,12 @@ export class AuthService {
     if (!rtMatches) {
       throw new ForbiddenException('Access Denied.');
     }
-    const tokens = await this.getTokens(user.id, user.email, user.roles);
+    const tokens = await this.getTokens(
+      user.id,
+      user.email,
+      user.roles,
+      user.type,
+    );
     await this.updateRtHash(user.id, tokens.refresh_token);
     return tokens;
   }
@@ -238,7 +252,12 @@ export class AuthService {
         };
       }
       if (result) {
-        const tokens = await this.getTokens(user.id, user.email, user.roles);
+        const tokens = await this.getTokens(
+          user.id,
+          user.email,
+          user.roles,
+          user.type,
+        );
         await this.updateRtHash(user.id, tokens.refresh_token);
         await this.prisma.user.updateMany({
           where: {
