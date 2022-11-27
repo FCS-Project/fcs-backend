@@ -17,8 +17,9 @@ let ProductService = class ProductService {
         this.prisma = prisma;
     }
     async create(createProductDto, type) {
+        console.log('type', type);
         try {
-            if (type == 'Pharmacy') {
+            if (type === 'Pharmacy') {
                 await this.prisma.product.create({ data: createProductDto });
                 return {
                     sucess: true,

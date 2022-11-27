@@ -10,7 +10,6 @@ import { GetCurrentUserType } from 'src/common/decorators/get-current-user-type.
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
-  @Public()
   @Post()
   create(
     @Body() createProductDto: CreateProductDto,

@@ -9,14 +9,14 @@ export declare class ProductController {
     findAll(): Promise<{
         success: boolean;
         data: {
+            id: string;
+            name: string;
+            price: string;
+            imgSrc: string;
             user: {
                 name: string;
                 displaySrc: string;
             };
-            name: string;
-            id: string;
-            price: string;
-            imgSrc: string;
         }[];
     }>;
     findOne(id: string): string;
