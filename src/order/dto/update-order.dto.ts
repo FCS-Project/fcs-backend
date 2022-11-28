@@ -17,4 +17,9 @@ export class UpdateOrderDto extends PartialType(CreateOrderDto) {
   @IsNotEmpty()
   @ApiProperty()
   paymentStatus: boolean;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  buyerId: string;
 }

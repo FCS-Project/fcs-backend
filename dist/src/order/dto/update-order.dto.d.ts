@@ -4,5 +4,6 @@ export declare class UpdateOrderDto extends UpdateOrderDto_base {
     razorpayPaymentId: string;
     razorpayOrderId: string;
     paymentStatus: boolean;
+    buyerId: string;
 }
 export {};

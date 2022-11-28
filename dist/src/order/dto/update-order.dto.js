@@ -33,5 +33,11 @@ __decorate([
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", Boolean)
 ], UpdateOrderDto.prototype, "paymentStatus", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", String)
+], UpdateOrderDto.prototype, "buyerId", void 0);
 exports.UpdateOrderDto = UpdateOrderDto;
 //# sourceMappingURL=update-order.dto.js.map
