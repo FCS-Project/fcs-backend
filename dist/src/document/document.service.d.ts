@@ -9,7 +9,6 @@ export declare class DocumentService {
     create(createDocumentDto: CreateDocumentDto, userId: string): Promise<{
         success: boolean;
     }>;
-    findAll(): Promise<import(".prisma/client").Document[]>;
     findOne(id: string): Promise<{
         success: boolean;
         data: import(".prisma/client").Document;
@@ -26,8 +25,8 @@ export declare class DocumentService {
                 name: string;
                 displaySrc: string;
             };
-            createdAt: Date;
             dataSrc: string;
+            createdAt: Date;
         }[];
     }>;
 }

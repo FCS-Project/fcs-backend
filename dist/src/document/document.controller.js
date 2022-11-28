@@ -28,9 +28,6 @@ let DocumentController = class DocumentController {
     getSharedDocs(userId) {
         return this.documentService.getSharedDocs(userId);
     }
-    findAll() {
-        return this.documentService.findAll();
-    }
     findOne(id) {
         return this.documentService.findOne(id);
     }
@@ -53,12 +50,6 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], DocumentController.prototype, "getSharedDocs", null);
-__decorate([
-    (0, common_1.Get)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], DocumentController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),

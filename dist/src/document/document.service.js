@@ -40,9 +40,6 @@ let DocumentService = class DocumentService {
             throw new common_1.HttpException(error, 500);
         }
     }
-    async findAll() {
-        return this.prisma.document.findMany();
-    }
     async findOne(id) {
         try {
             const document = await this.prisma.document.findUnique({ where: { id } });

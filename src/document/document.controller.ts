@@ -22,11 +22,6 @@ export class DocumentController {
     return this.documentService.getSharedDocs(userId);
   }
 
-  @Get()
-  findAll() {
-    return this.documentService.findAll();
-  }
-
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.documentService.findOne(id);

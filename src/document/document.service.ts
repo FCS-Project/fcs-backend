@@ -33,10 +33,6 @@ export class DocumentService {
     }
   }
 
-  async findAll() {
-    return this.prisma.document.findMany();
-  }
-
   async findOne(id: string) {
     try {
       const document = await this.prisma.document.findUnique({ where: { id } });
