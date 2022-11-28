@@ -5,7 +5,7 @@ export declare class UserService {
     constructor(prisma: PrismaService);
     getMe(userId: string): Promise<{
         success: boolean;
-        data: Omit<import(".prisma/client").User, "createdAt" | "password" | "updatedAt" | "hashedRt" | "otp" | "otpCreatedAt">;
+        data: Omit<import(".prisma/client").User, "password" | "hashedRt" | "otp" | "otpCreatedAt" | "createdAt" | "updatedAt">;
     }>;
     getUserDocuments(userId: string): Promise<{
         success: boolean;
@@ -22,15 +22,15 @@ export declare class UserService {
     }>;
     getProfile(handle: string, userId: string, role: string): Promise<{
         success: boolean;
-        data: Omit<import(".prisma/client").User, "createdAt" | "password" | "updatedAt" | "hashedRt" | "otp" | "otpCreatedAt">;
+        data: Omit<import(".prisma/client").User, "password" | "hashedRt" | "otp" | "otpCreatedAt" | "createdAt" | "updatedAt">;
     }>;
     getHome(userId: string): Promise<{
         success: boolean;
         data: {
             id: string;
             name: string;
-            displaySrc: string;
             type: import(".prisma/client").Type[];
+            displaySrc: string;
             bannerSrc: string;
             location: string;
             handle: string;
@@ -40,8 +40,8 @@ export declare class UserService {
         success: boolean;
         data: {
             name: string;
-            displaySrc: string;
             type: import(".prisma/client").Type[];
+            displaySrc: string;
             bannerSrc: string;
             location: string;
             handle: string;
@@ -51,8 +51,8 @@ export declare class UserService {
         success: boolean;
         data: {
             name: string;
-            displaySrc: string;
             type: import(".prisma/client").Type[];
+            displaySrc: string;
             bannerSrc: string;
             location: string;
             handle: string;

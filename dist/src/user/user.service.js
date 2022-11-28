@@ -82,7 +82,13 @@ let UserService = class UserService {
                 const sharedDocs = await this.prisma.document.deleteMany({
                     where: { sharedWith: id },
                 });
-                if (docs && sharedDocs) {
+                const orders = await this.prisma.order.deleteMany({
+                    where: { product: { userId: id } },
+                });
+                const products = await this.prisma.product.deleteMany({
+                    where: { userId: id },
+                });
+                if (docs && sharedDocs && products && orders) {
                     const user = await this.prisma.user.delete({ where: { id } });
                     if (user) {
                         return { success: true };
