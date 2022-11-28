@@ -11,12 +11,12 @@ export declare class ProductController {
         data: {
             id: string;
             name: string;
-            price: string;
-            imgSrc: string;
             user: {
                 name: string;
                 displaySrc: string;
             };
+            imgSrc: string;
+            price: string;
         }[];
     }>;
 }

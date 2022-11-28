@@ -27,9 +27,9 @@ export declare class UserService {
     getHome(userId: string): Promise<{
         success: boolean;
         data: {
+            type: import(".prisma/client").Type[];
             id: string;
             name: string;
-            type: import(".prisma/client").Type[];
             displaySrc: string;
             bannerSrc: string;
             location: string;
@@ -39,8 +39,8 @@ export declare class UserService {
     getUsers(role: string): Promise<{
         success: boolean;
         data: {
-            name: string;
             type: import(".prisma/client").Type[];
+            name: string;
             displaySrc: string;
             bannerSrc: string;
             location: string;
@@ -50,8 +50,8 @@ export declare class UserService {
     getOrganisations(role: string): Promise<{
         success: boolean;
         data: {
-            name: string;
             type: import(".prisma/client").Type[];
+            name: string;
             displaySrc: string;
             bannerSrc: string;
             location: string;
