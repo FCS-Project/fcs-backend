@@ -83,7 +83,7 @@ export class UserService {
           where: { sharedWith: id },
         });
         const orders = await this.prisma.order.deleteMany({
-          where: { product: { userId: id } },
+          where: { OR: [{ product: { userId: id } }, { buyerId: id }] },
         });
         const products = await this.prisma.product.deleteMany({
           where: { userId: id },

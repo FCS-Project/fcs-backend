@@ -6,8 +6,8 @@ export declare class UserController {
     getUsers(role: string): Promise<{
         success: boolean;
         data: {
-            type: import(".prisma/client").Type[];
             name: string;
+            type: import(".prisma/client").Type[];
             displaySrc: string;
             bannerSrc: string;
             location: string;
@@ -17,8 +17,8 @@ export declare class UserController {
     getOrganisations(role: string): Promise<{
         success: boolean;
         data: {
-            type: import(".prisma/client").Type[];
             name: string;
+            type: import(".prisma/client").Type[];
             displaySrc: string;
             bannerSrc: string;
             location: string;
@@ -38,9 +38,9 @@ export declare class UserController {
     getHome(userId: string): Promise<{
         success: boolean;
         data: {
-            type: import(".prisma/client").Type[];
             id: string;
             name: string;
+            type: import(".prisma/client").Type[];
             displaySrc: string;
             bannerSrc: string;
             location: string;
