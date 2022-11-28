@@ -7,6 +7,9 @@ import { HttpService } from '@nestjs/axios';
 import { firstValueFrom, map } from 'rxjs';
 import { signingPDF } from './utils/sign-pdf.util';
 
+const NodeRSA = require('node-rsa');
+const key = new NodeRSA(process.env.RSA_PRIVATE_KEY);
+
 @Injectable()
 export class DocumentService {
   constructor(
@@ -16,6 +19,10 @@ export class DocumentService {
 
   async create(createDocumentDto: CreateDocumentDto, userId: string) {
     try {
+      createDocumentDto.dataURI = key.decrypt(
+        createDocumentDto.dataURI,
+        'utf8',
+      );
       await signingPDF(createDocumentDto.dataURI);
       const pdfSrc = await this.uploadImage();
       const data = {

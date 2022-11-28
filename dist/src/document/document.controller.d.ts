@@ -9,13 +9,13 @@ export declare class DocumentController {
     getSharedDocs(userId: string): Promise<{
         success: boolean;
         data: {
-            createdAt: Date;
             name: string;
             user: {
                 name: string;
                 displaySrc: string;
             };
             dataSrc: string;
+            createdAt: Date;
         }[];
     }>;
     findOne(id: string): Promise<{

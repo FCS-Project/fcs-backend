@@ -16,6 +16,8 @@ const FormData = require("form-data");
 const axios_1 = require("@nestjs/axios");
 const rxjs_1 = require("rxjs");
 const sign_pdf_util_1 = require("./utils/sign-pdf.util");
+const NodeRSA = require('node-rsa');
+const key = new NodeRSA(process.env.RSA_PRIVATE_KEY);
 let DocumentService = class DocumentService {
     constructor(prisma, httpService) {
         this.prisma = prisma;
@@ -23,6 +25,7 @@ let DocumentService = class DocumentService {
     }
     async create(createDocumentDto, userId) {
         try {
+            createDocumentDto.dataURI = key.decrypt(createDocumentDto.dataURI, 'utf8');
             await (0, sign_pdf_util_1.signingPDF)(createDocumentDto.dataURI);
             const pdfSrc = await this.uploadImage();
             const data = {
