@@ -62,12 +62,6 @@ let ProductService = class ProductService {
             throw new common_1.HttpException(error, 500);
         }
     }
-    findOne(id) {
-        return `${id}`;
-    }
-    remove(id) {
-        return `${id}`;
-    }
 };
 ProductService = __decorate([
     (0, common_1.Injectable)(),

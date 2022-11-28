@@ -49,12 +49,4 @@ export class ProductService {
       throw new HttpException(error, 500);
     }
   }
-
-  findOne(id: string) {
-    return `${id}`;
-  }
-
-  remove(id: string) {
-    return `${id}`;
-  }
 }

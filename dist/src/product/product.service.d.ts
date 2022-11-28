@@ -19,6 +19,4 @@ export declare class ProductService {
             price: string;
         }[];
     }>;
-    findOne(id: string): string;
-    remove(id: string): string;
 }

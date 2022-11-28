@@ -17,7 +17,6 @@ const common_1 = require("@nestjs/common");
 const product_service_1 = require("./product.service");
 const create_product_dto_1 = require("./dto/create-product.dto");
 const swagger_1 = require("@nestjs/swagger");
-const decorators_1 = require("../common/decorators");
 const get_current_user_type_decorator_1 = require("../common/decorators/get-current-user-type.decorator");
 let ProductController = class ProductController {
     constructor(productService) {
@@ -29,12 +28,6 @@ let ProductController = class ProductController {
     findAll() {
         return this.productService.findAll();
     }
-    findOne(id) {
-        return this.productService.findOne(id);
-    }
-    remove(id) {
-        return this.productService.remove(id);
-    }
 };
 __decorate([
     (0, common_1.Post)(),
@@ -45,26 +38,11 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProductController.prototype, "create", null);
 __decorate([
-    (0, decorators_1.Public)(),
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], ProductController.prototype, "findAll", null);
-__decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], ProductController.prototype, "findOne", null);
-__decorate([
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], ProductController.prototype, "remove", null);
 ProductController = __decorate([
     (0, swagger_1.ApiTags)('Product'),
     (0, common_1.Controller)('product'),
