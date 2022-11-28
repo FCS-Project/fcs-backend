@@ -116,7 +116,7 @@ let AuthService = class AuthService {
         }
         catch (error) {
             if (error.code === 'P2002') {
-                throw new common_1.BadRequestException('A user with this email address already exists!');
+                throw new common_1.BadRequestException('A user with similar credentials already exists!');
             }
             else {
                 throw new common_1.HttpException(error, 500);

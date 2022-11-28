@@ -142,7 +142,7 @@ export class AuthService {
     } catch (error) {
       if (error.code === 'P2002') {
         throw new BadRequestException(
-          'A user with this email address already exists!',
+          'A user with similar credentials already exists!',
         );
       } else {
         throw new HttpException(error, 500);
